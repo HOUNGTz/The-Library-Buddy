@@ -4,7 +4,7 @@ plugins {
 
 android {
     namespace = "com.houng.mobile_app_development"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.houng.mobile_app_development"
