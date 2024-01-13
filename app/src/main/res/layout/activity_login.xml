@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity_login">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp">
+
+        <!-- Auto layout, variables, and unit scale are not yet supported -->
+        <View
+            android:id="@+id/book_lover_"
+            android:layout_width="295dp"
+            android:layout_height="218dp"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="68dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="101dp"
+            android:background="@drawable/book_lover_" />
+
+        <!-- Auto layout, variables, and unit scale are not yet supported -->
+        <TextView
+            android:id="@+id/sign_up_pag"
+            android:layout_width="149dp"
+            android:layout_height="47dp"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="37dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="348dp"
+            android:text="@string/sign_up_pag"
+            android:textAppearance="@style/sign_up_pag"
+            android:gravity="top"
+            />
+
+        <!-- Auto layout, variables, and unit scale are not yet supported -->
+        <View
+            android:id="@+id/rectangle_1"
+            android:layout_width="352dp"
+            android:layout_height="31dp"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="37dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="408dp"    />
+<!--            android:background="@drawable/rectangle_1"-->
+
+    </RelativeLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">mobile_app_development</string>
+    <string name="sign_up_pag">Sign Up Page</string>
+    <string name="turn_pages_">turn_page</string>
 </resources>
