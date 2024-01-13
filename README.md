@@ -3,16 +3,28 @@
 
 
 ## Getting started
-    Mobile app development using java and xml code to create the moblie application.
-    # Library Buddy App version 1.0
+        Mobile app development using java and xml code 
+    to create the moblie application.
+    # Library Buddy(electronic book) App versions 1.0
     # Languages Java and xml
     # gradle using compileSdk = 34, minSdk = 24, targetSdk = 33
     # Developers
-        @Pov Lyhoung <**/**> Team leader, software manager, and software developer.
-        @Chhorn Leanghor </> UX/UI Design and software developer.
-        @Heang Sothanarith </> UX/UI Design and software developer.
-        @Tang Sivmey </> Tester and software developer.
-        @Rous Seyha </> Tester and software developer.
+        @Pov Lyhoung <**/**> 
+            * Team leader, 
+            * software manager,  
+            * software developer;
+        @Chhorn Leanghor </> 
+            - UX/UI Design 
+            - software developer;
+        @Heang Sothanarith </> 
+            - UX/UI Design 
+            - software developer;
+        @Tang Sivmey </> 
+            - Tester 
+            - software developer;
+        @Rous Seyha </> 
+            - Tester
+            - software developer;
 
 ## Add your files
 
