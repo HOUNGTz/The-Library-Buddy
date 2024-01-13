@@ -14,10 +14,10 @@
             * software manager,  
             * software developer;
         @Chhorn Leanghor </> 
-            - UX/UI Design 
+            - UX/UI Designer 
             - software developer;
         @Heang Sothanarith </> 
-            - UX/UI Design 
+            - UX/UI Designer 
             - software developer;
         @Tang Sivmey </> 
             - Tester 
