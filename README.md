@@ -3,10 +3,16 @@
 
 
 ## Getting started
-
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
-
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+    Mobile app development using java and xml code to create the moblie application.
+    # Library Buddy App version 1.0
+    # Languages Java and xml
+    # gradle using compileSdk = 34, minSdk = 24, targetSdk = 33
+    # Developers
+        @Pov Lyhoung <**/**> Team leader, software manager, and software developer.
+        @Chhorn Leanghor </> UX/UI Design and software developer.
+        @Heang Sothanarith </> UX/UI Design and software developer.
+        @Tang Sivmey </> Tester and software developer.
+        @Rous Seyha </> Tester and software developer.
 
 ## Add your files
 
