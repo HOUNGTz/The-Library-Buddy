@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "435616392947",
+    "project_id": "librarybuddy-3d080",
+    "storage_bucket": "librarybuddy-3d080.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:435616392947:android:636845dced35da15e77986",
+        "android_client_info": {
+          "package_name": "com.houng.mobile_app_development"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBvoLZGwgbEN97KI4aD2RigxZSOVXCVDB4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
