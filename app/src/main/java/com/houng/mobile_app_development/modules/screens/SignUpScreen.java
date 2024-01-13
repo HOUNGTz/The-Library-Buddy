@@ -1,10 +1,12 @@
-package com.houng.mobile_app_development;
+package com.houng.mobile_app_development.modules.screens;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class activity_sign_up extends AppCompatActivity {
+import com.houng.mobile_app_development.R;
+
+public class SignUpScreen extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

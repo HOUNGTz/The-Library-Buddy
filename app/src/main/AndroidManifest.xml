@@ -13,12 +13,33 @@
         android:theme="@style/Theme.Mobile_app_development"
         tools:targetApi="31">
         <activity
-            android:name=".activity_sign_up"
+            android:name=".modules.settings.AboutUsPage"
             android:exported="false" />
         <activity
-            android:name=".activity_splash_screen"
+            android:name=".modules.settings.AccountDetailsPage"
+            android:exported="false" />
+        <activity
+            android:name=".modules.pages.BookDetailsPage"
+            android:exported="false" />
+        <activity
+            android:name=".modules.pages.BookPage"
+            android:exported="false" />
+        <activity
+            android:name=".modules.pages.ProfilePage"
+            android:exported="false" />
+        <activity
+            android:name=".modules.pages.SearchPage"
+            android:exported="false" />
+        <activity
+            android:name=".modules.screens.HomeScreen"
+            android:exported="false" />
+        <activity
+            android:name=".modules.screens.SignUpScreen"
+            android:exported="false" />
+        <activity
+            android:name=".modules.screens.SplashScreen"
             android:exported="false" /> <!-- <activity -->
-        <!-- android:name=".activity_login" -->
+        <!-- android:name=".LoginScreen" -->
         <!-- android:exported="true"> -->
         <!-- <intent-filter> -->
         <!-- <action android:name="android.intent.action.MAIN" /> -->
