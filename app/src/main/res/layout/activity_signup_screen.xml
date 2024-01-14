@@ -1,9 +1,164 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:pointerIcon="context_menu"
     tools:context=".modules.screens.SignUpScreen">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="27dp"
+        android:contentDescription="@string/book_lover"
+        app:srcCompat="@drawable/book_lover_" />
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/textView1"
+            style="@style/FormLable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="27dp"
+            android:text="@string/sign_up_pag"
+            android:textColor="#F48B6A"
+            android:textSize="27sp"
+            android:textStyle="bold"
+            tools:ignore="TextContrastCheck"
+            tools:text="@string/sign_up_pag" />
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/textInputEditText"
+                style="@style/FormLable"
+                android:layout_width="279dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="27dp"
+                android:hint="@string/username"
+                android:minHeight="48dp"
+                android:textColor="#090909"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="67dp"
+                android:layout_height="49dp"
+                android:contentDescription="@string/username_image"
+                app:srcCompat="@drawable/username"
+                tools:srcCompat="@drawable/username" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/textInputEditText2"
+                style="@style/FormLable"
+                android:layout_width="279dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="27dp"
+                android:hint="@string/email"
+                android:minHeight="48dp"
+                android:textColor="#090909"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="67dp"
+                android:layout_height="49dp"
+                android:contentDescription="@string/username_image"
+                app:srcCompat="@drawable/email"
+                tools:srcCompat="@drawable/email" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <EditText
+                android:id="@+id/editTextTextPassword"
+                style="@style/FormLable"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="27dp"
+                android:ems="10"
+                android:hint="@string/password"
+                android:inputType="textPassword"
+                android:minHeight="48dp"
+                android:textColor="#090909"
+                android:textSize="14sp"
+                tools:ignore="Autofill" />
+
+            <ImageView
+                android:id="@+id/imageView6"
+                android:layout_width="52dp"
+                android:layout_height="55dp"
+                app:srcCompat="@drawable/password"
+                tools:srcCompat="@drawable/password"
+                tools:ignore="ContentDescription" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <EditText
+                android:id="@+id/editTextConfirmPassword"
+                style="@style/FormLable"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="27dp"
+                android:ems="10"
+                android:hint="@string/confirm_password"
+                android:inputType="textPassword"
+                android:textColor="#090909"
+                android:textSize="14sp"
+                tools:ignore="Autofill,TouchTargetSizeCheck" />
+
+        </TableRow>
+
+    </TableLayout>
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="162dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="125dp"
+        android:layout_marginTop="18dp"
+        android:backgroundTint="#58B4DD"
+        android:text="@string/sing_up"
+        android:textStyle="bold"
+        app:iconTint="#35B5EF"
+        tools:ignore="TextContrastCheck"
+        tools:text="@string/sing_up" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="72dp"
+        android:text="If you already have an account? | Sign In"
+        android:textAlignment="center"
+        android:textSize="16sp"
+        tools:ignore="HardcodedText"
+        tools:text="@string/opt_sign_in" />
+
+
+
+
+</LinearLayout>
