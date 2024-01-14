@@ -1,0 +1,22 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/btn_home"
+        android:icon="@mipmap/home"
+        android:title="@string/home" />
+    <item
+        android:id="@+id/navigation_button2"
+        android:icon="@mipmap/book"
+        android:title="@string/book" />
+    <item
+        android:id="@+id/navigation_button3"
+        android:icon="@mipmap/search"
+        android:title="@string/search" />
+
+    <item
+        android:id="@+id/navigation_button4"
+        android:icon="@mipmap/profile"
+        android:title="@string/profile" />
+</menu>
+
+
+
