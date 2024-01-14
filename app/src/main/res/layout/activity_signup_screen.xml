@@ -26,6 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="27dp"
+            android:layout_marginBottom="9dp"
             android:text="@string/sign_up_pag"
             android:textColor="#F48B6A"
             android:textSize="27sp"
@@ -37,24 +38,25 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <com.google.android.material.textfield.TextInputEditText
+
+            <EditText
                 android:id="@+id/textInputEditText"
                 style="@style/FormLable"
-                android:layout_width="279dp"
-                android:layout_height="wrap_content"
+                android:layout_width="363dp"
+                android:layout_height="42dp"
                 android:layout_marginStart="27dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                android:background="@drawable/edit_round"
+                android:backgroundTint="#EDEAEA"
+                android:drawableEnd="@mipmap/username"
                 android:hint="@string/username"
+                android:inputType="text"
                 android:minHeight="48dp"
-                android:textColor="#090909"
-                android:textSize="14sp" />
-
-            <ImageView
-                android:id="@+id/imageView3"
-                android:layout_width="67dp"
-                android:layout_height="49dp"
-                android:contentDescription="@string/username_image"
-                app:srcCompat="@drawable/username"
-                tools:srcCompat="@drawable/username" />
+                android:padding="12dp"
+                android:textColor="#262626"
+                android:textSize="16sp"
+                tools:ignore="Autofill,TouchTargetSizeCheck" />
 
         </TableRow>
 
@@ -62,24 +64,25 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <com.google.android.material.textfield.TextInputEditText
+
+            <EditText
                 android:id="@+id/textInputEditText2"
                 style="@style/FormLable"
-                android:layout_width="279dp"
-                android:layout_height="wrap_content"
+                android:layout_width="363dp"
+                android:layout_height="40dp"
                 android:layout_marginStart="27dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                android:background="@drawable/edit_round"
+                android:backgroundTint="#EDEAEA"
+                android:drawableEnd="@mipmap/email"
                 android:hint="@string/email"
+                android:inputType="textEmailAddress"
                 android:minHeight="48dp"
-                android:textColor="#090909"
-                android:textSize="14sp" />
-
-            <ImageView
-                android:id="@+id/imageView2"
-                android:layout_width="67dp"
-                android:layout_height="49dp"
-                android:contentDescription="@string/username_image"
-                app:srcCompat="@drawable/email"
-                tools:srcCompat="@drawable/email" />
+                android:padding="12dp"
+                android:textColor="#262626"
+                android:textSize="16sp"
+                tools:ignore="Autofill,TouchTargetSizeCheck" />
 
         </TableRow>
 
@@ -91,24 +94,21 @@
             <EditText
                 android:id="@+id/editTextTextPassword"
                 style="@style/FormLable"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="363dp"
+                android:layout_height="42dp"
                 android:layout_marginStart="27dp"
-                android:ems="10"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                android:background="@drawable/edit_round"
+                android:backgroundTint="#EDEAEA"
+                android:drawableEnd="@mipmap/password"
                 android:hint="@string/password"
                 android:inputType="textPassword"
                 android:minHeight="48dp"
-                android:textColor="#090909"
-                android:textSize="14sp"
-                tools:ignore="Autofill" />
-
-            <ImageView
-                android:id="@+id/imageView6"
-                android:layout_width="52dp"
-                android:layout_height="55dp"
-                app:srcCompat="@drawable/password"
-                tools:srcCompat="@drawable/password"
-                tools:ignore="ContentDescription" />
+                android:padding="12dp"
+                android:textColor="#262626"
+                android:textSize="16sp"
+                tools:ignore="Autofill,TouchTargetSizeCheck,TextContrastCheck" />
 
         </TableRow>
 
@@ -120,15 +120,21 @@
             <EditText
                 android:id="@+id/editTextConfirmPassword"
                 style="@style/FormLable"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="363dp"
+                android:layout_height="40dp"
                 android:layout_marginStart="27dp"
-                android:ems="10"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                android:background="@drawable/edit_round"
+                android:backgroundTint="#EDEAEA"
+                android:drawableEnd="@mipmap/password"
                 android:hint="@string/confirm_password"
                 android:inputType="textPassword"
-                android:textColor="#090909"
-                android:textSize="14sp"
-                tools:ignore="Autofill,TouchTargetSizeCheck" />
+                android:minHeight="48dp"
+                android:padding="12dp"
+                android:textColor="#262626"
+                android:textSize="16sp"
+                tools:ignore="Autofill,TouchTargetSizeCheck,TextContrastCheck" />
 
         </TableRow>
 
@@ -142,6 +148,7 @@
         android:layout_marginTop="18dp"
         android:backgroundTint="#58B4DD"
         android:text="@string/sing_up"
+        android:textSize="16sp"
         android:textStyle="bold"
         app:iconTint="#35B5EF"
         tools:ignore="TextContrastCheck"
@@ -157,8 +164,6 @@
         android:textSize="16sp"
         tools:ignore="HardcodedText"
         tools:text="@string/opt_sign_in" />
-
-
 
 
 </LinearLayout>
