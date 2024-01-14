@@ -14,4 +14,9 @@
     <string name="username_image">UsernameImg\n</string>
     <string name="email">Email</string>
     <string name="password">Password\n</string>
+    <string name="home">Home</string>
+    <string name="book">Book</string>
+    <string name="search">Search</string>
+    <string name="profile">Profile</string>
+    <string name="home_page">Home Page</string>
 </resources>
