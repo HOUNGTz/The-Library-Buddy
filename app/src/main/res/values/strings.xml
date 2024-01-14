@@ -2,4 +2,8 @@
     <string name="app_name">mobile_app_development</string>
     <string name="sign_up_pag">Sign Up Page</string>
     <string name="turn_pages_">turn_page</string>
+    <string name="todo">TODO</string>
+    <string name="about_us">About Us</string>
+    <string name="subtitle">your digital gateway to a world of books and learning. At the heart of our mission is a commitment to fostering a love for reading and making it easier for everyone to access a vast repository of knowledge and entertainment. Our journey began with a simple yet powerful vision: to create a bridge between book lovers and the books they cherish. LibraryBuddy is more than just an app; it\'s a community, a haven for bibliophiles, and a treasure trove for curious minds. Built on cutting-edge technology, our app offers a seamless and user-friendly experience that brings the library to your fingertips. Whether you\'re searching for the latest bestsellers, timeless classics, or academic texts, LibraryBuddy is your reliable companion. Our diverse collection is carefully curated to cater to all ages, interests, and academic needs. With our app, users can easily view, search, and borrow books, immersing themselves in stories and knowledge from the comfort of their homes or on the go. At LibraryBuddy, we believe in the power of reading to inspire, educate, and transform. We are committed to continually expanding our offerings and innovating our services to meet and exceed the expectations of our cherished community of readers. Join us on this remarkable literary journey and rediscover the joy of reading with LibraryBuddy.</string>
+    <string name="tell">Welcome to LibraryBuddy</string>
 </resources>
