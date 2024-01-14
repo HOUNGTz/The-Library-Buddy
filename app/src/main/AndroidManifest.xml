@@ -19,7 +19,7 @@
             android:name=".modules.pages.NotificationPage"
             android:exported="false" />
         <activity
-            android:name=".modules.settings.AboutUsPage"
+            android:name=".modules.pages.AboutUsPage"
             android:exported="true" />
         <activity
             android:name=".modules.settings.AccountDetailsPage"

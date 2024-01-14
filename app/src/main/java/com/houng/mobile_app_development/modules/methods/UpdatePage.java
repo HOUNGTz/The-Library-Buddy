@@ -6,7 +6,7 @@ import android.os.Bundle;
 
 import com.houng.mobile_app_development.R;
 
-public class EditPage extends AppCompatActivity {
+public class UpdatePage extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
