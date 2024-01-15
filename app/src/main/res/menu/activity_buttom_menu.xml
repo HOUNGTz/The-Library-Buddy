@@ -4,16 +4,16 @@
         android:icon="@mipmap/home"
         android:title="@string/home" />
     <item
-        android:id="@+id/navigation_button2"
+        android:id="@+id/btn_book"
         android:icon="@mipmap/book"
         android:title="@string/book" />
     <item
-        android:id="@+id/navigation_button3"
+        android:id="@+id/btn_search"
         android:icon="@mipmap/search"
         android:title="@string/search" />
 
     <item
-        android:id="@+id/navigation_button4"
+        android:id="@+id/btn_profile"
         android:icon="@mipmap/profile"
         android:title="@string/profile" />
 </menu>
