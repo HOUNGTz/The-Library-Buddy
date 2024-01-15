@@ -8,15 +8,16 @@
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="476dp"
-        android:layout_height="834dp"
+        android:layout_width="562dp"
+        android:layout_height="921dp"
         android:contentDescription="@string/todo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.346"
-        app:srcCompat="@drawable/aboutus_back" />
+        app:srcCompat="@drawable/aboutus_back"
+        tools:ignore="VisualLintBounds" />
 
     <TextView
         android:id="@+id/textView"
@@ -40,19 +41,20 @@
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="393dp"
-        android:layout_height="583dp"
+        android:layout_width="372dp"
+        android:layout_height="553dp"
         android:fontFamily="sans-serif-medium"
         android:padding="16dp"
         android:text="@string/subtitle"
         android:textColor="#514E4E"
-        android:textSize="16sp"
+        android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textView"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.368"
+        tools:ignore="TextSizeCheck" />
 
     <TextView
         android:id="@+id/textView3"
@@ -62,12 +64,13 @@
         android:fontFamily="sans-serif-medium"
         android:padding="16dp"
         android:text="@string/tell"
-        android:textColor="#000000"
+        android:textColor="#5D4037"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textView" />
+        app:layout_constraintTop_toBottomOf="@id/textView"
+        tools:ignore="TextSizeCheck" />
 
     <ImageView
         android:id="@+id/imageView3"
@@ -76,7 +79,8 @@
         app:srcCompat="@mipmap/back"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="44dp"
-        tools:layout_editor_absoluteY="32dp" />
+        tools:layout_editor_absoluteY="32dp"
+        android:contentDescription="@string/todo1" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
