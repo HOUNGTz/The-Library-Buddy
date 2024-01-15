@@ -1,9 +1,10 @@
-package com.houng.mobile_app_development;
+package com.houng.mobile_app_development.modules.toolBars;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.content.Intent;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.houng.mobile_app_development.R;
 import com.houng.mobile_app_development.modules.screens.HomeScreen;
 
 class BottomMenu extends AppCompatActivity {

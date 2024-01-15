@@ -1,4 +1,4 @@
-package com.houng.mobile_app_development.modules.methods;
+package com.houng.mobile_app_development.modules.pages;
 
 import androidx.appcompat.app.AppCompatActivity;
 
