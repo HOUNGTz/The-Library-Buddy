@@ -16,14 +16,8 @@
             android:name=".modules.pages.AddPage"
             android:exported="false" />
         <activity
-            android:name=".modules.pages.NotificationPage"
-            android:exported="false" />
-        <activity
             android:name=".modules.pages.AboutUsPage"
             android:exported="true" />
-        <activity
-            android:name=".modules.settings.AccountDetailsPage"
-            android:exported="false" />
         <activity
             android:name=".modules.pages.BookDetailsPage"
             android:exported="false" />
@@ -44,7 +38,11 @@
             android:exported="false" />
         <activity
             android:name=".modules.screens.SplashScreen"
-            android:exported="false" /> <!-- <activity -->
+            android:exported="false" />
+        <activity android:name=".MainButtomNavigation"
+            android:exported="false"
+            />
+        <!-- <activity -->
         <!-- android:name=".LoginScreen" -->
         <!-- android:exported="true"> -->
         <!-- <intent-filter> -->
@@ -62,5 +60,4 @@
             </intent-filter>
         </activity>
     </application>
-
 </manifest>
