@@ -25,4 +25,7 @@
     <string name="hello" />
     <string name="turn_pages_turn_heads_turn_lives">Turn Pages, Turn Heads, Turn Lives.</string>
     <string name="library_buddy">Library Buddy</string>
+    <string name="study_now">Study Now</string>
+    <string name="new_book">New Book</string>
+    <string name="see_all">See all</string>
 </resources>
