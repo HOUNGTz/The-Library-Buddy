@@ -8,12 +8,12 @@
     <string name="tell">Welcome to LibraryBuddy</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="sing_up">Sign Up</string>
-    <string name="opt_sign_in">Opt Sign In</string>
+    <string name="opt_sign_in">If you already have an account? | Sign In</string>
     <string name="book_lover">Book Lover</string>
     <string name="username">Username</string>
     <string name="username_image">UsernameImg\n</string>
     <string name="email">Email</string>
-    <string name="password">Password\n</string>
+    <string name="password">Password</string>
     <string name="home">Home</string>
     <string name="book">Book</string>
     <string name="search">Search</string>
