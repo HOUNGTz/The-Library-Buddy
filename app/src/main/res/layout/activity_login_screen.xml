@@ -5,48 +5,48 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".modules.screens.LoginScreen">
-    <RelativeLayout
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="16dp">
+        android:orientation="vertical">
 
-        <!-- Auto layout, variables, and unit scale are not yet supported -->
         <View
             android:id="@+id/book_lover_"
             android:layout_width="295dp"
             android:layout_height="218dp"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="68dp"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="101dp"
-            android:background="@drawable/book_lover_" />
+            android:layout_marginStart="43dp"
+            android:layout_marginTop="106dp"
+            android:background="@drawable/image_login" />
 
-        <!-- Auto layout, variables, and unit scale are not yet supported -->
         <TextView
             android:id="@+id/sign_up_pag"
-            android:layout_width="149dp"
-            android:layout_height="47dp"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="37dp"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="348dp"
-            android:text="@string/sign_up_pag"
-            android:textAppearance="@style/sign_up_pag"
+            android:layout_width="320dp"
+            android:layout_height="113dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="23dp"
+            android:fontFamily="sans-serif-medium"
             android:gravity="top"
-            />
+            android:shadowColor="#424040"
+            android:shadowDx="7"
+            android:shadowDy="7"
+            android:shadowRadius="10"
+            android:text="Sign in"
+            android:textAppearance="@style/sign_up_pag"
+            android:textColor="#22a1b5"
+            android:textColorHighlight="#009688"
+            android:textSize="48sp" />
 
-        <!-- Auto layout, variables, and unit scale are not yet supported -->
-        <View
-            android:id="@+id/rectangle_1"
-            android:layout_width="352dp"
-            android:layout_height="31dp"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="37dp"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="408dp"    />
-<!--            android:background="@drawable/rectangle_1"-->
-
-    </RelativeLayout>
+        <EditText
+            android:id="@+id/editTextTextEmailAddress"
+            android:layout_width="378dp"
+            android:layout_height="56dp"
+            android:layout_margin="10dp"
+            android:hint="Email"
+            android:ems="10"
+            android:inputType="textEmailAddress"
+            tools:ignore="SpeakableTextPresentCheck" />
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
