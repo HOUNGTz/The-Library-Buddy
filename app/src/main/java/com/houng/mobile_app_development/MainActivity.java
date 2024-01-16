@@ -3,8 +3,8 @@ package com.houng.mobile_app_development;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-
 import androidx.appcompat.app.AppCompatActivity;
+import com.houng.mobile_app_development.modules.screens.LoginScreen;
 import com.houng.mobile_app_development.modules.screens.SignUpScreen;
 
 public class MainActivity extends AppCompatActivity {
@@ -15,10 +15,8 @@ public class MainActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                // Start the login activity after 2 seconds
-                Intent intent = new Intent(MainActivity.this, SignUpScreen.class);
+                Intent intent = new Intent(MainActivity.this, LoginScreen.class);
                 startActivity(intent);
-                // Close the splash activity so the user can't return to it
                 finish();
             }
         }, 2000);

@@ -36,21 +36,18 @@
         <activity
             android:name=".modules.screens.SignUpScreen"
             android:exported="false" />
+
+        <activity
+            android:name=".modules.screens.LoginScreen"
+            android:exported="false" />
         <activity
             android:name=".modules.screens.SplashScreen"
             android:exported="false" />
+
         <activity android:name=".MainButtomNavigation"
             android:exported="false"
             android:windowSoftInputMode="adjustPan"
             />
-        <!-- <activity -->
-        <!-- android:name=".LoginScreen" -->
-        <!-- android:exported="true"> -->
-        <!-- <intent-filter> -->
-        <!-- <action android:name="android.intent.action.MAIN" /> -->
-        <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-        <!-- </intent-filter> -->
-        <!-- </activity> -->
         <activity
             android:name=".MainActivity"
             android:exported="true">

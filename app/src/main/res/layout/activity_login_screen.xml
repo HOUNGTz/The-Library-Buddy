@@ -11,19 +11,25 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <View
-            android:id="@+id/book_lover_"
-            android:layout_width="295dp"
-            android:layout_height="218dp"
-            android:layout_marginStart="43dp"
-            android:layout_marginTop="106dp"
-            android:background="@drawable/image_login" />
+        <LinearLayout
+            android:layout_width="220dp"
+            android:layout_height="200dp"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp">
+
+            <View
+                android:id="@+id/book_lover_"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/image_login" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/sign_up_pag"
-            android:layout_width="320dp"
+            android:layout_width="match_parent"
             android:layout_height="73dp"
-            android:layout_marginStart="15dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="23dp"
             android:fontFamily="sans-serif-medium"
             android:gravity="top"
@@ -37,12 +43,12 @@
             android:textColor="#0097A7"
             android:textColorHighlight="#009688"
             android:textSize="48sp"
-            tools:ignore="HardcodedText,TextSizeCheck" />
+            tools:ignore="HardcodedText,RtlCompat,TextSizeCheck" />
 
         <EditText
             android:id="@+id/editTextTextEmailAddress"
-            android:layout_width="378dp"
-            android:layout_height="56dp"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
             android:layout_margin="10dp"
             android:background="@drawable/bg_input"
             android:drawableEnd="@mipmap/email"
@@ -55,8 +61,8 @@
 
         <EditText
             android:id="@+id/editTextTextEmailAddress2"
-            android:layout_width="377dp"
-            android:layout_height="56dp"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
             android:layout_margin="10dp"
             android:background="@drawable/bg_input"
             android:drawableEnd="@mipmap/password"
@@ -70,32 +76,38 @@
 
         <CheckBox
             android:id="@+id/check"
-            android:layout_width="348dp"
+            android:layout_width="match_parent"
             android:layout_height="48dp"
             android:checked="true"
+            android:layout_marginStart="10dp"
             android:text="@string/remember_me"
             tools:ignore="VisualLintButtonSize" />
 
         <Button
-            android:id="@+id/button2"
-            android:layout_width="173dp"
+            android:id="@+id/button"
+            android:layout_width="162dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="100dp"
-            android:layout_marginTop="20dp"
-            android:text="Login"
-            tools:ignore="HardcodedText" />
+            android:layout_marginStart="125dp"
+            android:layout_marginTop="18dp"
+            android:backgroundTint="#58B4DD"
+            android:text="@string/login"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:iconTint="#35B5EF"
+            tools:ignore="TextContrastCheck"
+            tools:text="@string/login" />
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp">
 
             <TextView
                 android:id="@+id/sign_up_pag2"
                 android:layout_width="wrap_content"
-                android:layout_height="73dp"
-                android:layout_marginStart="95dp"
-                android:layout_marginTop="40dp"
+                android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-medium"
                 android:gravity="top"
                 android:shadowColor="#424040"
@@ -108,14 +120,12 @@
                 android:textColor="#555757"
                 android:textColorHighlight="#009688"
                 android:textSize="16sp"
-                tools:ignore="HardcodedText,VisualLintBounds" />
+                tools:ignore="HardcodedText,RtlCompat,VisualLintBounds" />
 
             <TextView
                 android:id="@+id/sign_up_pag3"
-                android:layout_width="100dp"
-                android:layout_height="56dp"
-                android:layout_marginStart="0dp"
-                android:layout_marginTop="40dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:fontFamily="sans-serif-medium"
                 android:gravity="top"
@@ -129,10 +139,9 @@
                 android:textColor="#00796B"
                 android:textColorHighlight="#009688"
                 android:textSize="16sp"
-                tools:ignore="HardcodedText,InefficientWeight,VisualLintBounds" />
+                tools:ignore="HardcodedText,InefficientWeight,RtlCompat,VisualLintBounds" />
         </LinearLayout>
 
     </LinearLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

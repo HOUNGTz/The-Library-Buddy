@@ -29,4 +29,8 @@
     <string name="new_book">New Book</string>
     <string name="see_all">See all</string>
     <string name="remember_me">Remember me</string>
+    <string name="sign_in">Sign in</string>
+    <string name="login">Login</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="if_you_don_t_have_an_account">if you don\'t have an account ?</string>
 </resources>
