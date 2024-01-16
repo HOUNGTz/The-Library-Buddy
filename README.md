@@ -12,15 +12,18 @@
         @Pov Lyhoung <**/**> 
             * Team leader, 
             * software manager,  
-            * software developer;
+            * software developer,
+            * Tester;
         @Chhorn Leanghor </> 
-            - UX/UI Designer 
-            - software developer;
+            - UX/UI Designer, 
+            - software developer,
+            - Tester;
         @Heang Sothanarith </> 
-            - UX/UI Designer 
-            - software developer;
+            - UX/UI Designer, 
+            - software developer,
+            - Tester;
         @Tang Sivmey </> 
-            - Tester 
+            - Tester, 
             - software developer;
         @Rous Seyha </> 
             - Tester
