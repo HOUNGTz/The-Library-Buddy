@@ -22,7 +22,7 @@
         <TextView
             android:id="@+id/sign_up_pag"
             android:layout_width="320dp"
-            android:layout_height="113dp"
+            android:layout_height="73dp"
             android:layout_marginStart="15dp"
             android:layout_marginTop="23dp"
             android:fontFamily="sans-serif-medium"
@@ -32,20 +32,106 @@
             android:shadowDy="7"
             android:shadowRadius="10"
             android:text="Sign in"
+            android:textAlignment="viewStart"
             android:textAppearance="@style/sign_up_pag"
-            android:textColor="#22a1b5"
+            android:textColor="#0097A7"
             android:textColorHighlight="#009688"
-            android:textSize="48sp" />
+            android:textSize="48sp"
+            tools:ignore="HardcodedText,TextSizeCheck" />
 
         <EditText
             android:id="@+id/editTextTextEmailAddress"
             android:layout_width="378dp"
             android:layout_height="56dp"
             android:layout_margin="10dp"
-            android:hint="Email"
+            android:background="@drawable/bg_input"
+            android:drawableEnd="@mipmap/email"
             android:ems="10"
+            android:hint="Email"
             android:inputType="textEmailAddress"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            tools:ignore="HardcodedText,SpeakableTextPresentCheck" />
+
+        <EditText
+            android:id="@+id/editTextTextEmailAddress2"
+            android:layout_width="377dp"
+            android:layout_height="56dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/bg_input"
+            android:drawableEnd="@mipmap/password"
+            android:ems="10"
+            android:hint="@string/password"
+            android:inputType="textEmailAddress"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:textColorHint="#616161"
             tools:ignore="SpeakableTextPresentCheck" />
+
+        <CheckBox
+            android:id="@+id/check"
+            android:layout_width="348dp"
+            android:layout_height="48dp"
+            android:checked="true"
+            android:text="@string/remember_me"
+            tools:ignore="VisualLintButtonSize" />
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="173dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="100dp"
+            android:layout_marginTop="20dp"
+            android:text="Login"
+            tools:ignore="HardcodedText" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/sign_up_pag2"
+                android:layout_width="wrap_content"
+                android:layout_height="73dp"
+                android:layout_marginStart="95dp"
+                android:layout_marginTop="40dp"
+                android:fontFamily="sans-serif-medium"
+                android:gravity="top"
+                android:shadowColor="#424040"
+                android:shadowDx="0"
+                android:shadowDy="0"
+                android:shadowRadius="0"
+                android:text="if you don't have an account ? "
+                android:textAlignment="viewStart"
+                android:textAppearance="@style/sign_up_pag"
+                android:textColor="#555757"
+                android:textColorHighlight="#009688"
+                android:textSize="16sp"
+                tools:ignore="HardcodedText,VisualLintBounds" />
+
+            <TextView
+                android:id="@+id/sign_up_pag3"
+                android:layout_width="100dp"
+                android:layout_height="56dp"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="40dp"
+                android:layout_weight="1"
+                android:fontFamily="sans-serif-medium"
+                android:gravity="top"
+                android:shadowColor="#424040"
+                android:shadowDx="0"
+                android:shadowDy="0"
+                android:shadowRadius="0"
+                android:text="Sign Up"
+                android:textAlignment="viewStart"
+                android:textAppearance="@style/sign_up_pag"
+                android:textColor="#00796B"
+                android:textColorHighlight="#009688"
+                android:textSize="16sp"
+                tools:ignore="HardcodedText,InefficientWeight,VisualLintBounds" />
+        </LinearLayout>
+
     </LinearLayout>
 
 
