@@ -14,7 +14,7 @@
 
         <LinearLayout
             android:layout_width="413dp"
-            android:layout_height="271dp"
+            android:layout_height="306dp"
             android:orientation="vertical"
             tools:ignore="MissingConstraints,VisualLintBounds">
 
@@ -22,65 +22,43 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-
                 <View
                     android:id="@+id/view3"
-                    android:layout_width="412dp"
+                    android:layout_width="match_parent"
                     android:layout_height="227dp"
                     android:background="@drawable/bg_main_search"
-                    tools:layout_editor_absoluteY="854dp"
                     tools:ignore="VisualLintBounds" />
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="410dp"
-                    android:layout_height="227dp"
-                    android:paddingStart="100dp"
-                    android:paddingTop="100dp"
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-medium"
+                    android:shadowColor="#403F3F"
+                    android:shadowDx="4"
+                    android:shadowDy="10"
+                    android:shadowRadius="3"
+                    android:text="Librarybuddy"
+                    android:textAlignment="center"
+                    android:textColor="#FFFFFF"
+                    android:textSize="34sp"
+                    tools:layout_editor_absoluteY="79dp" />
 
-                    tools:ignore="RtlSymmetry">
-
-                    <TextView
-                        android:id="@+id/title"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="sans-serif-medium"
-                        android:shadowColor="#403F3F"
-                        android:shadowDx="4"
-                        android:shadowDy="10"
-                        android:shadowRadius="3"
-                        android:text="Librarybuddy"
-                        android:textColor="#FFFFFF"
-                        android:textSize="34sp"
-                        tools:layout_editor_absoluteX="64dp"
-                        tools:layout_editor_absoluteY="5dp" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="409dp"
-                    android:layout_height="305dp"
-                    android:textAlignment="textEnd"
-                    tools:layout_editor_absoluteY="854dp"
-                    tools:ignore="VisualLintBounds">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/search_textfield"
-                        android:layout_width="366dp"
-                        android:layout_height="61dp"
-                        android:layout_marginStart="24dp"
-                        android:layout_marginTop="192dp"
-                        android:background="@drawable/bg_search"
-                        android:drawableStart="@mipmap/search"
-                        android:drawablePadding="10dp"
-                        android:hint="Search..."
-                        android:paddingStart="10dp"
-                        android:textAlignment="viewStart"
-                        android:textColorHint="#0097A7"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:ignore="HardcodedText,RtlSymmetry,TextContrastCheck" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/search_textfield"
+                    android:layout_width="match_parent"
+                    android:layout_height="61dp"
+                    android:layout_margin="20dp"
+                    android:background="@drawable/bg_search"
+                    android:drawableStart="@mipmap/search"
+                    android:drawablePadding="10dp"
+                    android:hint="Search..."
+                    android:paddingStart="10dp"
+                    android:textAlignment="viewStart"
+                    android:textColorHint="#0097A7"
+                    tools:ignore="HardcodedText,RtlSymmetry,TextContrastCheck"
+                    tools:layout_editor_absoluteX="24dp"
+                    tools:layout_editor_absoluteY="194dp" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>
