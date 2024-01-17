@@ -48,7 +48,7 @@
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp">
+            android:padding="18dp">
 
             <EditText
                 android:id="@+id/textInputEditText2"
@@ -71,8 +71,8 @@
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
+            android:paddingLeft="18dp"
+            android:paddingRight="18dp"
             >
 
 
