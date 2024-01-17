@@ -44,16 +44,16 @@
                     android:scaleType="fitXY"
                     android:src="@drawable/lirbrary_buddy" />
 
-<!--                <Button-->
-<!--                    android:id="@+id/buttonStudyNow"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginStart="20dp"-->
-<!--                    android:layout_marginTop="160dp"-->
-<!--                    android:layout_marginBottom="0dp"-->
-<!--                    android:background="@drawable/button_background"-->
-<!--                    android:fontFamily="@font/kdam_thmor"-->
-<!--                    android:text="@string/study_now" />-->
+                <Button
+                    android:id="@+id/buttonStudyNow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="160dp"
+                    android:backgroundTint="#FF8A00"
+                    android:layout_marginBottom="0dp"
+                    android:fontFamily="@font/kdam_thmor"
+                    android:text="@string/study_now" />
             </RelativeLayout>
 
             <LinearLayout
