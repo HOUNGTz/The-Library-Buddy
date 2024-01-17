@@ -45,41 +45,61 @@
             android:textSize="48sp"
             tools:ignore="HardcodedText,RtlCompat,TextSizeCheck" />
 
-        <EditText
-            android:id="@+id/editTextTextEmailAddress"
+        <TableRow
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_margin="10dp"
-            android:background="@drawable/bg_input"
-            android:drawableEnd="@mipmap/email"
-            android:ems="10"
-            android:hint="Email"
-            android:inputType="textEmailAddress"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            tools:ignore="HardcodedText,SpeakableTextPresentCheck" />
+            android:layout_height="wrap_content"
+            android:padding="16dp">
 
-        <EditText
-            android:id="@+id/editTextTextEmailAddress2"
+            <EditText
+                android:id="@+id/textInputEditText2"
+                style="@style/FormLable"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/edit_round"
+                android:backgroundTint="#EDEAEA"
+                android:drawableEnd="@mipmap/email"
+                android:hint="@string/email"
+                android:inputType="textEmailAddress"
+                android:minHeight="48dp"
+                android:padding="12dp"
+                android:textColor="#262626"
+                android:textSize="16sp"
+                tools:ignore="Autofill,TouchTargetSizeCheck" />
+
+        </TableRow>
+
+        <TableRow
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_margin="10dp"
-            android:background="@drawable/bg_input"
-            android:drawableEnd="@mipmap/password"
-            android:ems="10"
-            android:hint="@string/password"
-            android:inputType="textEmailAddress"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:textColorHint="#616161"
-            tools:ignore="SpeakableTextPresentCheck" />
+            android:layout_height="wrap_content"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            >
+
+
+            <EditText
+                android:id="@+id/editTextTextPassword"
+                style="@style/FormLable"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/edit_round"
+                android:backgroundTint="#EDEAEA"
+                android:drawableEnd="@mipmap/password"
+                android:hint="@string/password"
+                android:inputType="textPassword"
+                android:minHeight="48dp"
+                android:padding="12dp"
+                android:textColor="#262626"
+                android:textSize="16sp"
+                tools:ignore="Autofill,TouchTargetSizeCheck,TextContrastCheck" />
+
+        </TableRow>
 
         <CheckBox
             android:id="@+id/check"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:checked="true"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="16dp"
             android:text="@string/remember_me"
             tools:ignore="VisualLintButtonSize" />
 
@@ -136,7 +156,7 @@
                 android:text="Sign Up"
                 android:textAlignment="viewStart"
                 android:textAppearance="@style/sign_up_pag"
-                android:textColor="#00796B"
+                android:textColor="#3498DB"
                 android:textColorHighlight="#009688"
                 android:textSize="16sp"
                 tools:ignore="HardcodedText,InefficientWeight,RtlCompat,VisualLintBounds" />

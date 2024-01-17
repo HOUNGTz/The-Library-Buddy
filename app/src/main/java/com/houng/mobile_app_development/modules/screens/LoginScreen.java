@@ -5,8 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.houng.mobile_app_development.MainButtomNavigation;
@@ -15,7 +18,7 @@ import com.houng.mobile_app_development.R;
 public class LoginScreen extends AppCompatActivity {
     public TextView btn_login;
     public Button login;
-    @SuppressLint("MissingInflatedId")
+    @SuppressLint({"MissingInflatedId", "ClickableViewAccessibility"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,5 +41,24 @@ public class LoginScreen extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        EditText editTextPassword = findViewById(R.id.editTextTextPassword);
+        editTextPassword.setOnTouchListener((v, event) -> {
+            final int DRAWABLE_RIGHT = 2;
+            if(event.getAction() == MotionEvent.ACTION_UP) {
+                if(event.getRawX() >= (editTextPassword.getRight() - editTextPassword.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                    // Toggle between textPassword and textVisiblePassword
+                    if(editTextPassword.getInputType() == (InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD)) {
+                        editTextPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                    } else {
+                        editTextPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                    }
+                    editTextPassword.setSelection(editTextPassword.getText().length());
+                    return true;
+                }
+            }
+            return false;
+        });
+
     }
 }
