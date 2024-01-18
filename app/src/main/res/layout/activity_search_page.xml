@@ -37,7 +37,7 @@
         android:layout_margin="20dp"
         android:layout_marginTop="30dp"
         android:background="@drawable/bg_search"
-        android:drawableStart="@mipmap/search"
+        android:drawableStart="@mipmap/search_outline_icon"
         android:drawablePadding="10dp"
         android:hint="Search..."
         android:paddingStart="10dp"
