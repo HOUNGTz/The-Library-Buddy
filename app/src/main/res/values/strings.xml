@@ -43,7 +43,4 @@
     <string name="description">Description</string>
     <string name="story">Story</string>
     <string name="button_update">Update</string>
-    <string name="add_new_book">"Insert "</string>
-    <string name="button_save">Save</string>
-    <string name="edit">Edit</string>
 </resources>
