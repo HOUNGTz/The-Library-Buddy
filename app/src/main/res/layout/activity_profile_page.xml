@@ -44,7 +44,7 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_weight="1"
-                android:src="@mipmap/version" />
+                android:src="@mipmap/version_icon" />
 
             <TextView
                 android:id="@+id/textView7"
@@ -60,7 +60,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="1.0.0"
+                android:text="1.0.5"
                 android:textAlignment="center" />
 
         </LinearLayout>
