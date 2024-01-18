@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <LinearLayout
@@ -29,11 +30,10 @@
         android:fillViewport="true">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            >
+            android:layout_height="match_parent"
+            android:orientation="vertical">
             <RelativeLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="235dp"
                 >
 
@@ -87,28 +87,62 @@
             </LinearLayout>
 
             <GridLayout
-                android:id="@+id/gridLayoutMenu"
+                android:id="@+id/gridView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="16dp"
+                android:layout_height="wrap_content"
+                android:verticalSpacing="10dp"
                 android:columnCount="3"
-                android:alignmentMode="alignMargins"
-                android:columnOrderPreserved="false">
+                android:layout_margin="16dp"
+                android:horizontalSpacing="10dp"
+                android:layout="@layout/grid_item">
 
                 <ImageView
-                    android:layout_width="350px"
-                    android:layout_height="500px"
-                    android:paddingRight="16px"
-                    android:paddingBottom="20px"
-                    android:scaleType="fitXY"
+                    android:layout_width="100dp"
+                    android:layout_height="120dp"
                     android:layout_row="0"
                     android:layout_column="0"
-                    android:src="@drawable/librarybuddy"
-                    tools:ignore="PxUsage,RtlHardcoded,RtlSymmetry" />
+                    android:layout_columnWeight="1"
+                    android:layout_gravity="center"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/librarybuddy">
+
+                </ImageView>
+
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="120dp"
+                    android:layout_row="0"
+                    android:layout_column="1"
+                    android:layout_columnWeight="1"
+                    android:layout_gravity="center"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/librarybuddy">
+
+                </ImageView>
+
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="120dp"
+                    android:layout_row="0"
+                    android:layout_column="2"
+                    android:scaleType="fitXY"
+                    android:layout_columnWeight="1"
+                    android:layout_gravity="center"
+                    android:src="@drawable/librarybuddy">
+
+                </ImageView>
             </GridLayout>
 
+            <GridView
+                android:id="@+id/gridView1"
+                android:layout_width="wrap_content"
+                android:layout_height="150dp"
+                android:layout_margin="16dp"
+                android:verticalSpacing="10dp"
+                android:horizontalSpacing="10dp"
+                android:layout="@layout/grid_item"
+                android:background="@drawable/librarybuddy"/>
+
         </LinearLayout>
-
     </ScrollView>
-
 </LinearLayout>

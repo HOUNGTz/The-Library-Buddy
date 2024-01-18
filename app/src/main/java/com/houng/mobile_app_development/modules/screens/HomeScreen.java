@@ -19,25 +19,24 @@ public class HomeScreen extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_home_screen, container, false);
-        gridLayout = view.findViewById(R.id.gridLayoutMenu);
-        addImagesToGridLayout(gridLayout);
-
+//        gridLayout = view.findViewById(R.id.gridLayoutMenu);
+        //addImagesToGridLayout(gridLayout);
         return view;
     }
 
-    public void addImagesToGridLayout(GridLayout gridLayout) {
-        for (int i = 0; i < 9; i++) {
-            ImageView newImageView = new ImageView(getContext());
-            GridLayout.LayoutParams params = new GridLayout.LayoutParams();
-            newImageView.setLayoutParams(params);// Assuming 'this' is a Context object
-            newImageView.setLayoutParams(new GridLayout.LayoutParams());
-            newImageView.getLayoutParams().width = 350; // width in pixels
-            newImageView.getLayoutParams().height = 500;
-            newImageView.setPadding(0, 0, 16, 20);// height in pixels
-            newImageView.setScaleType(ImageView.ScaleType.FIT_XY);
-            newImageView.setImageResource(R.drawable.librarybuddy);
-            gridLayout.addView(newImageView);
-        }
-    }
+//    public void addImagesToGridLayout(GridLayout gridLayout) {
+//        for (int i = 0; i < 9; i++) {
+//            ImageView newImageView = new ImageView(getContext());
+//            GridLayout.LayoutParams params = new GridLayout.LayoutParams();
+//            newImageView.setLayoutParams(params);// Assuming 'this' is a Context object
+//            newImageView.setLayoutParams(new GridLayout.LayoutParams());
+//            newImageView.getLayoutParams().width = 300;
+//            newImageView.getLayoutParams().height = 450;
+//            newImageView.setPadding(10,10,10,10);// height in pixels
+//            newImageView.setScaleType(ImageView.ScaleType.FIT_XY);
+//            newImageView.setImageResource(R.drawable.librarybuddy);
+//            gridLayout.addView(newImageView);
+//        }
+//    }
 
 }
