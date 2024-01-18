@@ -34,4 +34,13 @@
     <string name="sign_up">Sign Up</string>
     <string name="if_you_don_t_have_an_account">if you don\'t have an account ?</string>
     <string name="librarybuddy1">Librarybuddy</string>
+    <string name="update">Update</string>
+    <string name="book_title">Title</string>
+    <string name="category">Category</string>
+    <string name="books_subtitle">Subtilte</string>
+    <string name="browes_image">Browes image</string>
+    <string name="rating_books">Rate books</string>
+    <string name="description">Description</string>
+    <string name="story">Story</string>
+    <string name="button_update">Update</string>
 </resources>
