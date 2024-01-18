@@ -140,7 +140,6 @@
                 android:layout_margin="16dp"
                 android:verticalSpacing="10dp"
                 android:horizontalSpacing="10dp"
-                android:layout="@layout/grid_item"
                 android:background="@drawable/librarybuddy"/>
 
         </LinearLayout>
