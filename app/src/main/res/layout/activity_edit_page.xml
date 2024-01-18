@@ -18,7 +18,7 @@
             android:background="?attr/colorPrimary"
             android:minHeight="?attr/actionBarSize"
             android:theme="?attr/actionBarTheme"
-            app:navigationIcon="@drawable/arrow_back">
+            app:navigationIcon="@mipmap/arrow_back">
 
             <!-- Back button -->
 
