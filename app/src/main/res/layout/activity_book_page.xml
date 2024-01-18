@@ -80,7 +80,7 @@
                 android:id="@+id/textViewBookTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="141dp"
+                android:layout_marginEnd="120dp"
                 android:layout_toStartOf="@+id/buttonDelete"
                 android:text="Book Title"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
@@ -95,7 +95,7 @@
                 android:layout_alignBottom="@+id/buttonDelete"
                 android:layout_marginStart="0dp"
                 android:layout_marginEnd="0dp"
-                android:layout_marginBottom="6dp"
+                android:layout_marginBottom="27dp"
                 android:layout_toStartOf="@+id/buttonDelete"
                 android:text="Book Subtitle"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
@@ -110,7 +110,7 @@
                 android:layout_alignBottom="@+id/buttonDelete"
                 android:layout_marginStart="0dp"
                 android:layout_marginEnd="0dp"
-                android:layout_marginBottom="-21dp"
+                android:layout_marginBottom="6dp"
                 android:layout_toStartOf="@+id/buttonDelete"
                 android:text="Time"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
@@ -125,7 +125,7 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="@string/todo"
                 android:padding="8dp"
-                android:src="@mipmap/delete" />
+                android:src="@mipmap/delete_icon" />
 
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
