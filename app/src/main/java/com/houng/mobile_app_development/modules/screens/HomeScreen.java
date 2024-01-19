@@ -1,6 +1,8 @@
 package com.houng.mobile_app_development.modules.screens;
 
 import androidx.fragment.app.Fragment;
+
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
@@ -48,10 +50,9 @@ public class HomeScreen extends Fragment {
             imageView.setLayoutParams(params);
             imageView.setScaleType(ImageView.ScaleType.FIT_XY);
             imageView.setBackgroundResource(R.drawable.rounded_cornor);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                imageView.setClipToOutline(true);
-            }
+            imageView.setClipToOutline(true);
 
+            @SuppressLint("DiscouragedApi")
             int resId = getResources().getIdentifier("image" + (i + 1), "drawable", getContext().getPackageName());
             if (resId != 0) { // resource was found
                 imageView.setImageResource(resId);
