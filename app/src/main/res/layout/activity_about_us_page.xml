@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".modules.pages.AboutUsPage">
-
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="562dp"
@@ -19,68 +18,65 @@
         app:srcCompat="@drawable/aboutus_back"
         tools:ignore="VisualLintBounds" />
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:fontFamily="sans-serif-black"
-        android:padding="16dp"
-        android:shadowColor="#3C3A3A"
-        android:shadowDx="10"
-        android:shadowDy="10"
-        android:shadowRadius="20"
-        android:text="@string/about_us"
-        android:textAlignment="center"
-        android:textColor="#000000"
-        android:textSize="44sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:orientation="horizontal"
+        tools:ignore="MissingConstraints">
+
+        <ImageView
+            android:id="@+id/about_arrow_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:contentDescription="@string/todo1"
+            android:paddingStart="30dp"
+            android:paddingTop="28dp"
+            app:srcCompat="@mipmap/arrow_back_large_size_icon"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="-137dp"
+            tools:layout_editor_absoluteY="48dp" />
+
+        <TextView
+            android:id="@+id/about_txt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:fontFamily="sans-serif-black"
+            android:padding="16dp"
+            android:shadowColor="#3C3A3A"
+            android:shadowDx="10"
+            android:shadowDy="10"
+            android:shadowRadius="20"
+            android:text="@string/about_us"
+            android:textAlignment="center"
+            android:textColor="#000000"
+            android:textSize="44sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="372dp"
-        android:layout_height="553dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:fontFamily="sans-serif-medium"
-        android:padding="16dp"
+        android:paddingLeft="18dp"
+        android:paddingTop="5dp"
+        android:paddingRight="18dp"
         android:text="@string/subtitle"
         android:textColor="#514E4E"
-        android:textSize="15sp"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
         app:layout_constraintVertical_bias="0.368"
-        tools:ignore="TextSizeCheck" />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="274dp"
-        android:layout_height="66dp"
-        android:layout_marginTop="8dp"
-        android:fontFamily="sans-serif-medium"
-        android:padding="16dp"
-        android:text="@string/tell"
-        android:textColor="#5D4037"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textView"
-        tools:ignore="TextSizeCheck" />
-
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="27dp"
-        android:layout_height="40dp"
-        app:srcCompat="@mipmap/arrow_back_large_size_icon"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="44dp"
-        tools:layout_editor_absoluteY="32dp"
-        android:contentDescription="@string/todo1" />
+        tools:ignore="NotSibling,TextSizeCheck" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -11,30 +11,33 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/materialToolbar"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?attr/colorPrimary"
-            android:minHeight="?attr/actionBarSize"
-            android:theme="?attr/actionBarTheme"
-            app:navigationIcon="@mipmap/arrow_back_icon">
-
-            <!-- Back button -->
-
-            <!-- Title -->
-            <TextView
-                android:id="@+id/toolbarTitle"
+            android:layout_height="60dp"
+            android:background="#22A5B4"
+            android:paddingStart="16dp"
+            tools:ignore="RtlSymmetry">
+            <ImageView
+                android:id="@+id/arrow_back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:src="@mipmap/arrow_back_icon"
+                android:gravity="center"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="150dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"
+                android:fontFamily="@font/kdam_thmor"
+                android:gravity="center_horizontal|center_vertical"
                 android:text="@string/add_new_book"
-                android:textColor="@android:color/white"
+                android:textAlignment="center"
+                android:textColor="@color/white"
                 android:textSize="18sp" />
 
-        </com.google.android.material.appbar.MaterialToolbar>
-
-
+        </LinearLayout>
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -215,7 +218,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
-                    android:text="@string/button_save" />
+                    android:text="Save" />
             </TableRow>
         </TableLayout>
 

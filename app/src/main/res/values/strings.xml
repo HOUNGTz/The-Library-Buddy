@@ -44,4 +44,11 @@
     <string name="story">Story</string>
     <string name="button_update">Update</string>
     <string name="category_1">Category 1</string>
+    <string name="category_2">Category 2</string>
+    <string name="version">Version</string>
+    <string name="_1_0_5">1.0.5</string>
+    <string name="admin">Admin</string>
+    <string name="about">About</string>
+    <string name="add_new_book">Add New Book</string>
+    <string name="logout">Logout</string>
 </resources>
