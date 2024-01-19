@@ -1,11 +1,7 @@
 package com.houng.mobile_app_development.modules.screens;
 
 import androidx.fragment.app.Fragment;
-
 import android.annotation.SuppressLint;
-import android.content.Context;
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
@@ -13,9 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridLayout;
-import android.widget.GridView;
 import android.widget.ImageView;
-
 import com.houng.mobile_app_development.R;
 
 public class HomeScreen extends Fragment {
@@ -34,7 +28,6 @@ public class HomeScreen extends Fragment {
         final int columnCount = 3;
         gridLayout.setColumnCount(columnCount);
 
-        // Calculate the image width considering the screen width and spacing
         DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
         float screenWidthDp = displayMetrics.widthPixels / displayMetrics.density;
         float imageWidthDp = (screenWidthDp - (2 * 16 + 2 * 10)) / columnCount;
@@ -54,7 +47,7 @@ public class HomeScreen extends Fragment {
 
             @SuppressLint("DiscouragedApi")
             int resId = getResources().getIdentifier("image" + (i + 1), "drawable", getContext().getPackageName());
-            if (resId != 0) { // resource was found
+            if (resId != 0) {
                 imageView.setImageResource(resId);
             } else {
                 imageView.setImageResource(R.drawable.librarybuddy);

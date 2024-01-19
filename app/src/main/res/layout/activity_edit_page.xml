@@ -1,47 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:orientation="vertical"
-tools:context=".modules.pages.UpdatePage">
-
-<com.google.android.material.appbar.AppBarLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".modules.pages.UpdatePage">
 
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/materialToolbar"
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        app:navigationIcon="@mipmap/arrow_back_icon">
+        android:layout_height="match_parent">
 
-        <!-- Back button -->
-
-        <!-- Title -->
-        <TextView
-            android:id="@+id/toolbarTitle"
-            android:layout_width="wrap_content"
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/materialToolbar"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="@string/edit"
-            android:textColor="@android:color/white"
-            android:textSize="18sp"/>
+            android:background="?attr/colorPrimary"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme"
+            app:navigationIcon="@mipmap/arrow_back_icon">
 
-    </com.google.android.material.appbar.MaterialToolbar>
+            <!-- Back button -->
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="5dp"
-        app:cardCornerRadius="8dp"
-        app:cardElevation="8dp">
+            <!-- Title -->
+            <TextView
+                android:id="@+id/toolbarTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/edit"
+                android:textColor="@android:color/white"
+                android:textSize="18sp" />
+
+        </com.google.android.material.appbar.MaterialToolbar>
+
+
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -72,27 +65,29 @@ tools:context=".modules.pages.UpdatePage">
                         android:layout_width="195dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
-                        android:layout_marginEnd="10dp">
+                        android:layout_marginEnd="10dp"
+                        android:background="@color/form_color"
+                        >
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:layout_width="195dp"
                             android:layout_height="55dp"
                             android:hint="@string/book_title"
-                            app:hintEnabled="true" />
-
-
+                            app:hintEnabled="true"
+                            />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginEnd="10dp">
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:background="@color/form_color">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:layout_width="180dp"
                             android:layout_height="55dp"
-                            android:drawableEnd="@mipmap/chevron_down_icon"
-                            android:hint="@string/category" />
+                            android:hint="@string/category"
+                            android:drawableEnd="@mipmap/chevron_down_icon"/>
                     </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
 
@@ -107,7 +102,8 @@ tools:context=".modules.pages.UpdatePage">
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:background="@color/form_color">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="389dp"
@@ -125,12 +121,12 @@ tools:context=".modules.pages.UpdatePage">
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:background="@color/form_color">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="389dp"
                         android:layout_height="55dp"
-                        android:drawableEnd="@mipmap/browe_image"
                         android:hint="@string/browes_image" />
                 </com.google.android.material.textfield.TextInputLayout>
             </TableRow>
@@ -144,7 +140,8 @@ tools:context=".modules.pages.UpdatePage">
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:background="@color/form_color">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="389dp"
@@ -162,7 +159,8 @@ tools:context=".modules.pages.UpdatePage">
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:background="@color/form_color">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="389dp"
@@ -198,7 +196,7 @@ tools:context=".modules.pages.UpdatePage">
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp">
+                    android:background="@color/form_color">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="389dp"
@@ -207,41 +205,19 @@ tools:context=".modules.pages.UpdatePage">
                 </com.google.android.material.textfield.TextInputLayout>
             </TableRow>
 
-
-        </TableLayout>
-    </androidx.cardview.widget.CardView>
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="15dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-
-        app:cardCornerRadius="8dp"
-        app:cardElevation="8dp">
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/design_default_color_secondary">
-            <TextView
-                android:id="@+id/button3"
+            <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:text="@string/button_update"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:textAlignment="center"/>
-            <!--                <Button-->
-            <!--                    android:id="@+id/button3"-->
-            <!--                    android:layout_width="match_parent"-->
-            <!--                    android:layout_height="wrap_content"-->
-            <!--                    android:text="@string/button_save"-->
-            <!--                    android:textColor="@color/black"-->
-            <!--                    android:textSize="20sp" />-->
-        </TableRow>
-    </androidx.cardview.widget.CardView>
-</com.google.android.material.appbar.AppBarLayout>
+                android:layout_height="match_parent"
+                android:layout_marginTop="15dp">
+
+                <Button
+                    android:id="@+id/button3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:text="@string/button_update" />
+            </TableRow>
+        </TableLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
 </LinearLayout>

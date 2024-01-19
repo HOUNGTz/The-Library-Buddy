@@ -23,7 +23,8 @@
             android:text="@string/library_buddy"
             android:textAlignment="center"
             android:textColor="@color/white"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            tools:ignore="TextSizeCheck,TextContrastCheck" />
 
     </LinearLayout>
 
@@ -74,13 +75,14 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/librarybuddy"
                 android:scaleType="fitXY"
-                android:background="@drawable/frame_image"/>
+                android:background="@drawable/frame_image"
+                tools:ignore="ContentDescription" />
 
             <TextView
                 android:id="@+id/textViewBookTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="120dp"
+                android:layout_marginEnd="148dp"
                 android:layout_toStartOf="@+id/buttonDelete"
                 android:text="Book Title"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
@@ -95,7 +97,7 @@
                 android:layout_alignBottom="@+id/buttonDelete"
                 android:layout_marginStart="0dp"
                 android:layout_marginEnd="0dp"
-                android:layout_marginBottom="27dp"
+                android:layout_marginBottom="26dp"
                 android:layout_toStartOf="@+id/buttonDelete"
                 android:text="Book Subtitle"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
@@ -106,11 +108,11 @@
                 android:id="@+id/textViewBookDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignStart="@+id/textViewBookSubtitle"
+                android:layout_alignStart="@+id/textViewBookTitle"
                 android:layout_alignBottom="@+id/buttonDelete"
                 android:layout_marginStart="0dp"
                 android:layout_marginEnd="0dp"
-                android:layout_marginBottom="6dp"
+                android:layout_marginBottom="0dp"
                 android:layout_toStartOf="@+id/buttonDelete"
                 android:text="Time"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
@@ -120,12 +122,120 @@
             <ImageButton
                 android:id="@+id/buttonDelete"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_alignParentEnd="true"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="@string/todo"
+                android:foregroundGravity="center_vertical"
                 android:padding="8dp"
-                android:src="@mipmap/delete_icon" />
+                android:src="@mipmap/delete_icon"
+                tools:ignore="TouchTargetSizeCheck,DuplicateSpeakableTextCheck" />
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:padding="16dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center_vertical">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/quick"
+            android:gravity="start"
+            android:text="@string/category_2"
+            android:textColor="#000"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            tools:ignore="UnusedAttribute" />
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginEnd="18dp"
+            android:layout_marginTop="8dp"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:background="@android:color/black" />
+    </TableRow>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="4dp"
+        app:cardElevation="4dp"
+        app:cardUseCompatPadding="true"
+        android:layout_margin="8dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:padding="16dp"
+            android:layout_gravity="center">
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/librarybuddy"
+                android:scaleType="fitXY"
+                android:background="@drawable/frame_image"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:id="@+id/type_b_text_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="148dp"
+                android:layout_toStartOf="@+id/type_b_delete_button"
+                android:text="Book Title"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textSize="12sp"
+                tools:ignore="HardcodedText,TextSizeCheck" />
+
+            <TextView
+                android:id="@+id/type_b_text_subtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/type_b_text_title"
+                android:layout_alignBottom="@+id/type_b_delete_button"
+                android:layout_marginStart="0dp"
+                android:layout_marginEnd="0dp"
+                android:layout_marginBottom="26dp"
+                android:layout_toStartOf="@+id/type_b_delete_button"
+                android:text="Book Subtitle"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textSize="13sp"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:id="@+id/type_b_text_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/type_b_text_title"
+                android:layout_alignBottom="@+id/type_b_delete_button"
+                android:layout_marginStart="0dp"
+                android:layout_marginEnd="0dp"
+                android:layout_marginBottom="0dp"
+                android:layout_toStartOf="@+id/type_b_delete_button"
+                android:text="Time"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textSize="13sp"
+                tools:ignore="HardcodedText" />
+
+            <ImageButton
+                android:id="@+id/type_b_delete_button"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/todo"
+                android:foregroundGravity="center_vertical"
+                android:padding="8dp"
+                android:src="@mipmap/delete_icon"
+                tools:ignore="TouchTargetSizeCheck" />
 
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
