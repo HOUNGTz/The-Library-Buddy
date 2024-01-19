@@ -43,4 +43,8 @@
     <string name="description">Description</string>
     <string name="story">Story</string>
     <string name="button_update">Update</string>
+    <string name="button_save">Save</string>
+    <string name="add_new_book">Insert</string>
+    <string name="category_1">Famous</string>
+    <string name="edit">Update</string>
 </resources>
