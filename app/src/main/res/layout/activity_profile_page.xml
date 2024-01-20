@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".modules.pages.ProfilePage">
+    tools:context=".modules.pages.ProfilePage"
+    android:background="@drawable/bg_input">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -28,9 +29,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="18dp"
+        android:paddingTop="16dp"
         android:layout_margin="16dp"
-        android:background="@drawable/bg_input"
+        android:background="@drawable/profile_bg"
         android:orientation="vertical">
 
         <LinearLayout
@@ -38,8 +39,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="horizontal"
-            android:textAlignment="center"
-            android:layout_marginBottom="18dp">
+            android:textAlignment="center">
 
             <ImageView
                 android:id="@+id/icons_version"
@@ -72,14 +72,25 @@
                 tools:ignore="RtlCompat" />
 
         </LinearLayout>
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginStart="50dp"
+            android:layout_marginEnd="22dp"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:background="@android:color/black"
+            tools:ignore="InefficientWeight,RtlSymmetry"
+            android:paddingStart="30dp"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="horizontal"
-            android:textAlignment="center"
-            android:layout_marginBottom="18dp">
+            android:textAlignment="center">
 
             <ImageView
                 android:layout_width="0dp"
@@ -98,6 +109,18 @@
                 android:textSize="18sp" />
 
         </LinearLayout>
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginStart="50dp"
+            android:layout_marginEnd="22dp"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:background="@android:color/black"
+            tools:ignore="InefficientWeight,RtlSymmetry"
+            android:paddingStart="30dp"/>
 
         <LinearLayout
             android:id="@+id/about"
@@ -105,8 +128,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="horizontal"
-            android:textAlignment="center"
-            android:layout_marginBottom="18dp">
+            android:textAlignment="center">
 
             <ImageView
                 android:layout_width="0dp"
@@ -131,6 +153,18 @@
                 android:layout_gravity="start"
                 android:src="@mipmap/chevron_icon" />
         </LinearLayout>
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginStart="50dp"
+            android:layout_marginEnd="22dp"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:background="@android:color/black"
+            tools:ignore="InefficientWeight,RtlSymmetry"
+            android:paddingStart="30dp"/>
 
         <LinearLayout
             android:id="@+id/add_book"
@@ -167,14 +201,15 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/even_logout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="7dp"
-        android:paddingBottom="7dp"
+        android:paddingBottom="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_gravity="center_horizontal"
-        android:background="@drawable/bg_input"
+        android:background="@drawable/profile_bg"
         android:orientation="horizontal"
         android:gravity="center_vertical">
 
@@ -188,7 +223,7 @@
         <TextView
             android:id="@+id/log_out"
             android:layout_width="200dp"
-            android:layout_height="30dp"
+            android:layout_height="wrap_content"
             android:layout_weight="2"
             android:layout_gravity="center_vertical|center_horizontal"
             android:text="@string/logout"
@@ -198,8 +233,8 @@
 
         <ImageView
             android:layout_width="0dp"
-            android:layout_height="20dp"
-            android:layout_gravity="start"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|center_vertical"
             android:layout_weight="1"
             android:src="@mipmap/chevron_icon" />
     </LinearLayout>
