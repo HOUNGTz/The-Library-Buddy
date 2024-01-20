@@ -55,19 +55,6 @@
                         android:layout_height="match_parent"
                         android:layout_marginTop="15dp"
                         android:orientation="horizontal">
-
-                        <!--                    <com.google.android.material.textfield.TextInputLayout-->
-                        <!--                        android:layout_width="207dp"-->
-                        <!--                        android:layout_height="match_parent">-->
-
-                        <!--                        <com.google.android.material.textfield.TextInputEditText-->
-                        <!--                            android:layout_width="195dp"-->
-                        <!--                            android:layout_height="55dp"-->
-                        <!--                            android:layout_marginStart="10dp"-->
-                        <!--                            android:hint="@string/book_title"-->
-                        <!--                            app:hintEnabled="true"/>-->
-
-                        <!--                    </com.google.android.material.textfield.TextInputLayout>-->
                         <com.google.android.material.textfield.TextInputLayout
                             android:layout_width="195dp"
                             android:layout_height="wrap_content"
@@ -169,24 +156,6 @@
                             android:hint="@string/description" />
                     </com.google.android.material.textfield.TextInputLayout>
                 </TableRow>
-
-                <!--            <TableRow-->
-                <!--                android:layout_width="match_parent"-->
-                <!--                android:layout_height="match_parent"-->
-                <!--                android:layout_marginTop="10dp">-->
-
-                <!--                <com.google.android.material.textfield.TextInputLayout-->
-                <!--                    android:layout_width="match_parent"-->
-                <!--                    android:layout_height="wrap_content">-->
-
-                <!--                    <com.google.android.material.textfield.TextInputEditText-->
-                <!--                        android:layout_width="match_parent"-->
-                <!--                        android:layout_height="142dp"-->
-                <!--                        android:layout_marginStart="10dp"-->
-                <!--                        android:hint="@string/story" />-->
-                <!--                </com.google.android.material.textfield.TextInputLayout>-->
-                <!--            </TableRow>-->
-
                 <TableRow
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -231,17 +200,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:text="@string/update"
-                    android:layout_gravity="center_horizontal"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:layout_gravity="center_horizontal|center_vertical"
                     android:textColor="@color/white"
                     android:textSize="20sp"
                     android:textAlignment="center"/>
-                <!--                <Button-->
-                <!--                    android:id="@+id/button3"-->
-                <!--                    android:layout_width="match_parent"-->
-                <!--                    android:layout_height="wrap_content"-->
-                <!--                    android:text="@string/button_save"-->
-                <!--                    android:textColor="@color/black"-->
-                <!--                    android:textSize="20sp" />-->
             </TableRow>
         </androidx.cardview.widget.CardView>
     </com.google.android.material.appbar.AppBarLayout>
