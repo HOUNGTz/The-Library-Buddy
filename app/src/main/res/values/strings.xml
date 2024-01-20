@@ -50,4 +50,7 @@
     <string name="about">About</string>
     <string name="add_new_book">Add new book</string>
     <string name="logout">Logout</string>
+    <string name="save">Save</string>
+    <string name="category_2">Category 2</string>
+    <string name="edit">Edit</string>
 </resources>

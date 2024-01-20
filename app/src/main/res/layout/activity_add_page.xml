@@ -11,28 +11,32 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/materialToolbar"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?attr/colorPrimary"
-            android:minHeight="?attr/actionBarSize"
-            android:theme="?attr/actionBarTheme"
-            app:navigationIcon="@mipmap/arrow_back_icon">
-
-            <!-- Back button -->
-
-            <!-- Title -->
-            <TextView
-                android:id="@+id/toolbarTitle"
+            android:layout_height="60dp"
+            android:background="#22A5B4"
+            android:paddingLeft="16dp"
+            android:gravity="center_vertical"
+            android:layout_gravity="center_horizontal|center_vertical">
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@string/add_new_book"
-                android:textColor="@android:color/white"
-                android:textSize="18sp"/>
+                android:src="@mipmap/arrow_back_icon"
+                android:id="@+id/arrow_back"/>
 
-        </com.google.android.material.appbar.MaterialToolbar>
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="150dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"
+                android:fontFamily="@font/kdam_thmor"
+                android:gravity="center"
+                android:text="@string/library_buddy"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+        </LinearLayout>
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView"
@@ -230,7 +234,7 @@
                     android:id="@+id/button3"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:text="@string/button_save"
+                    android:text="@string/save"
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     android:textAlignment="center"/>
