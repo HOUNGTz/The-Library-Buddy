@@ -41,9 +41,11 @@
         <activity
             android:name=".modules.screens.LoginScreen"
             android:exported="false" />
+
         <activity
-            android:name=".modules.screens.SplashScreen"
+            android:name=".modules.pages.UpdatePage"
             android:exported="false" />
+
 
         <activity android:name=".MainButtomNavigation"
             android:exported="false"

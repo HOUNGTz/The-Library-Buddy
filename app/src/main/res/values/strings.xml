@@ -56,4 +56,6 @@
     <string name="dialog_start_game">Confirm!\n\nAre you sure to logout an account?</string>
     <string name="start">Okay</string>
     <string name="cancel">Cancel\n</string>
+    <string name="title">Title:</string>
+    <string name="rate">Rate:</string>
 </resources>

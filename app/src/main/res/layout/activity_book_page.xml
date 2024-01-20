@@ -71,6 +71,7 @@
             android:layout_gravity="center">
 
             <ImageView
+                android:id="@+id/img_clicker"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:src="@drawable/librarybuddy"

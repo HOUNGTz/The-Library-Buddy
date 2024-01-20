@@ -80,7 +80,6 @@
                                 android:hint="@string/book_title"
                                 app:hintEnabled="true" />
 
-
                         </com.google.android.material.textfield.TextInputLayout>
 
                         <com.google.android.material.textfield.TextInputLayout
