@@ -14,6 +14,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.Toast;
+
+import com.google.android.material.snackbar.Snackbar;
+import com.houng.mobile_app_development.MainActivity;
 import com.houng.mobile_app_development.R;
 
 import java.util.Objects;
@@ -66,9 +70,23 @@ public class ProfilePage extends Fragment {
                 .setPositiveButton(R.string.start, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {}
                 })
-                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {}
-                }
+                    .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            View rootView = getActivity().findViewById(android.R.id.content); // Get the root view
+                            Snackbar snackbar = Snackbar.make(rootView, "The account wasn't logged out.", Snackbar.LENGTH_LONG);
+                            snackbar.setAction("UNDO", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Toast.makeText(getActivity(), "The item has been restored", Toast.LENGTH_SHORT).show(); // Use getActivity() for context
+                                }
+                            });
+                            snackbar.setDuration(3000);
+                            snackbar.setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark));
+                            snackbar.setActionTextColor(getResources().getColor(R.color.white));
+                            snackbar.show();
+                        }
+                    }
             );
             return builder.create();
         }

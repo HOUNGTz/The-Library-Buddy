@@ -12,13 +12,13 @@
         android:layout_gravity="center"
         android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/image_splash"
-            android:layout_width="150dp"
-            android:layout_height="125dp"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            app:srcCompat="@drawable/img_spash" />
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottieAnimationView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:lottie_rawRes="@raw/splash_anime"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true" />
 
         <TextView
             android:layout_width="wrap_content"

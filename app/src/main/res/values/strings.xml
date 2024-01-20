@@ -53,7 +53,7 @@
     <string name="save">Save</string>
     <string name="category_2">Category 2</string>
     <string name="edit">Edit</string>
-    <string name="dialog_start_game">Confirm!\n\nAre you sure to logout account?</string>
+    <string name="dialog_start_game">Confirm!\n\nAre you sure to logout an account?</string>
     <string name="start">Okay</string>
     <string name="cancel">Cancel\n</string>
 </resources>
