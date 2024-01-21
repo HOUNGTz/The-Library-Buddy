@@ -7,7 +7,6 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.houng.mobile_app_development.R;
-
 import java.util.ArrayList;
 import java.util.List;
 public class CarouselAdapter extends RecyclerView.Adapter<CarouselAdapter.ViewHolder> {

@@ -2,7 +2,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <LinearLayout
@@ -10,17 +9,22 @@
         android:layout_height="60dp"
         android:background="@color/colorApp">
 
-        <TextView
-            android:id="@+id/title"
+        <ImageView
             android:layout_width="150dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_horizontal"
-            android:fontFamily="@font/kdam_thmor"
-            android:gravity="center"
-            android:text="@string/library_buddy"
-            android:textAlignment="center"
-            android:textColor="@color/white"
-            android:textSize="18sp" />
+            android:layout_height="wrap_content"
+            android:src="@drawable/logos" />
+
+<!--        <TextView-->
+<!--            android:id="@+id/title"-->
+<!--            android:layout_width="150dp"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_gravity="center_horizontal"-->
+<!--            android:fontFamily="@font/kdam_thmor"-->
+<!--            android:gravity="center"-->
+<!--            android:text="@string/library_buddy"-->
+<!--            android:textAlignment="center"-->
+<!--            android:textColor="@color/white"-->
+<!--            android:textSize="18sp" />-->
 
     </LinearLayout>
 
