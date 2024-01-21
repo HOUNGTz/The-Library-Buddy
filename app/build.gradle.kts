@@ -46,5 +46,6 @@ dependencies {
     implementation ("androidx.fragment:fragment:1.6.2")
     implementation ("com.google.android.material:material:1.11.0")
     implementation ("com.airbnb.android:lottie:3.4.0")
+    implementation ("androidx.recyclerview:recyclerview:1.3.2")
 
 }

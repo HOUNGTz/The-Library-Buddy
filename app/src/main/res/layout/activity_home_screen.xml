@@ -32,29 +32,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="235dp"
-                >
 
-                <ImageView
-                    android:id="@+id/imageView"
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/lirbrary_buddy" />
-
-                <Button
-                    android:id="@+id/buttonStudyNow"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="160dp"
-                    android:backgroundTint="#FF8A00"
-                    android:layout_marginBottom="0dp"
-                    android:fontFamily="@font/kdam_thmor"
-                    android:text="@string/study_now" />
-            </RelativeLayout>
+                    android:layout_height="220dp"
+                    android:clipToPadding="false" />
 
             <LinearLayout
                 android:layout_width="match_parent"
