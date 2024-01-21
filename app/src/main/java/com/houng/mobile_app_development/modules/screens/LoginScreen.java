@@ -111,9 +111,9 @@ public class LoginScreen extends AppCompatActivity {
         authProfile.signInWithEmailAndPassword(the_email, psw).addOnCompleteListener(LoginScreen.this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()) {
+                FirebaseUser firebaseUser = authProfile.getCurrentUser();
+                if (task.isSuccessful() || firebaseUser.isEmailVerified()) {
                     Toast.makeText(LoginScreen.this, "user Login successfully !", Toast.LENGTH_LONG).show();
-                    FirebaseUser firebaseUser = authProfile.getCurrentUser();
                     if (firebaseUser.isEmailVerified()) {
                         Toast.makeText(LoginScreen.this, "you are logged in now ", Toast.LENGTH_LONG).show();
                         startActivity(new Intent(LoginScreen.this, MainButtomNavigation.class));
@@ -151,9 +151,9 @@ public class LoginScreen extends AppCompatActivity {
         builder.setPositiveButton(" Continue ", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Intent intent = new Intent(Intent.ACTION_MAIN);
-                        intent.addCategory(Intent.CATEGORY_APP_EMAIL);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        Intent intent = new Intent(LoginScreen.this, LoginScreen.class);
+//                        intent.addCategory(Intent.CATEGORY_APP_EMAIL);
+//                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent);
                     }
                 }
