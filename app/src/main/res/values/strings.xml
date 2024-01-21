@@ -59,4 +59,5 @@
     <string name="title">Title:</string>
     <string name="rate">Rate:</string>
     <string name="none">None</string>
+    <string name="read_book">Read Book</string>
 </resources>

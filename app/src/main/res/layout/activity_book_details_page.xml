@@ -10,7 +10,7 @@
         android:id="@+id/materialToolbar"
         android:layout_width="match_parent"
         android:layout_height="250dp"
-        android:background="#00BCD4"
+        android:background="#22A5B4"
         android:layout_gravity="center_horizontal"
         android:fontFamily="@font/kdam_thmor"
         android:minHeight="?attr/actionBarSize"
@@ -129,7 +129,7 @@
                 android:src="@mipmap/text_note_icon"
                 app:layout_constraintEnd_toEndOf="parent"
                 tools:ignore="TouchTargetSizeCheck,DuplicateSpeakableTextCheck,ImageContrastCheck"
-                tools:layout_editor_absoluteY="1dp" />
+                tools:layout_editor_absoluteY="-4dp" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
