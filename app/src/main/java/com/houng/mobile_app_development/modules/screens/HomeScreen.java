@@ -70,14 +70,14 @@ public class HomeScreen extends Fragment {
             ImageView imageView = new ImageView(getContext());
             GridLayout.LayoutParams params = new GridLayout.LayoutParams();
             params.width = (int) (imageWidthDp * displayMetrics.density);
-            params.height = 450;
+            params.height = 400;
             params.setMargins(0, 20, 25, 20);
             params.rowSpec = GridLayout.spec(i / columnCount);
             params.columnSpec = GridLayout.spec(i % columnCount);
             params.setGravity(Gravity.CENTER);
             imageView.setLayoutParams(params);
             imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-            imageView.setBackgroundResource(R.drawable.rounded_cornor);
+            imageView.setBackgroundResource(R.drawable.image_raduis);
             imageView.setClipToOutline(true);
 
             @SuppressLint("DiscouragedApi")

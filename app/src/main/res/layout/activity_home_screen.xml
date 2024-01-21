@@ -6,25 +6,15 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="@color/colorApp">
+        android:layout_height="70dp"
+        android:background="@color/colorApp"
+        android:layout_gravity="center_horizontal|center_vertical">
 
         <ImageView
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:src="@drawable/logos" />
-
-<!--        <TextView-->
-<!--            android:id="@+id/title"-->
-<!--            android:layout_width="150dp"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:layout_gravity="center_horizontal"-->
-<!--            android:fontFamily="@font/kdam_thmor"-->
-<!--            android:gravity="center"-->
-<!--            android:text="@string/library_buddy"-->
-<!--            android:textAlignment="center"-->
-<!--            android:textColor="@color/white"-->
-<!--            android:textSize="18sp" />-->
+            android:layout_width="220dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/lg_app"
+            tools:ignore="ContentDescription" />
 
     </LinearLayout>
 
