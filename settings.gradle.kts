@@ -13,6 +13,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "mobile_app_development"
+rootProject.name = "LibraryBuddy"
 include(":app")
  

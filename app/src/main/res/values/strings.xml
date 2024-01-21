@@ -44,7 +44,7 @@
     <string name="story">Story</string>
     <string name="button_update">Update</string>
     <string name="category_1">Category 1</string>
-    <string name="_1_0_5">1.0.5</string>
+    <string name="app_version">1.1.0</string>
     <string name="version">Version</string>
     <string name="admin">Admin</string>
     <string name="about">About</string>
@@ -53,4 +53,10 @@
     <string name="save">Save</string>
     <string name="category_2">Category 2</string>
     <string name="edit">Edit</string>
+    <string name="dialog_start_game">Confirm!\n\nAre you sure to logout an account?</string>
+    <string name="start">Okay</string>
+    <string name="cancel">Cancel\n</string>
+    <string name="title">Title:</string>
+    <string name="rate">Rate:</string>
+    <string name="none">None</string>
 </resources>
