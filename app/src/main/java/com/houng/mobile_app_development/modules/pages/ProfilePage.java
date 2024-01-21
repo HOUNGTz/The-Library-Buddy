@@ -17,13 +17,17 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
 import com.houng.mobile_app_development.MainActivity;
 import com.houng.mobile_app_development.R;
+import com.houng.mobile_app_development.modules.screens.LoginScreen;
+import com.houng.mobile_app_development.modules.screens.SignUpScreen;
 
 import java.util.Objects;
 
 public class ProfilePage extends Fragment {
     public LinearLayout evenLogout;
+
     @Override
     public View onCreateView(
         LayoutInflater inflater,
@@ -32,11 +36,13 @@ public class ProfilePage extends Fragment {
             View view = inflater.inflate(R.layout.activity_profile_page, container, false);
             setupClickListener(view, R.id.add_book, AddPage.class);
             setupClickListener(view, R.id.about, AboutUsPage.class);
+
         evenLogout = view.findViewById(R.id.even_logout);
         if (evenLogout != null) {
             evenLogout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
                     new StartGameDialogFragment().show(requireActivity().getSupportFragmentManager(), "GAME_DIALOG");
                 }
             });
@@ -61,14 +67,22 @@ public class ProfilePage extends Fragment {
         }
     }
     public static class StartGameDialogFragment extends DialogFragment {
+        public FirebaseAuth authProfile;
         @NonNull
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
+            authProfile = FirebaseAuth.getInstance();
             builder.setIcon(R.mipmap.warning_bulelight_icon)
                 .setMessage(R.string.dialog_start_game)
                 .setPositiveButton(R.string.start, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {}
+                    public void onClick(DialogInterface dialog, int id) {
+                        authProfile.signOut();
+                        Intent intent = new Intent(getActivity(), LoginScreen.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | intent.FLAG_ACTIVITY_CLEAR_TASK | intent.FLAG_ACTIVITY_NEW_TASK
+                        );
+                        startActivity(intent);
+                    }
                 })
                     .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                         @Override

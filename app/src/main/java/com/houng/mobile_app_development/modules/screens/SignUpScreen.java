@@ -188,7 +188,8 @@ public class SignUpScreen extends AppCompatActivity {
                                     firebaseUser.sendEmailVerification();
                                     Toast.makeText(SignUpScreen.this, "Register Successfully !.please verify your email", Toast.LENGTH_LONG).show();
                                     Intent intent = new Intent(SignUpScreen.this, LoginScreen.class);
-                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | intent.FLAG_ACTIVITY_CLEAR_TASK | intent.FLAG_ACTIVITY_NEW_TASK);
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | intent.FLAG_ACTIVITY_CLEAR_TASK | intent.FLAG_ACTIVITY_NEW_TASK
+                                    );
                                     startActivity(intent);
                                     finish();
                                 } else {
