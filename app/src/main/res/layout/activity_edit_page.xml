@@ -65,7 +65,7 @@
                     android:layout_weight="0.4">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/choose_type_book"
+                        android:id="@+id/update_type_book"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawableEnd="@mipmap/down"

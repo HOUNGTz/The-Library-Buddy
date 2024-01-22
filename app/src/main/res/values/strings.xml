@@ -60,6 +60,7 @@
     <string name="rate">Rate:</string>
     <string name="none">None</string>
     <string name="read_book">Read Book</string>
-    <string name="loading">loading...</string>
-    <string name="user">user</string>
+    <string name="view_all">View All</string>
+    <string name="loading">Loading...</string>
+    <string name="user">User</string>
 </resources>

@@ -1,9 +1,5 @@
 package com.houng.mobile_app_development.modules.pages;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -18,6 +14,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
+
 import com.bumptech.glide.Glide;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
@@ -27,13 +28,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.houng.mobile_app_development.MainActivity;
 import com.houng.mobile_app_development.R;
 import com.houng.mobile_app_development.ReadWriteUserDetails;
 import com.houng.mobile_app_development.modules.screens.LoginScreen;
-import com.houng.mobile_app_development.modules.screens.SignUpScreen;
-
-import java.util.Objects;
 
 public class ProfilePage extends Fragment {
     public LinearLayout evenLogout;
@@ -177,12 +174,6 @@ public class ProfilePage extends Fragment {
                         public void onClick(DialogInterface dialog, int which) {
                             View rootView = getActivity().findViewById(android.R.id.content); // Get the root view
                             Snackbar snackbar = Snackbar.make(rootView, "The account wasn't logged out.", Snackbar.LENGTH_LONG);
-                            snackbar.setAction("UNDO", new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    Toast.makeText(getActivity(), "The item has been restored", Toast.LENGTH_SHORT).show(); // Use getActivity() for context
-                                }
-                            });
                             snackbar.setDuration(3000);
                             snackbar.setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark));
                             snackbar.setActionTextColor(getResources().getColor(R.color.white));
