@@ -13,13 +13,23 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.houng.mobile_app_development.MainActivity;
 import com.houng.mobile_app_development.R;
+import com.houng.mobile_app_development.ReadWriteUserDetails;
 import com.houng.mobile_app_development.modules.screens.LoginScreen;
 import com.houng.mobile_app_development.modules.screens.SignUpScreen;
 
@@ -27,28 +37,105 @@ import java.util.Objects;
 
 public class ProfilePage extends Fragment {
     public LinearLayout evenLogout;
+    public LinearLayout about;
+    public TextView textName, roleText;
+    public ImageView imageView;
+    public FirebaseAuth auth;
+    public String name, image,role;
 
     @Override
     public View onCreateView(
-        LayoutInflater inflater,
-        ViewGroup container,
-        Bundle savedInstanceState) {
-            View view = inflater.inflate(R.layout.activity_profile_page, container, false);
-            setupClickListener(view, R.id.add_book, AddPage.class);
-            setupClickListener(view, R.id.about, AboutUsPage.class);
+            LayoutInflater inflater,
+            ViewGroup container,
+            Bundle savedInstanceState) {
 
-        evenLogout = view.findViewById(R.id.even_logout);
-        if (evenLogout != null) {
-            evenLogout.setOnClickListener(new View.OnClickListener() {
+        View view = inflater.inflate(R.layout.activity_profile_page, container, false);
+
+        // Initialize your views here
+        textName = view.findViewById(R.id.textViewName);
+        imageView = view.findViewById(R.id.imageViewProfile);
+        LinearLayout evenLogout = view.findViewById(R.id.even_logout);
+        LinearLayout add_book = view.findViewById(R.id.add_book);
+        roleText = view.findViewById(R.id.role);
+
+        // Setup Firebase
+        auth = FirebaseAuth.getInstance();
+        FirebaseUser firebaseUser = auth.getCurrentUser();
+        if (firebaseUser == null){
+            Toast.makeText(getActivity(), "User not logged in", Toast.LENGTH_LONG).show();
+        } else {
+            DatabaseReference referenceProfile = FirebaseDatabase.getInstance().getReference("Registered users");
+            referenceProfile.child(firebaseUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
-                public void onClick(View v) {
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    ReadWriteUserDetails readWriteUserDetails = snapshot.getValue(ReadWriteUserDetails.class);
+                    if (readWriteUserDetails != null) {
+                        name = firebaseUser.getDisplayName();
+                        image = readWriteUserDetails.imageUrl;
+                        role = readWriteUserDetails.role;
 
-                    new StartGameDialogFragment().show(requireActivity().getSupportFragmentManager(), "GAME_DIALOG");
+                        // Set the name and role in the TextViews
+                        textName.setText(name);
+                        if (role.equals("1")) {
+                            roleText.setText("Admin");
+                            add_book.setVisibility(View.VISIBLE);
+                        } else {
+                            roleText.setText("User");
+                            add_book.setVisibility(View.GONE);
+                        }
+
+                        // Load the image using Glide
+                        if (image != null && !image.isEmpty()) {
+                            Glide.with(ProfilePage.this)
+                                    .load(image)
+                                    .into(imageView);
+                        }
+                    } else {
+                        Toast.makeText(getActivity(), "User details not found", Toast.LENGTH_LONG).show();
+                    }
+                }
+
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
                 }
             });
+
+            if (image != null && !image.isEmpty()) {
+                Glide.with(ProfilePage.this)
+                        .load(image)
+                        .into(imageView);
+            }
         }
+
+        // Setup logout event
+        if (evenLogout != null) {
+            evenLogout.setOnClickListener(v -> new StartGameDialogFragment().show(requireActivity().getSupportFragmentManager(), "GAME_DIALOG"));
+        }
+
+
+        about = view.findViewById(R.id.about);
+        about.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent  = new Intent(getActivity(), AboutUsPage.class);
+                startActivity(intent);
+            }
+        });
+        add_book.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent  = new Intent(getActivity(), AddPage.class);
+                startActivity(intent);
+            }
+        });
         return view;
+
     }
+
+
+
     private void setupClickListener(View view, int layoutId, Class<?> activityClass) {
         LinearLayout layout = view.findViewById(layoutId);
         if (layout != null) {
@@ -68,6 +155,7 @@ public class ProfilePage extends Fragment {
     }
     public static class StartGameDialogFragment extends DialogFragment {
         public FirebaseAuth authProfile;
+
         @NonNull
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {

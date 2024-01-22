@@ -177,7 +177,7 @@ public class SignUpScreen extends AppCompatActivity {
 
                     uploadImageAndGetUrl(imageUri, imageUrl -> {
 
-                        ReadWriteUserDetails writeUserDetails = new ReadWriteUserDetails( textEmail, textPassword, imageUrl, role);
+                        ReadWriteUserDetails writeUserDetails = new ReadWriteUserDetails( textEmail, textPassword, imageUrl, role, textuser);
 
                         DatabaseReference referenceProfile = FirebaseDatabase.getInstance().getReference("Registered users");
 
