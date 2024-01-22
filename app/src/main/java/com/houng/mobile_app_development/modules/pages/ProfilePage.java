@@ -54,6 +54,8 @@ public class ProfilePage extends Fragment {
         LinearLayout evenLogout = view.findViewById(R.id.even_logout);
         LinearLayout add_book = view.findViewById(R.id.add_book);
         roleText = view.findViewById(R.id.role);
+        LinearLayout update = view.findViewById(R.id.update);
+        View line = view.findViewById(R.id.lineText);
 
         // Setup Firebase
         auth = FirebaseAuth.getInstance();
@@ -76,6 +78,8 @@ public class ProfilePage extends Fragment {
                         if (role.equals("1")) {
                             roleText.setText("Admin");
                             add_book.setVisibility(View.VISIBLE);
+                            update.setVisibility(View.GONE);
+                            line.setVisibility(View.GONE);
                         } else {
                             roleText.setText("User");
                             add_book.setVisibility(View.GONE);
@@ -124,6 +128,14 @@ public class ProfilePage extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent  = new Intent(getActivity(), AddPage.class);
+                startActivity(intent);
+            }
+        });
+
+        update.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), AddPage.class);
                 startActivity(intent);
             }
         });
