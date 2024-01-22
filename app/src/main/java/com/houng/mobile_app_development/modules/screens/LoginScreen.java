@@ -1,15 +1,9 @@
 package com.houng.mobile_app_development.modules.screens;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.preference.DialogPreference;
-import android.preference.Preference;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
@@ -22,8 +16,13 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
@@ -31,8 +30,6 @@ import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseUser;
 import com.houng.mobile_app_development.MainButtomNavigation;
 import com.houng.mobile_app_development.R;
-
-import java.util.regex.Pattern;
 
 public class LoginScreen extends AppCompatActivity {
     public TextView btn_login;
@@ -47,7 +44,6 @@ public class LoginScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_screen);
-//        getSupportActionBar().setTitle("Login");
         btn_login = findViewById(R.id.sign_up_pag3);
         login = findViewById(R.id.button_login);
         email = findViewById(R.id.emailEditTextLogin);
@@ -61,14 +57,29 @@ public class LoginScreen extends AppCompatActivity {
                 String textEmail = email.getText().toString();
                 String textPassword = password.getText().toString();
                 if (TextUtils.isEmpty(textEmail)) {
-                    Toast.makeText(LoginScreen.this, "where are your email hah ?", Toast.LENGTH_LONG).show();
+                    View rootView = findViewById(android.R.id.content); // Get the root view
+                    Snackbar snackbar = Snackbar.make(rootView, "Please entry your email.", Snackbar.LENGTH_LONG);
+                    snackbar.setDuration(3000);
+                    snackbar.setBackgroundTint(getResources().getColor(R.color.black));
+                    snackbar.setActionTextColor(getResources().getColor(R.color.white));
+                    snackbar.show();
                     email.setError("email is required");
                     email.requestFocus();
                 } else if (!Patterns.EMAIL_ADDRESS.matcher(textEmail).matches()) {
-                    Toast.makeText(LoginScreen.this, "your re-enter Email", Toast.LENGTH_LONG).show();
+                    View rootView = findViewById(android.R.id.content); // Get the root view
+                    Snackbar snackbar = Snackbar.make(rootView, "Please re-render email.", Snackbar.LENGTH_LONG);
+                    snackbar.setDuration(3000);
+                    snackbar.setBackgroundTint(getResources().getColor(R.color.black));
+                    snackbar.setActionTextColor(getResources().getColor(R.color.white));
+                    snackbar.show();
                     email.setError("valid email is required");
                 } else if (TextUtils.isEmpty(textPassword)) {
-                    Toast.makeText(LoginScreen.this, "you need to input your password !", Toast.LENGTH_LONG).show();
+                    View rootView = findViewById(android.R.id.content); // Get the root view
+                    Snackbar snackbar = Snackbar.make(rootView, "Password is require!", Snackbar.LENGTH_LONG);
+                    snackbar.setDuration(3000);
+                    snackbar.setBackgroundTint(getResources().getColor(R.color.black));
+                    snackbar.setActionTextColor(getResources().getColor(R.color.white));
+                    snackbar.show();
                     password.setError("password is required");
                     password.requestFocus();
                 } else {
@@ -113,9 +124,13 @@ public class LoginScreen extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 FirebaseUser firebaseUser = authProfile.getCurrentUser();
                 if (task.isSuccessful() || firebaseUser.isEmailVerified()) {
-                    Toast.makeText(LoginScreen.this, "user Login successfully !", Toast.LENGTH_LONG).show();
+                    View rootView = findViewById(android.R.id.content); // Get the root view
+                    Snackbar snackbar = Snackbar.make(rootView, "User login successfully!", Snackbar.LENGTH_LONG);
+                    snackbar.setDuration(3000);
+                    snackbar.setBackgroundTint(getResources().getColor(R.color.blue));
+                    snackbar.setActionTextColor(getResources().getColor(R.color.white));
+                    snackbar.show();
                     if (firebaseUser.isEmailVerified()) {
-                        Toast.makeText(LoginScreen.this, "you are logged in now ", Toast.LENGTH_LONG).show();
                         startActivity(new Intent(LoginScreen.this, MainButtomNavigation.class));
                         finish();
                     } else {
@@ -136,7 +151,12 @@ public class LoginScreen extends AppCompatActivity {
                         Log.e(TAG, e.getMessage());
                         Toast.makeText(LoginScreen.this, e.getMessage(), Toast.LENGTH_LONG).show();
                     }
-                    Toast.makeText(LoginScreen.this, "Something went Wrong !", Toast.LENGTH_LONG).show();
+                    View rootView = findViewById(android.R.id.content); // Get the root view
+                    Snackbar snackbar = Snackbar.make(rootView, "Something went Wrong!", Snackbar.LENGTH_LONG);
+                    snackbar.setDuration(3000);
+                    snackbar.setBackgroundTint(getResources().getColor(R.color.black));
+                    snackbar.setActionTextColor(getResources().getColor(R.color.white));
+                    snackbar.show();
 
                 }
                 progressBar.setVisibility(View.GONE);
@@ -152,8 +172,6 @@ public class LoginScreen extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Intent intent = new Intent(LoginScreen.this, LoginScreen.class);
-//                        intent.addCategory(Intent.CATEGORY_APP_EMAIL);
-//                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent);
                     }
                 }
@@ -166,15 +184,21 @@ public class LoginScreen extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         if (authProfile.getCurrentUser() != null) {
-            Toast.makeText(
-                    LoginScreen.this, "you are already login", Toast.LENGTH_LONG
-            ).show();
+            View rootView = findViewById(android.R.id.content); // Get the root view
+            Snackbar snackbar = Snackbar.make(rootView, "You already logged in.", Snackbar.LENGTH_LONG);
+            snackbar.setDuration(3000);
+            snackbar.setBackgroundTint(getResources().getColor(R.color.black));
+            snackbar.setActionTextColor(getResources().getColor(R.color.white));
+            snackbar.show();
             startActivity(new Intent(LoginScreen.this, MainButtomNavigation.class));
             finish();
         } else {
-            Toast.makeText(
-                    LoginScreen.this, "you can login now", Toast.LENGTH_LONG
-            ).show();
+            View rootView = findViewById(android.R.id.content); // Get the root view
+            Snackbar snackbar = Snackbar.make(rootView, "You can login now.", Snackbar.LENGTH_LONG);
+            snackbar.setDuration(3000);
+            snackbar.setBackgroundTint(getResources().getColor(R.color.black));
+            snackbar.setActionTextColor(getResources().getColor(R.color.white));
+            snackbar.show();
         }
     }
 }
