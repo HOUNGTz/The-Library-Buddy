@@ -31,11 +31,10 @@ public class UpdatePage extends AppCompatActivity {
         SpannableString spannableString = new SpannableString(getSupportActionBar().getTitle());
         spannableString.setSpan(new ForegroundColorSpan(titleTextColor), 0, spannableString.length(), 0);
         getSupportActionBar().setTitle(spannableString);
-
         TextInputEditText update_type_book = findViewById(R.id.update_type_book);
         update_type_book.setOnClickListener(v -> showDialog());
-    }
 
+    }
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == android.R.id.home) {

@@ -5,12 +5,16 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,25 +24,35 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.houng.mobile_app_development.MainButtomNavigation;
 import com.houng.mobile_app_development.R;
 import com.houng.mobile_app_development.ReadWriteUserDetails;
 import com.houng.mobile_app_development.modules.screens.LoginScreen;
+import com.houng.mobile_app_development.modules.screens.SignUpScreen;
+
+import java.util.zip.Inflater;
+
+
 
 public class ProfilePage extends Fragment {
     public LinearLayout evenLogout;
     public LinearLayout about;
     public TextView textName, roleText;
+
     public ImageView imageView;
     public FirebaseAuth auth;
-    public String name, image,role;
+    public String name, image,email,role,password, userID;
 
     @Override
     public View onCreateView(
@@ -69,9 +83,12 @@ public class ProfilePage extends Fragment {
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     ReadWriteUserDetails readWriteUserDetails = snapshot.getValue(ReadWriteUserDetails.class);
                     if (readWriteUserDetails != null) {
+                        userID = firebaseUser.getUid();
                         name = firebaseUser.getDisplayName();
                         image = readWriteUserDetails.imageUrl;
                         role = readWriteUserDetails.role;
+                        email = readWriteUserDetails.email;
+                        password = readWriteUserDetails.password;
 
                         // Set the name and role in the TextViews
                         textName.setText(name);
@@ -132,13 +149,8 @@ public class ProfilePage extends Fragment {
             }
         });
 
-        update.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), AddPage.class);
-                startActivity(intent);
-            }
-        });
+        update.setOnClickListener(v -> new UpdateDialogFragment(name, email, password, userID, firebaseUser, image, role).show(requireActivity().getSupportFragmentManager(), "GAME_DIALOG"));
+
         return view;
 
     }
@@ -196,5 +208,113 @@ public class ProfilePage extends Fragment {
             return builder.create();
         }
     }
+
+    public static class UpdateDialogFragment extends DialogFragment {
+        public FirebaseAuth authProfile;
+        private EditText userNameEditText ;
+        private EditText emailEditText;
+        private EditText passwordEditText;
+        private ProgressBar progressBar;
+        private String name;
+        private String email;
+        private String password;
+        private String userId;
+        private String imageUri;
+        private String role;
+
+        private FirebaseUser firebaseUser;
+
+        public UpdateDialogFragment(String name, String email, String password, String userId, FirebaseUser firebaseUser, String imageUri, String role) {
+            this.name = name;
+            this.email = email;
+            this.password = password;
+            this.userId = userId;
+            this.firebaseUser = firebaseUser;
+            this.imageUri = imageUri;
+            this.role = role;
+        }
+
+        @NonNull
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            authProfile = FirebaseAuth.getInstance();
+
+            LayoutInflater inflater = requireActivity().getLayoutInflater();
+            View view = inflater.inflate(R.layout.update_user, null);
+
+            userNameEditText = view.findViewById(R.id.etName);
+            emailEditText = view.findViewById(R.id.etEmail);
+            passwordEditText = view.findViewById(R.id.etPassword);
+            progressBar = view.findViewById(R.id.progressBarUpdate);
+            userNameEditText.setText(name);
+            emailEditText.setText(email);
+            passwordEditText.setText(password);
+
+            builder.setView(view)
+                    .setPositiveButton(R.string.start, null) // Set to null temporarily
+                    .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            // Cancel behavior here
+                        }
+                    });
+
+            final AlertDialog dialog = builder.create();
+
+            dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+                @Override
+                public void onShow(DialogInterface dialogInterface) {
+
+                    Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                    positiveButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            String textName = userNameEditText.getText().toString();
+                            String textEmail = emailEditText.getText().toString();
+                            String textPassword = passwordEditText.getText().toString();
+
+                            if (TextUtils.isEmpty(textName)) {
+                                userNameEditText.setError("Name Is required");
+                                userNameEditText.requestFocus();
+                                return; // Stay open
+                            } else if (TextUtils.isEmpty(textEmail)) {
+                                emailEditText.setError("Email is required");
+                                emailEditText.requestFocus();
+                                return; // Stay open
+                            } else if (TextUtils.isEmpty(textPassword)) {
+                                passwordEditText.setError("Password is required");
+                                passwordEditText.requestFocus();
+                                return; // Stay open
+                            }
+                            progressBar.setVisibility(View.VISIBLE);
+                            ReadWriteUserDetails writeUserDetails = new ReadWriteUserDetails( textEmail, textPassword,imageUri, role,textName);
+                            DatabaseReference userReference = FirebaseDatabase.getInstance().getReference("Registered users");
+
+                            userReference.child(userId).setValue(writeUserDetails).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()){
+                                        UserProfileChangeRequest profileChangeRequest = new UserProfileChangeRequest.Builder().setDisplayName(textName).build();
+                                        firebaseUser.updateProfile(profileChangeRequest);
+                                        Intent intent = new Intent(getActivity(), MainButtomNavigation.class);
+                                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                        startActivity(intent);
+                                    }
+                                }
+                            });
+
+                        }
+                    });
+                }
+            });
+
+            return dialog;
+        }
+
+
+    }
+
 }
 

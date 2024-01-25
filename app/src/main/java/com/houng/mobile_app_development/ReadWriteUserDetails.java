@@ -12,4 +12,5 @@ public  ReadWriteUserDetails(){};
         this.name = name;
 
     }
+
 }
