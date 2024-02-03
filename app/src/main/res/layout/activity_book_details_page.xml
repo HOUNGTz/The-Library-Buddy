@@ -26,7 +26,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:contentDescription="TODO"
-        android:src="@mipmap/favorite_icon"
+        android:src="@mipmap/ic_favorite"
         app:layout_constraintEnd_toEndOf="@+id/materialToolbar"
         app:layout_constraintTop_toTopOf="@+id/materialToolbar"
         tools:ignore="ContentDescription,HardcodedText,ImageContrastCheck" />
@@ -46,11 +46,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/title"
-            android:textSize="20sp" />
+            android:textSize="20sp"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp">
 
             <ImageView
                 android:layout_width="20dp"
@@ -120,7 +122,7 @@
             <ImageButton
                 android:id="@+id/buttonEditText"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="16dp"
                 android:background="@color/white"
@@ -151,13 +153,13 @@
     <ImageView
         android:layout_width="131dp"
         android:layout_height="183dp"
-        android:layout_marginTop="96dp"
+        android:layout_marginTop="64dp"
+        android:contentDescription="TODO"
         android:scaleType="fitXY"
         android:src="@drawable/img"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/materialToolbar"
         app:layout_constraintTop_toTopOf="@+id/materialToolbar"
-        tools:ignore="ContentDescription,HardcodedText,MissingConstraints"
-        android:contentDescription="TODO" />
+        tools:ignore="ContentDescription,HardcodedText,MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,15 +5,15 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.houng.mobile_app_development.R;
-import com.houng.mobile_app_development.modules.helper.IconAdapterWithTextDialog;
 
 public class BookPage extends Fragment {
     ImageView img_clicker;
@@ -25,37 +25,41 @@ public class BookPage extends Fragment {
 
         img_clicker = view.findViewById(R.id.img_clicker);
         if(img_clicker != null){
-            img_clicker.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(getActivity(), BookDetailsPage.class);
-                    startActivity(intent);
-                }
+            img_clicker.setOnClickListener(v -> {
+                Intent intent = new Intent(getActivity(), BookDetailsPage.class);
+                startActivity(intent);
             });
         }
         information = view.findViewById(R.id.information);
-        information.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showBottomSheetDialog();
-            }
-        });
+        information.setOnClickListener(v -> showBottomSheet());
 
         return view;
     }
-    public void showBottomSheetDialog() {
-        View view = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_buttom, null);
-        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(requireActivity());
-        bottomSheetDialog.setContentView(view);
+    private void showBottomSheet() {
+        final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(requireActivity());
+        bottomSheetDialog.setContentView(R.layout.dialog_buttom);
+        Button add = bottomSheetDialog.findViewById(R.id.button_item_2);
+        Button delete = bottomSheetDialog.findViewById(R.id.button_item_3);
+        Button cancel = bottomSheetDialog.findViewById(R.id.button_cancel);
 
-        ListView listView = view.findViewById(R.id.listView);
-        String[] items = new String[]{"Delete this book", "Add book to favorite"};
-        int[] icons = new int[]{R.mipmap.ic_x_mark, R.mipmap.ic_bookmarks};
-        IconAdapterWithTextDialog adapter = new IconAdapterWithTextDialog(requireActivity(), items, icons);
-        listView.setAdapter(adapter);
-        listView.setOnItemClickListener((adapterView, view1, position, id) -> {
+        assert add != null;
+        add.setOnClickListener(v -> {
+            Toast.makeText(getContext(), "Success", Toast.LENGTH_LONG).show();
             bottomSheetDialog.dismiss();
         });
+
+        assert delete != null;
+        delete.setOnClickListener(v -> {
+            Toast.makeText(getContext(), "Deleted successfully", Toast.LENGTH_LONG).show();
+            bottomSheetDialog.dismiss();
+        });
+
+        assert cancel != null;
+        cancel.setOnClickListener(v -> {
+            Toast.makeText(getContext(), "Cancel", Toast.LENGTH_LONG).show();
+            bottomSheetDialog.dismiss();
+        });
+
         bottomSheetDialog.show();
     }
 }
