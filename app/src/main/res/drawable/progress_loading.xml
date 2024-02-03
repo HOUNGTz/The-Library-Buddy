@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Define the border -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#00000000" /> <!-- Transparent background -->
+            <stroke android:width="1dp" android:color="#FF0000"/> <!-- Red border, 2dp width -->
+        </shape>
+    </item>
+    <!-- Define the progress bar -->
+    <item android:id="@android:id/progress">
+        <clip>
+            <shape>
+                <solid android:color="#FF00FF"/> <!-- Color of the progress -->
+            </shape>
+        </clip>
+    </item>
+</layer-list>

@@ -8,7 +8,7 @@
     tools:context=".modules.pages.ProfilePage"
     android:background="@drawable/bg_input">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:baselineAligned="false"
@@ -24,14 +24,27 @@
             app:civ_border_color="#ffdb15"
             app:civ_border_width="3dp" />
 
-    </LinearLayout>
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="155dp"
+            android:layout_height="155dp"
+            android:layout_alignStart="@+id/imageViewProfile"
+            android:layout_alignTop="@+id/imageViewProfile"
+            android:layout_alignEnd="@+id/imageViewProfile"
+            android:layout_alignBottom="@+id/imageViewProfile"
+            android:layout_marginStart="53dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="55dp"
+            android:layout_marginBottom="4dp" />
+
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/textViewName"
         android:layout_width="match_parent"
         android:layout_height="43dp"
         android:fontFamily="sans-serif-medium"
-        android:text="@string/loading"
+        android:text=""
         android:textAlignment="center"
         android:textSize="24sp"
         tools:ignore="TextSizeCheck" />
@@ -116,7 +129,7 @@
                 android:layout_width="285dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="@string/loading"
+                android:text=""
                 android:textAlignment="viewStart"
                 android:textSize="18sp" />
 

@@ -1,9 +1,11 @@
 package com.houng.mobile_app_development.modules.pages;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -17,13 +19,14 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
-
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.CustomTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
@@ -39,11 +42,6 @@ import com.houng.mobile_app_development.MainButtomNavigation;
 import com.houng.mobile_app_development.R;
 import com.houng.mobile_app_development.ReadWriteUserDetails;
 import com.houng.mobile_app_development.modules.screens.LoginScreen;
-import com.houng.mobile_app_development.modules.screens.SignUpScreen;
-
-import java.util.zip.Inflater;
-
-
 
 public class ProfilePage extends Fragment {
     public LinearLayout evenLogout;
@@ -53,6 +51,7 @@ public class ProfilePage extends Fragment {
     public ImageView imageView;
     public FirebaseAuth auth;
     public String name, image,email,role,password, userID;
+    private ProgressBar progressBar;
 
     @Override
     public View onCreateView(
@@ -69,7 +68,7 @@ public class ProfilePage extends Fragment {
         LinearLayout add_book = view.findViewById(R.id.add_book);
         roleText = view.findViewById(R.id.role);
         LinearLayout update = view.findViewById(R.id.update);
-        View line = view.findViewById(R.id.lineText);
+        progressBar = view.findViewById(R.id.progressBar);
 
         // Setup Firebase
         auth = FirebaseAuth.getInstance();
@@ -79,6 +78,7 @@ public class ProfilePage extends Fragment {
         } else {
             DatabaseReference referenceProfile = FirebaseDatabase.getInstance().getReference("Registered users");
             referenceProfile.child(firebaseUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                @SuppressLint("SetTextI18n")
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     ReadWriteUserDetails readWriteUserDetails = snapshot.getValue(ReadWriteUserDetails.class);
@@ -96,17 +96,35 @@ public class ProfilePage extends Fragment {
                             roleText.setText("Admin");
                             add_book.setVisibility(View.VISIBLE);
                             update.setVisibility(View.GONE);
-                            line.setVisibility(View.GONE);
                         } else {
                             roleText.setText("User");
                             add_book.setVisibility(View.GONE);
                         }
 
                         // Load the image using Glide
-                        if (image != null && !image.isEmpty()) {
-                            Glide.with(ProfilePage.this)
-                                    .load(image)
-                                    .into(imageView);
+                        if (readWriteUserDetails.imageUrl != null && !readWriteUserDetails.imageUrl.isEmpty()) {
+                            Glide.with(requireActivity())
+                                .load(readWriteUserDetails.imageUrl)
+                                .into(new CustomTarget<Drawable>() {
+                                    @Override
+                                    public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                                        imageView.setImageDrawable(resource);
+                                        progressBar.setVisibility(View.GONE); // Hide the ProgressBar
+                                    }
+
+                                    @Override
+                                    public void onLoadCleared(@Nullable Drawable placeholder) {
+                                        // Handle cleanup if needed
+                                    }
+
+                                    @Override
+                                    public void onLoadFailed(@Nullable Drawable errorDrawable) {
+                                        progressBar.setVisibility(View.GONE); // Hide the ProgressBar on failure
+                                    }
+                                });
+                        } else {
+                            Toast.makeText(getActivity(), "User image not available", Toast.LENGTH_LONG).show();
+                            progressBar.setVisibility(View.GONE); // Hide the ProgressBar
                         }
                     } else {
                         Toast.makeText(getActivity(), "User details not found", Toast.LENGTH_LONG).show();
@@ -188,7 +206,7 @@ public class ProfilePage extends Fragment {
                     public void onClick(DialogInterface dialog, int id) {
                         authProfile.signOut();
                         Intent intent = new Intent(getActivity(), LoginScreen.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | intent.FLAG_ACTIVITY_CLEAR_TASK | intent.FLAG_ACTIVITY_NEW_TASK
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK
                         );
                         startActivity(intent);
                     }
@@ -196,7 +214,7 @@ public class ProfilePage extends Fragment {
                     .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            View rootView = getActivity().findViewById(android.R.id.content); // Get the root view
+                            View rootView = requireActivity().findViewById(android.R.id.content); // Get the root view
                             Snackbar snackbar = Snackbar.make(rootView, "The account wasn't logged out.", Snackbar.LENGTH_LONG);
                             snackbar.setDuration(3000);
                             snackbar.setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark));
@@ -215,14 +233,14 @@ public class ProfilePage extends Fragment {
         private EditText emailEditText;
         private EditText passwordEditText;
         private ProgressBar progressBar;
-        private String name;
-        private String email;
-        private String password;
-        private String userId;
-        private String imageUri;
-        private String role;
+        private final String name;
+        private final String email;
+        private final String password;
+        private final String userId;
+        private final String imageUri;
+        private final String role;
 
-        private FirebaseUser firebaseUser;
+        private final FirebaseUser firebaseUser;
 
         public UpdateDialogFragment(String name, String email, String password, String userId, FirebaseUser firebaseUser, String imageUri, String role) {
             this.name = name;
@@ -237,7 +255,7 @@ public class ProfilePage extends Fragment {
         @NonNull
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
             authProfile = FirebaseAuth.getInstance();
 
             LayoutInflater inflater = requireActivity().getLayoutInflater();
@@ -252,13 +270,14 @@ public class ProfilePage extends Fragment {
             passwordEditText.setText(password);
 
             builder.setView(view)
-                    .setPositiveButton(R.string.start, null) // Set to null temporarily
-                    .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            // Cancel behavior here
-                        }
-                    });
+                .setPositiveButton(R.string.start, null) // Set to null temporarily
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Cancel behavior here
+                    }
+                }
+            );
 
             final AlertDialog dialog = builder.create();
 
@@ -312,8 +331,6 @@ public class ProfilePage extends Fragment {
 
             return dialog;
         }
-
-
     }
 
 }
