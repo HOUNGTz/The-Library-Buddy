@@ -1,9 +1,12 @@
 package com.houng.mobile_app_development.modules.screens;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.PagerSnapHelper;
 import android.annotation.SuppressLint;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.DisplayMetrics;
@@ -13,8 +16,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridLayout;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.Toast;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.CustomTarget;
+import com.bumptech.glide.request.transition.Transition;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.houng.mobile_app_development.R;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import com.houng.mobile_app_development.ReadWriteUserDetails;
 import com.houng.mobile_app_development.modules.helper.CarouselAdapter;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,12 +40,14 @@ public class HomeScreen extends Fragment {
     public GridLayout gridLayout;
     public RecyclerView recyclerView;
     public CarouselAdapter adapter;
+    public ImageView profile;
+    private ProgressBar progressBar;
     private final Handler sliderHandler = new Handler();
     private final Runnable sliderRunnable = new Runnable() {
         @Override
         public void run() {
             if (recyclerView != null) {
-                int currentPosition = Objects.requireNonNull(recyclerView.getLayoutManager()).getPosition(recyclerView.getLayoutManager().getChildAt(0));
+                int currentPosition = Objects.requireNonNull(recyclerView.getLayoutManager()).getPosition(Objects.requireNonNull(recyclerView.getLayoutManager().getChildAt(0)));
                 int nextPosition = currentPosition + 1;
                 if (nextPosition >= adapter.getItemCount()) {
                     nextPosition = 0;
@@ -43,6 +61,8 @@ public class HomeScreen extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_home_screen, container, false);
+        profile = view.findViewById(R.id.profile);
+        progressBar = view.findViewById(R.id.progressBar);
         gridLayout = view.findViewById(R.id.gridImage);
         addImagesToGridLayout(gridLayout);
 
@@ -56,6 +76,9 @@ public class HomeScreen extends Fragment {
         recyclerView.setAdapter(adapter);
         PagerSnapHelper snapHelper = new PagerSnapHelper();
         snapHelper.attachToRecyclerView(recyclerView);
+
+        loadUserProfileImage();
+
         return view;
     }
     public void addImagesToGridLayout(GridLayout gridLayout) {
@@ -77,11 +100,11 @@ public class HomeScreen extends Fragment {
             params.setGravity(Gravity.CENTER);
             imageView.setLayoutParams(params);
             imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-            imageView.setBackgroundResource(R.drawable.image_raduis);
+            imageView.setBackgroundResource(R.drawable.tomtav);
             imageView.setClipToOutline(true);
 
             @SuppressLint("DiscouragedApi")
-            int resId = getResources().getIdentifier("image" + (i + 1), "drawable", getContext().getPackageName());
+            int resId = getResources().getIdentifier("image" + (i + 1), "drawable", requireContext().getPackageName());
             if (resId != 0) {
                 imageView.setImageResource(resId);
             } else {
@@ -109,5 +132,53 @@ public class HomeScreen extends Fragment {
         super.onDestroyView();
         sliderHandler.removeCallbacks(sliderRunnable);
     }
+
+    private void loadUserProfileImage() {
+        progressBar.setVisibility(View.VISIBLE); // Show the ProgressBar
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseUser firebaseUser = auth.getCurrentUser();
+        if (firebaseUser == null) {
+            Toast.makeText(getActivity(), "User not logged in", Toast.LENGTH_LONG).show();
+            progressBar.setVisibility(View.GONE); // Hide the ProgressBar
+        } else {
+            DatabaseReference referenceProfile = FirebaseDatabase.getInstance().getReference("Registered users");
+            referenceProfile.child(firebaseUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    ReadWriteUserDetails userDetails = snapshot.getValue(ReadWriteUserDetails.class);
+                    if (userDetails != null && userDetails.imageUrl != null && !userDetails.imageUrl.isEmpty()) {
+                        Glide.with(requireActivity())
+                            .load(userDetails.imageUrl)
+                            .into(new CustomTarget<Drawable>() {
+                                @Override
+                                public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                                    profile.setImageDrawable(resource);
+                                    progressBar.setVisibility(View.GONE); // Hide the ProgressBar
+                                }
+
+                                @Override
+                                public void onLoadCleared(@Nullable Drawable placeholder) {
+                                    // Handle cleanup if needed
+                                }
+
+                                @Override
+                                public void onLoadFailed(@Nullable Drawable errorDrawable) {
+                                    progressBar.setVisibility(View.GONE); // Hide the ProgressBar on failure
+                                }
+                            });
+                    } else {
+                        Toast.makeText(getActivity(), "User image not available", Toast.LENGTH_LONG).show();
+                        progressBar.setVisibility(View.GONE); // Hide the ProgressBar
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    progressBar.setVisibility(View.GONE); // Hide the ProgressBar on cancellation
+                }
+            });
+        }
+    }
+
 }
 

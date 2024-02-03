@@ -2,12 +2,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:background="@color/colorApp"
+        android:gravity="center_vertical"
         android:layout_gravity="center_horizontal|center_vertical">
 
         <ImageView
@@ -15,6 +17,30 @@
             android:layout_height="match_parent"
             android:src="@drawable/lg_app"
             tools:ignore="ContentDescription" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="end"
+            android:layout_gravity="end|center_vertical"
+            android:paddingEnd="10dp">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profile"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/empty_image"
+                app:civ_border_color="#ffdb15"
+                app:civ_border_width="3dp" />
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="11dp" />
+        </RelativeLayout>
 
     </LinearLayout>
 
