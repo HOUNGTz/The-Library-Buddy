@@ -140,8 +140,8 @@ public class ProfilePage extends Fragment {
 
             if (image != null && !image.isEmpty()) {
                 Glide.with(ProfilePage.this)
-                        .load(image)
-                        .into(imageView);
+                .load(image)
+                .into(imageView);
             }
         }
 
