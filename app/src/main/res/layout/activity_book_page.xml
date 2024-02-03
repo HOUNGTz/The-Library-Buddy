@@ -28,216 +28,429 @@
 
     </LinearLayout>
 
-    <TableRow
+    <ScrollView
         android:layout_width="match_parent"
-        android:padding="16dp"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_gravity="center_vertical">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.4"
-            android:fontFamily="@font/quick"
-            android:gravity="start"
-            android:text="@string/category_1"
-            android:textColor="#000"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            tools:ignore="UnusedAttribute" />
-
-        <com.google.android.material.divider.MaterialDivider
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_gravity="center_vertical"
-            android:layout_marginTop="8dp"
-            android:layout_weight="1"
-            android:background="@android:color/black" />
-    </TableRow>
-
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardCornerRadius="4dp"
-        app:cardElevation="4dp"
-        app:cardUseCompatPadding="true"
-        android:layout_margin="8dp">
-
-        <RelativeLayout
+        android:layout_height="match_parent">
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:padding="16dp"
-            android:layout_gravity="center">
-
-            <ImageView
-                android:id="@+id/img_clicker"
-                android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <TableRow
+                android:layout_width="match_parent"
+                android:padding="16dp"
                 android:layout_height="wrap_content"
-                android:src="@drawable/tomtav"
-                android:scaleType="fitXY"
-                android:background="@drawable/frame_image"
-                tools:ignore="ContentDescription" />
+                android:orientation="horizontal"
+                android:layout_gravity="center_vertical">
 
-            <TextView
-                android:id="@+id/textViewBookTitle"
-                android:layout_width="wrap_content"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/quick"
+                    android:gravity="start"
+                    android:text="សៀវភៅរឿងខ្មែរ"
+                    android:textColor="#000"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    tools:ignore="UnusedAttribute" />
+
+                <com.google.android.material.divider.MaterialDivider
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="8dp"
+                    android:layout_weight="1"
+                    android:background="@android:color/black" />
+            </TableRow>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="148dp"
-                android:layout_toStartOf="@+id/information"
-                android:text="Book Title"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                android:textSize="12sp"
-                tools:ignore="HardcodedText,TextSizeCheck" />
+                app:cardCornerRadius="4dp"
+                app:cardElevation="4dp"
+                app:cardUseCompatPadding="true"
+                android:layout_margin="8dp">
 
-            <TextView
-                android:id="@+id/textViewBookSubtitle"
-                android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:padding="16dp"
+                    android:layout_gravity="center">
+
+                    <ImageView
+                        android:id="@+id/img_clicker"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/tomtav"
+                        android:scaleType="fitXY"
+                        android:background="@drawable/frame_image"
+                        tools:ignore="ContentDescription" />
+
+                    <TextView
+                        android:id="@+id/textViewBookTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="148dp"
+                        android:layout_toStartOf="@+id/information"
+                        android:text="Book Title"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                        android:textSize="12sp"
+                        tools:ignore="HardcodedText,TextSizeCheck" />
+
+                    <TextView
+                        android:id="@+id/textViewBookSubtitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignStart="@+id/textViewBookTitle"
+                        android:layout_alignBottom="@+id/information"
+                        android:layout_marginStart="0dp"
+                        android:layout_marginEnd="0dp"
+                        android:layout_marginBottom="26dp"
+                        android:layout_toStartOf="@+id/information"
+                        android:text="Book Subtitle"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                        android:textSize="13sp"
+                        tools:ignore="HardcodedText" />
+
+                    <TextView
+                        android:id="@+id/textViewBookDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignStart="@+id/textViewBookTitle"
+                        android:layout_alignBottom="@+id/information"
+                        android:layout_marginStart="0dp"
+                        android:layout_marginEnd="0dp"
+                        android:layout_marginBottom="0dp"
+                        android:layout_toStartOf="@+id/information"
+                        android:text="Public date:"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                        android:textSize="13sp"
+                        tools:ignore="HardcodedText" />
+
+                    <ImageButton
+                        android:id="@+id/information"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentEnd="true"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:contentDescription="@string/todo"
+                        android:foregroundGravity="center_vertical"
+                        android:padding="8dp"
+                        android:src="@mipmap/more"
+                        tools:ignore="TouchTargetSizeCheck,DuplicateSpeakableTextCheck" />
+
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:padding="16dp"
                 android:layout_height="wrap_content"
-                android:layout_alignStart="@+id/textViewBookTitle"
-                android:layout_alignBottom="@+id/information"
-                android:layout_marginStart="0dp"
-                android:layout_marginEnd="0dp"
-                android:layout_marginBottom="26dp"
-                android:layout_toStartOf="@+id/information"
-                android:text="Book Subtitle"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                android:textSize="13sp"
-                tools:ignore="HardcodedText" />
+                android:orientation="horizontal"
+                android:layout_gravity="center_vertical">
 
-            <TextView
-                android:id="@+id/textViewBookDate"
-                android:layout_width="wrap_content"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/quick"
+                    android:gravity="start"
+                    android:text="រឿងប្រលោមលោក"
+                    android:textColor="#000"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    tools:ignore="UnusedAttribute" />
+                <com.google.android.material.divider.MaterialDivider
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="8dp"
+                    android:layout_weight="1"
+                    android:background="@android:color/black" />
+            </TableRow>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignStart="@+id/textViewBookTitle"
-                android:layout_alignBottom="@+id/information"
-                android:layout_marginStart="0dp"
-                android:layout_marginEnd="0dp"
-                android:layout_marginBottom="0dp"
-                android:layout_toStartOf="@+id/information"
-                android:text="Public date:"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                android:textSize="13sp"
-                tools:ignore="HardcodedText" />
+                app:cardCornerRadius="4dp"
+                app:cardElevation="4dp"
+                app:cardUseCompatPadding="true"
+                android:layout_margin="8dp">
 
-            <ImageButton
-                android:id="@+id/information"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignParentEnd="true"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:contentDescription="@string/todo"
-                android:foregroundGravity="center_vertical"
-                android:padding="8dp"
-                android:src="@mipmap/more"
-                tools:ignore="TouchTargetSizeCheck,DuplicateSpeakableTextCheck" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:padding="16dp"
+                    android:layout_gravity="center">
 
-        </RelativeLayout>
-    </androidx.cardview.widget.CardView>
+                    <ImageView
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/tomtav"
+                        android:scaleType="fitXY"
+                        android:background="@drawable/frame_image"
+                        tools:ignore="ContentDescription" />
 
-    <TableRow
-        android:layout_width="match_parent"
-        android:padding="16dp"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_gravity="center_vertical">
+                    <TextView
+                        android:id="@+id/type_b_text_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="148dp"
+                        android:layout_toStartOf="@+id/type_b_delete_button"
+                        android:text="Book Title"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                        android:textSize="12sp"
+                        tools:ignore="HardcodedText,TextSizeCheck" />
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.4"
-            android:fontFamily="@font/quick"
-            android:gravity="start"
-            android:text="@string/category_2"
-            android:textColor="#000"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            tools:ignore="UnusedAttribute" />
-        <com.google.android.material.divider.MaterialDivider
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_gravity="center_vertical"
-            android:layout_marginTop="8dp"
-            android:layout_weight="1"
-            android:background="@android:color/black" />
-    </TableRow>
+                    <TextView
+                        android:id="@+id/type_b_text_subtitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignStart="@+id/type_b_text_title"
+                        android:layout_alignBottom="@+id/type_b_delete_button"
+                        android:layout_marginStart="0dp"
+                        android:layout_marginEnd="0dp"
+                        android:layout_marginBottom="26dp"
+                        android:layout_toStartOf="@+id/type_b_delete_button"
+                        android:text="Book Subtitle"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                        android:textSize="13sp"
+                        tools:ignore="HardcodedText" />
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardCornerRadius="4dp"
-        app:cardElevation="4dp"
-        app:cardUseCompatPadding="true"
-        android:layout_margin="8dp">
+                    <TextView
+                        android:id="@+id/type_b_text_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignStart="@+id/type_b_text_title"
+                        android:layout_alignBottom="@+id/type_b_delete_button"
+                        android:layout_marginStart="0dp"
+                        android:layout_marginEnd="0dp"
+                        android:layout_marginBottom="0dp"
+                        android:layout_toStartOf="@+id/type_b_delete_button"
+                        android:text="Public date:"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                        android:textSize="13sp"
+                        tools:ignore="HardcodedText" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:padding="16dp"
-            android:layout_gravity="center">
+                    <ImageButton
+                        android:id="@+id/type_b_delete_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentEnd="true"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:contentDescription="@string/todo"
+                        android:foregroundGravity="center_vertical"
+                        android:padding="8dp"
+                        android:src="@mipmap/more"
+                        tools:ignore="TouchTargetSizeCheck" />
 
-            <ImageView
-                android:layout_width="100dp"
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:padding="16dp"
                 android:layout_height="wrap_content"
-                android:src="@drawable/tomtav"
-                android:scaleType="fitXY"
-                android:background="@drawable/frame_image"
-                tools:ignore="ContentDescription" />
+                android:orientation="horizontal"
+                android:layout_gravity="center_vertical">
 
-            <TextView
-                android:id="@+id/type_b_text_title"
-                android:layout_width="wrap_content"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/quick"
+                    android:gravity="start"
+                    android:text="រឿងអក្សរសិល្ប៍"
+                    android:textColor="#000"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    tools:ignore="UnusedAttribute" />
+                <com.google.android.material.divider.MaterialDivider
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="8dp"
+                    android:layout_weight="1"
+                    android:background="@android:color/black" />
+            </TableRow>
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="148dp"
-                android:layout_toStartOf="@+id/type_b_delete_button"
-                android:text="Book Title"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                android:textSize="12sp"
-                tools:ignore="HardcodedText,TextSizeCheck" />
+                app:cardCornerRadius="4dp"
+                app:cardElevation="4dp"
+                app:cardUseCompatPadding="true"
+                android:layout_margin="8dp">
 
-            <TextView
-                android:id="@+id/type_b_text_subtitle"
-                android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:padding="16dp"
+                    android:layout_gravity="center">
+
+                    <ImageView
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/tomtav"
+                        android:scaleType="fitXY"
+                        android:background="@drawable/frame_image"
+                        tools:ignore="ContentDescription" />
+
+                    <TextView
+                        android:id="@+id/type_b_text_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="148dp"
+                        android:layout_toStartOf="@+id/type_b_delete_button"
+                        android:text="Book Title"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                        android:textSize="12sp"
+                        tools:ignore="DuplicateIds,HardcodedText,TextSizeCheck" />
+
+                    <TextView
+                        android:id="@+id/type_b_text_subtitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignStart="@+id/type_b_text_title"
+                        android:layout_alignBottom="@+id/type_b_delete_button"
+                        android:layout_marginStart="0dp"
+                        android:layout_marginEnd="0dp"
+                        android:layout_marginBottom="26dp"
+                        android:layout_toStartOf="@+id/type_b_delete_button"
+                        android:text="Book Subtitle"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                        android:textSize="13sp"
+                        tools:ignore="DuplicateIds,HardcodedText" />
+
+                    <TextView
+                        android:id="@+id/type_b_text_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignStart="@+id/type_b_text_title"
+                        android:layout_alignBottom="@+id/type_b_delete_button"
+                        android:layout_marginStart="0dp"
+                        android:layout_marginEnd="0dp"
+                        android:layout_marginBottom="0dp"
+                        android:layout_toStartOf="@+id/type_b_delete_button"
+                        android:text="Public date:"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                        android:textSize="13sp"
+                        tools:ignore="DuplicateIds,HardcodedText" />
+
+                    <ImageButton
+                        android:id="@+id/type_b_delete_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentEnd="true"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:contentDescription="@string/todo"
+                        android:foregroundGravity="center_vertical"
+                        android:padding="8dp"
+                        android:src="@mipmap/more"
+                        tools:ignore="DuplicateIds,TouchTargetSizeCheck" />
+
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:padding="16dp"
                 android:layout_height="wrap_content"
-                android:layout_alignStart="@+id/type_b_text_title"
-                android:layout_alignBottom="@+id/type_b_delete_button"
-                android:layout_marginStart="0dp"
-                android:layout_marginEnd="0dp"
-                android:layout_marginBottom="26dp"
-                android:layout_toStartOf="@+id/type_b_delete_button"
-                android:text="Book Subtitle"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                android:textSize="13sp"
-                tools:ignore="HardcodedText" />
+                android:orientation="horizontal"
+                android:layout_gravity="center_vertical">
 
-            <TextView
-                android:id="@+id/type_b_text_date"
-                android:layout_width="wrap_content"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/quick"
+                    android:gravity="start"
+                    android:text="រឿងកំប្លែង"
+                    android:textColor="#000"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    tools:ignore="UnusedAttribute" />
+                <com.google.android.material.divider.MaterialDivider
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="8dp"
+                    android:layout_weight="1"
+                    android:background="@android:color/black" />
+            </TableRow>
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignStart="@+id/type_b_text_title"
-                android:layout_alignBottom="@+id/type_b_delete_button"
-                android:layout_marginStart="0dp"
-                android:layout_marginEnd="0dp"
-                android:layout_marginBottom="0dp"
-                android:layout_toStartOf="@+id/type_b_delete_button"
-                android:text="Public date:"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                android:textSize="13sp"
-                tools:ignore="HardcodedText" />
+                app:cardCornerRadius="4dp"
+                app:cardElevation="4dp"
+                app:cardUseCompatPadding="true"
+                android:layout_margin="8dp">
 
-            <ImageButton
-                android:id="@+id/type_b_delete_button"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignParentEnd="true"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:contentDescription="@string/todo"
-                android:foregroundGravity="center_vertical"
-                android:padding="8dp"
-                android:src="@mipmap/more"
-                tools:ignore="TouchTargetSizeCheck" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:padding="16dp"
+                    android:layout_gravity="center">
 
-        </RelativeLayout>
-    </androidx.cardview.widget.CardView>
+                    <ImageView
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/tomtav"
+                        android:scaleType="fitXY"
+                        android:background="@drawable/frame_image"
+                        tools:ignore="ContentDescription" />
+
+                    <TextView
+                        android:id="@+id/type_b_text_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="148dp"
+                        android:layout_toStartOf="@+id/type_b_delete_button"
+                        android:text="Book Title"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                        android:textSize="12sp"
+                        tools:ignore="DuplicateIds,HardcodedText,TextSizeCheck" />
+
+                    <TextView
+                        android:id="@+id/type_b_text_subtitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignStart="@+id/type_b_text_title"
+                        android:layout_alignBottom="@+id/type_b_delete_button"
+                        android:layout_marginStart="0dp"
+                        android:layout_marginEnd="0dp"
+                        android:layout_marginBottom="26dp"
+                        android:layout_toStartOf="@+id/type_b_delete_button"
+                        android:text="Book Subtitle"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                        android:textSize="13sp"
+                        tools:ignore="DuplicateIds,HardcodedText" />
+
+                    <TextView
+                        android:id="@+id/type_b_text_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignStart="@+id/type_b_text_title"
+                        android:layout_alignBottom="@+id/type_b_delete_button"
+                        android:layout_marginStart="0dp"
+                        android:layout_marginEnd="0dp"
+                        android:layout_marginBottom="0dp"
+                        android:layout_toStartOf="@+id/type_b_delete_button"
+                        android:text="Public date:"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                        android:textSize="13sp"
+                        tools:ignore="DuplicateIds,HardcodedText" />
+
+                    <ImageButton
+                        android:id="@+id/type_b_delete_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentEnd="true"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:contentDescription="@string/todo"
+                        android:foregroundGravity="center_vertical"
+                        android:padding="8dp"
+                        android:src="@mipmap/more"
+                        tools:ignore="DuplicateIds,TouchTargetSizeCheck" />
+
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>
