@@ -52,6 +52,7 @@ public class ProfilePage extends Fragment {
     public FirebaseAuth auth;
     public String name, image,email,role,password, userID;
     private ProgressBar progressBar;
+    public View verticalLine;
 
     @Override
     public View onCreateView(
@@ -69,6 +70,7 @@ public class ProfilePage extends Fragment {
         roleText = view.findViewById(R.id.role);
         LinearLayout update = view.findViewById(R.id.update);
         progressBar = view.findViewById(R.id.progressBar);
+        verticalLine = view.findViewById(R.id.vertical_line);
 
         // Setup Firebase
         auth = FirebaseAuth.getInstance();
@@ -94,10 +96,11 @@ public class ProfilePage extends Fragment {
                         textName.setText(name);
                         if (role.equals("1")) {
                             roleText.setText("Admin");
+                            verticalLine.setVisibility(View.VISIBLE);
                             add_book.setVisibility(View.VISIBLE);
-                            update.setVisibility(View.GONE);
                         } else {
                             roleText.setText("User");
+                            verticalLine.setVisibility(View.GONE);
                             add_book.setVisibility(View.GONE);
                         }
 
