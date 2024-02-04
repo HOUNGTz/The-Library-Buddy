@@ -11,38 +11,70 @@ import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ListView;
+import android.widget.TableRow;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.houng.mobile_app_development.R;
+import com.houng.mobile_app_development.model.Book_model;
 
 import java.util.Objects;
 
 public class AddPage extends AppCompatActivity {
-    public TextInputEditText choose_type_book;
+    public TextInputEditText choose_type_book, title, subtitle, rate, des, story;
+    public Button save_button;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_page);
+        save_button = findViewById(R.id.save_book_button);
+        title = findViewById(R.id.input_title);
+        subtitle = findViewById(R.id.input_subtitle);
+        rate = findViewById(R.id.input_rate);
+        des = findViewById(R.id.input_des);
+        story = findViewById(R.id.input_story);
         Toolbar toolbar = findViewById(R.id.materialToolbar);
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setTitle("Insert New Books");
+
         int titleTextColor = ContextCompat.getColor(this, R.color.white);
         SpannableString spannableString = new SpannableString(getSupportActionBar().getTitle());
         spannableString.setSpan(new ForegroundColorSpan(titleTextColor), 0, spannableString.length(), 0);
         getSupportActionBar().setTitle(spannableString);
 
+
         choose_type_book = findViewById(R.id.choose_type_book);
+
         choose_type_book.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showDialog();
+            }
+        });
+        save_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String editTitle = title.getText().toString();
+                String editSubtitle = subtitle.getText().toString();
+                String editRate = rate.getText().toString();
+                String editDes = des.getText().toString();
+                String editStory = story.getText().toString();
+                String editCategory = choose_type_book.getText().toString();
+                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("book");
+                String bookId = databaseReference.push().getKey();
+                Book_model book = new Book_model(editTitle,editCategory, editSubtitle,"1.png",editRate,editDes,editStory);
+                databaseReference.child(bookId).setValue(book);
+
             }
         });
 
