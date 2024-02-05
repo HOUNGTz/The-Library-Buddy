@@ -66,4 +66,5 @@
     <string name="search_text">Search</string>
     <string name="add_to_favorite">Add to favorite</string>
     <string name="delete">Delete</string>
+    <string name="image_preview" />
 </resources>

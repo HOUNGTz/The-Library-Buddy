@@ -39,6 +39,8 @@ dependencies {
     implementation("com.google.android.material:material:1.11.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation ("de.hdodenhof:circleimageview:3.1.0")
+    implementation ("com.google.firebase:firebase-appcheck:latest_version")
+    implementation ("com.google.firebase:firebase-appcheck-safetynet:16.0.0-beta01")
     implementation ("com.google.android.material:material:<latest_version>")
     implementation ("com.github.bumptech.glide:glide:4.16.0")
     annotationProcessor ("com.github.bumptech.glide:compiler:4.14.2")
