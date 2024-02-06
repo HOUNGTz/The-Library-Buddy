@@ -45,7 +45,6 @@ public class AddPage extends AppCompatActivity {
     public TextInputEditText choose_type_book, title, subtitle, rate, des, story;
     public Button save_button;
     private static final int PICK_IMAGE_REQUEST = 1;
-
     private ImageView imagePreview;
     private Uri imageUri;
     private ProgressBar progressBar;

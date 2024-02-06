@@ -17,8 +17,10 @@ import android.view.ViewGroup;
 import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Switch;
 import android.widget.Toast;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.google.firebase.auth.FirebaseAuth;
@@ -31,7 +33,9 @@ import com.google.firebase.database.ValueEventListener;
 import com.houng.mobile_app_development.R;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import com.houng.mobile_app_development.ReadWriteUserDetails;
+import com.houng.mobile_app_development.model.Book_model;
 import com.houng.mobile_app_development.modules.helper.CarouselAdapter;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -43,6 +47,7 @@ public class HomeScreen extends Fragment {
     public ImageView profile;
     private ProgressBar progressBar;
     private final Handler sliderHandler = new Handler();
+    public String image;
     private final Runnable sliderRunnable = new Runnable() {
         @Override
         public void run() {
@@ -82,37 +87,68 @@ public class HomeScreen extends Fragment {
         return view;
     }
     public void addImagesToGridLayout(GridLayout gridLayout) {
-        final int totalImages = 10;
         final int columnCount = 3;
         gridLayout.setColumnCount(columnCount);
 
         DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
         float screenWidthDp = displayMetrics.widthPixels / displayMetrics.density;
         float imageWidthDp = (screenWidthDp - (2 * 16 + 2 * 10)) / columnCount;
-        for (int i = 0; i < totalImages; i++) {
-            ImageView imageView = new ImageView(getContext());
-            GridLayout.LayoutParams params = new GridLayout.LayoutParams();
-            params.width = (int) (imageWidthDp * displayMetrics.density);
-            params.height = 400;
-            params.setMargins(0, 20, 25, 20);
-            params.rowSpec = GridLayout.spec(i / columnCount);
-            params.columnSpec = GridLayout.spec(i % columnCount);
-            params.setGravity(Gravity.CENTER);
-            imageView.setLayoutParams(params);
-            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-            imageView.setBackgroundResource(R.drawable.tomtav);
-            imageView.setClipToOutline(true);
 
-            @SuppressLint("DiscouragedApi")
-            int resId = getResources().getIdentifier("image" + (i + 1), "drawable", requireContext().getPackageName());
-            if (resId != 0) {
-                imageView.setImageResource(resId);
-            } else {
-                imageView.setImageResource(R.drawable.librarybuddy);
-            }
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseUser user = auth.getCurrentUser();
+        if (user == null) {
+            Toast.makeText(getActivity(), "No user signed in", Toast.LENGTH_LONG).show();
+        } else {
+            DatabaseReference referenceBooks = FirebaseDatabase.getInstance().getReference("book");
+            referenceBooks.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    int imageIndex = 0; // Index to keep track of image position in the grid
 
-            gridLayout.addView(imageView);
+                    for (DataSnapshot bookSnapshot : dataSnapshot.getChildren()) {
+                        if (imageIndex > 5) {
+                            // Stop the loop after 5 images have been added
+                            break;
+                        }
+
+                        Book_model book = bookSnapshot.getValue(Book_model.class);
+                        image = book.image;
+                        if (book != null && image != null && !image.isEmpty()) {
+                            ImageView imageView = new ImageView(getContext());
+                            GridLayout.LayoutParams params = new GridLayout.LayoutParams();
+                            params.width = (int) (imageWidthDp * getResources().getDisplayMetrics().density);
+                            params.height = 400;
+                            params.setMargins(0, 20, 25, 20);// Set your desired margins
+
+                            params.rowSpec = GridLayout.spec(imageIndex / columnCount);
+                            params.columnSpec = GridLayout.spec(imageIndex % columnCount);
+                            imageView.setLayoutParams(params);
+                            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                            imageView.setClipToOutline(true);
+
+                            gridLayout.addView(imageView);
+
+                            // Use Glide to load the image without an error placeholder
+                            Glide.with(requireContext())
+                                .load(image)
+                                .skipMemoryCache(true)
+                                .error(R.drawable.book)
+                                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                                .into(imageView);
+
+                            imageIndex++; // Increment the index for the next image
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    Toast.makeText(getActivity(), "Database error: " + databaseError.getMessage(), Toast.LENGTH_LONG).show();
+                }
+            });
         }
+
+
     }
 
     @Override
