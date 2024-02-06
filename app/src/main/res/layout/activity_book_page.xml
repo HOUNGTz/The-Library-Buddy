@@ -80,9 +80,11 @@
                         android:id="@+id/img_clicker"
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/tomtav"
-                        android:scaleType="fitXY"
+                        android:layout_marginEnd="12dp"
+                        android:layout_toStartOf="@+id/textViewBookSubtitle"
                         android:background="@drawable/frame_image"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/tomtav"
                         tools:ignore="ContentDescription" />
 
                     <TextView
@@ -184,9 +186,11 @@
                     <ImageView
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/tomtav"
-                        android:scaleType="fitXY"
+                        android:layout_marginEnd="11dp"
+                        android:layout_toStartOf="@+id/type_b_text_subtitle"
                         android:background="@drawable/frame_image"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/tomtav"
                         tools:ignore="ContentDescription" />
 
                     <TextView
@@ -287,9 +291,11 @@
                     <ImageView
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/tomtav"
-                        android:scaleType="fitXY"
+                        android:layout_marginEnd="11dp"
+                        android:layout_toStartOf="@+id/type_b_text_subtitle"
                         android:background="@drawable/frame_image"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/tomtav"
                         tools:ignore="ContentDescription" />
 
                     <TextView
@@ -390,9 +396,11 @@
                     <ImageView
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/tomtav"
-                        android:scaleType="fitXY"
+                        android:layout_marginEnd="11dp"
+                        android:layout_toStartOf="@+id/type_b_text_subtitle"
                         android:background="@drawable/frame_image"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/tomtav"
                         tools:ignore="ContentDescription" />
 
                     <TextView
