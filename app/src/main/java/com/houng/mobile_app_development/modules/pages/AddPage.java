@@ -5,6 +5,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.appcheck.FirebaseAppCheck;
 
+import android.annotation.SuppressLint;
 import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -17,12 +18,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.TableRow;
 import android.widget.Toast;
 import com.google.firebase.appcheck.safetynet.SafetyNetAppCheckProviderFactory;
 
@@ -34,20 +31,14 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.houng.mobile_app_development.MainActivity;
 import com.houng.mobile_app_development.MainButtomNavigation;
 import com.houng.mobile_app_development.R;
 import com.houng.mobile_app_development.model.Book_model;
-import com.houng.mobile_app_development.modules.screens.LoginScreen;
-import com.houng.mobile_app_development.modules.screens.SignUpScreen;
-
 import java.util.Objects;
 
 public class AddPage extends AppCompatActivity {
@@ -170,15 +161,16 @@ public class AddPage extends AppCompatActivity {
 
     private void saveBook(String imageUrl) {
 
-        String editTitle = title.getText().toString();
-        String editSubtitle = subtitle.getText().toString();
-        String editRate = rate.getText().toString();
-        String editDes = des.getText().toString();
-        String editStory = story.getText().toString();
-        String editCategory = choose_type_book.getText().toString();
+        String editTitle = Objects.requireNonNull(title.getText()).toString();
+        String editSubtitle = Objects.requireNonNull(subtitle.getText()).toString();
+        String editRate = Objects.requireNonNull(rate.getText()).toString();
+        String editDes = Objects.requireNonNull(des.getText()).toString();
+        String editStory = Objects.requireNonNull(story.getText()).toString();
+        String editCategory = Objects.requireNonNull(choose_type_book.getText()).toString();
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("book");
         String bookId = databaseReference.push().getKey();
         Book_model book = new Book_model(editTitle,editCategory, editSubtitle,"1.png",editRate,editDes,editStory);
+        assert bookId != null;
         databaseReference.child(bookId).setValue(book);
         Book_model books = new Book_model(editTitle, editCategory, editSubtitle, imageUrl, editRate, editDes, editStory);
         databaseReference.child(bookId).setValue(books).addOnCompleteListener(
@@ -197,19 +189,17 @@ public class AddPage extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                onBackPressed();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     public void showDialog() {
         final CharSequence[] items = {"សៀវភៅប្រលោមលោក", "សៀវភៅទូទៅ", "សៀវភៅអក្សរសិល្ប៌", "សៀវភៅរឿងកំប្លែង"};
         LayoutInflater inflater = LayoutInflater.from(this);
-        View dialogView = inflater.inflate(R.layout.dialog_single_choice, null);
+        @SuppressLint("InflateParams") View dialogView = inflater.inflate(R.layout.dialog_single_choice, null);
         final int[] selectedItemIndex = {-1};
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
