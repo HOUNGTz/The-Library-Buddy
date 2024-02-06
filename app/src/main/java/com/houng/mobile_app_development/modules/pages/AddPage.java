@@ -90,7 +90,6 @@ public class AddPage extends AppCompatActivity {
         spannableString.setSpan(new ForegroundColorSpan(titleTextColor), 0, spannableString.length(), 0);
         getSupportActionBar().setTitle(spannableString);
 
-
         choose_type_book = findViewById(R.id.choose_type_book);
 
         choose_type_book.setOnClickListener(new View.OnClickListener() {
@@ -102,8 +101,6 @@ public class AddPage extends AppCompatActivity {
         save_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                 progressBar.setVisibility(View.VISIBLE);
                 save_button.setVisibility(View.GONE);
                 if (imageUri != null) {
@@ -111,7 +108,6 @@ public class AddPage extends AppCompatActivity {
                 } else {
                     // Save book without image or show an error message
                     saveBook(null);
-
                 }
 
             }
@@ -150,24 +146,25 @@ public class AddPage extends AppCompatActivity {
                     .child(System.currentTimeMillis() + "." + getFileExtension(imageUri));
 
             fileReference.putFile(imageUri)
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                @Override
-                                public void onSuccess(Uri uri) {
-                                    String downloadUrl = uri.toString();
-                                    saveBook(downloadUrl);
-                                }
-                            });
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(AddPage.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                String downloadUrl = uri.toString();
+                                saveBook(downloadUrl);
+                            }
+                        });
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(AddPage.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            );
         }
     }
 
@@ -185,17 +182,16 @@ public class AddPage extends AppCompatActivity {
         databaseReference.child(bookId).setValue(book);
         Book_model books = new Book_model(editTitle, editCategory, editSubtitle, imageUrl, editRate, editDes, editStory);
         databaseReference.child(bookId).setValue(books).addOnCompleteListener(
-                new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-
-                        if(task.isSuccessful()){
-                            progressBar.setVisibility(View.GONE);
-                            Intent intent = new Intent(AddPage.this, MainButtomNavigation.class);
-                            startActivity(intent);
-                        }
+            new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if(task.isSuccessful()){
+                        progressBar.setVisibility(View.GONE);
+                        Intent intent = new Intent(AddPage.this, MainButtomNavigation.class);
+                        startActivity(intent);
                     }
                 }
+            }
         );
     }
 
@@ -210,12 +206,10 @@ public class AddPage extends AppCompatActivity {
         }
     }
 
-
     public void showDialog() {
-        final CharSequence[] items = {"សៀវភៅប្រលោមលោក", "សៀវភៅទូទៅ", "សៀវភៅអក្សរសិល្ប៌", "គម្ពីរធម៌"};
+        final CharSequence[] items = {"សៀវភៅប្រលោមលោក", "សៀវភៅទូទៅ", "សៀវភៅអក្សរសិល្ប៌", "សៀវភៅរឿងកំប្លែង"};
         LayoutInflater inflater = LayoutInflater.from(this);
         View dialogView = inflater.inflate(R.layout.dialog_single_choice, null);
-        CheckBox checkBox = dialogView.findViewById(R.id.checkbox_none);
         final int[] selectedItemIndex = {-1};
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -223,32 +217,25 @@ public class AddPage extends AppCompatActivity {
         builder.setSingleChoiceItems(items, -1, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int item) {
                 selectedItemIndex[0] = item;
-                checkBox.setChecked(false);
+//                choose_type_book.setText(items[item].toString());
             }
         });
-        builder.setView(dialogView);
-        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    ListView listView = ((AlertDialog) dialogView.getParent()).getListView();
-                    listView.setItemChecked(selectedItemIndex[0], false);
-                    selectedItemIndex[0] = -1;
-                }
-            }
-        });
+
         builder.setPositiveButton("យល់ព្រម", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int id) {
                 if (selectedItemIndex[0] != -1) {
-                } else {
-                    checkBox.isChecked();
+                    choose_type_book.setText(items[selectedItemIndex[0]].toString()); // Set the text of EditText when "Okay" is clicked
                 }
             }
         });
+
         builder.setNegativeButton("បោះបង់", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {}
+            public void onClick(DialogInterface dialog, int id) {
+                // Handle the negative button action here if needed
+            }
         });
+
         AlertDialog dialog = builder.create();
         dialog.show();
     }
