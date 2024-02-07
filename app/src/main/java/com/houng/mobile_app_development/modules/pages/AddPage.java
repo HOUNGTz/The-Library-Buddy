@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.SpannableString;
+import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -166,24 +167,47 @@ public class AddPage extends AppCompatActivity {
         String editDes = Objects.requireNonNull(des.getText()).toString();
         String editStory = Objects.requireNonNull(story.getText()).toString();
         String editCategory = Objects.requireNonNull(choose_type_book.getText()).toString();
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("book");
-        String bookId = databaseReference.push().getKey();
-        Book_model book = new Book_model(editTitle,editCategory, editSubtitle,"1.png",editRate,editDes,editStory);
-        assert bookId != null;
-        databaseReference.child(bookId).setValue(book);
-        Book_model books = new Book_model(editTitle, editCategory, editSubtitle, imageUrl, editRate, editDes, editStory);
-        databaseReference.child(bookId).setValue(books).addOnCompleteListener(
-            new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull Task<Void> task) {
-                    if(task.isSuccessful()){
-                        progressBar.setVisibility(View.GONE);
-                        Intent intent = new Intent(AddPage.this, MainButtomNavigation.class);
-                        startActivity(intent);
+        if(TextUtils.isEmpty(editTitle)){
+            title.setError("Title Is required");
+            title.requestFocus();
+        } else if (TextUtils.isEmpty(editSubtitle)) {
+            subtitle.setError("Subtitle Is required");
+            subtitle.requestFocus();
+        }else if (TextUtils.isEmpty(editRate)) {
+            rate.setError("Rate Is required");
+            rate.requestFocus();
+        }else if (TextUtils.isEmpty(editDes)) {
+            des.setError("Des Is required");
+            des.requestFocus();
+        }else if (TextUtils.isEmpty(editStory)) {
+            story.setError("Story Is required");
+            story.requestFocus();
+        } else if (TextUtils.isEmpty(editCategory)) {
+            choose_type_book.setError("Category Is required");
+            choose_type_book.requestFocus();
+        } else if (TextUtils.isEmpty(imageUrl)) {
+            Toast.makeText(AddPage.this, "Please input image cover", Toast.LENGTH_LONG).show();
+            progressBar.setVisibility(View.GONE);
+            save_button.setVisibility(View.VISIBLE);
+        }else {
+            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("book");
+            String bookId = databaseReference.push().getKey();
+            assert bookId != null;
+            Book_model books = new Book_model(editTitle, editCategory, editSubtitle, imageUrl, editRate, editDes, editStory);
+            databaseReference.child(bookId).setValue(books).addOnCompleteListener(
+                    new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if(task.isSuccessful()){
+                                progressBar.setVisibility(View.GONE);
+                                Intent intent = new Intent(AddPage.this, MainButtomNavigation.class);
+                                startActivity(intent);
+                            }
+                        }
                     }
-                }
-            }
-        );
+            );
+        }
+
     }
 
     @Override
