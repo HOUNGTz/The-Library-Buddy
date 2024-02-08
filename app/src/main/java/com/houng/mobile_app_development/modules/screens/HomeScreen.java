@@ -6,16 +6,19 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.PagerSnapHelper;
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.Toast;
@@ -35,6 +38,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.houng.mobile_app_development.ReadWriteUserDetails;
 import com.houng.mobile_app_development.model.Book_model;
 import com.houng.mobile_app_development.modules.helper.CarouselAdapter;
+import com.houng.mobile_app_development.modules.pages.BookDetailsPage;
+import com.houng.mobile_app_development.modules.pages.UpdatePage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,6 +53,8 @@ public class HomeScreen extends Fragment {
     private ProgressBar progressBar;
     private final Handler sliderHandler = new Handler();
     public String image;
+    public LinearLayout loading;
+    public ImageView imageView;
     private final Runnable sliderRunnable = new Runnable() {
         @Override
         public void run() {
@@ -69,6 +76,7 @@ public class HomeScreen extends Fragment {
         profile = view.findViewById(R.id.profile);
         progressBar = view.findViewById(R.id.progressBar);
         gridLayout = view.findViewById(R.id.gridImage);
+        loading = view.findViewById(R.id.loading);
         addImagesToGridLayout(gridLayout);
 
         recyclerView = view.findViewById(R.id.recyclerView);
@@ -103,22 +111,22 @@ public class HomeScreen extends Fragment {
             referenceBooks.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    int imageIndex = 0; // Index to keep track of image position in the grid
+                    int imageIndex = 0;
 
                     for (DataSnapshot bookSnapshot : dataSnapshot.getChildren()) {
-                        if (imageIndex > 5) {
-                            // Stop the loop after 5 images have been added
-                            break;
-                        }
+//                        if (imageIndex > 6) {
+//                            break;
+//                        }
 
                         Book_model book = bookSnapshot.getValue(Book_model.class);
+                        assert book != null;
                         image = book.image;
-                        if (book != null && image != null && !image.isEmpty()) {
-                            ImageView imageView = new ImageView(getContext());
+                        if (image != null && !image.isEmpty()) {
                             GridLayout.LayoutParams params = new GridLayout.LayoutParams();
+                            imageView = new ImageView(getContext());
                             params.width = (int) (imageWidthDp * getResources().getDisplayMetrics().density);
                             params.height = 400;
-                            params.setMargins(0, 20, 25, 20);// Set your desired margins
+                            params.setMargins(0, 20, 25, 20);
 
                             params.rowSpec = GridLayout.spec(imageIndex / columnCount);
                             params.columnSpec = GridLayout.spec(imageIndex % columnCount);
@@ -132,11 +140,27 @@ public class HomeScreen extends Fragment {
                             Glide.with(requireContext())
                                 .load(image)
                                 .skipMemoryCache(true)
-                                .error(R.drawable.book)
+                                .error(R.drawable.empty_image)
                                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                                 .into(imageView);
 
-                            imageIndex++; // Increment the index for the next image
+                            imageIndex++;
+                            loading.setVisibility(View.GONE);
+
+                            final Book_model finalBook = book;
+
+                            imageView.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    try {
+                                        Intent intent = new Intent(getContext(), BookDetailsPage.class);
+                                        intent.putExtra("EXTRA_DATA", finalBook);
+                                        startActivity(intent);
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            });
                         }
                     }
                 }
@@ -147,8 +171,6 @@ public class HomeScreen extends Fragment {
                 }
             });
         }
-
-
     }
 
     @Override

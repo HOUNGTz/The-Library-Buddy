@@ -1,6 +1,8 @@
 package com.houng.mobile_app_development.model;
 
-public class Book_model {
+import java.io.Serializable;
+
+public class Book_model implements Serializable {
     public String title, category, subtitle, image, rate, des, story;
 
     public Book_model() {

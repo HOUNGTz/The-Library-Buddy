@@ -63,7 +63,7 @@ public class LoginScreen extends AppCompatActivity {
                     snackbar.setBackgroundTint(getResources().getColor(R.color.black));
                     snackbar.setActionTextColor(getResources().getColor(R.color.white));
                     snackbar.show();
-                    email.setError("email is required");
+                    email.setError("Email is required");
                     email.requestFocus();
                 } else if (!Patterns.EMAIL_ADDRESS.matcher(textEmail).matches()) {
                     View rootView = findViewById(android.R.id.content); // Get the root view
@@ -72,7 +72,7 @@ public class LoginScreen extends AppCompatActivity {
                     snackbar.setBackgroundTint(getResources().getColor(R.color.black));
                     snackbar.setActionTextColor(getResources().getColor(R.color.white));
                     snackbar.show();
-                    email.setError("valid email is required");
+                    email.setError("Valid email is required");
                 } else if (TextUtils.isEmpty(textPassword)) {
                     View rootView = findViewById(android.R.id.content); // Get the root view
                     Snackbar snackbar = Snackbar.make(rootView, "Password is require!", Snackbar.LENGTH_LONG);
@@ -80,7 +80,7 @@ public class LoginScreen extends AppCompatActivity {
                     snackbar.setBackgroundTint(getResources().getColor(R.color.black));
                     snackbar.setActionTextColor(getResources().getColor(R.color.white));
                     snackbar.show();
-                    password.setError("password is required");
+                    password.setError("Password is required");
                     password.requestFocus();
                 } else {
                     progressBar.setVisibility(View.VISIBLE);
@@ -167,15 +167,14 @@ public class LoginScreen extends AppCompatActivity {
     private void showAlertDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(LoginScreen.this);
         builder.setTitle("Email not Verified");
-        builder.setMessage("please verify your email now. you can not login without email verification");
+        builder.setMessage("Please verify your email now. you can not login without email verification");
         builder.setPositiveButton(" Continue ", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Intent intent = new Intent(LoginScreen.this, LoginScreen.class);
-                        startActivity(intent);
-                    }
-                }
-        );
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent intent = new Intent(LoginScreen.this, LoginScreen.class);
+                startActivity(intent);
+            }
+        });
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }

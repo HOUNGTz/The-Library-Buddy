@@ -78,28 +78,6 @@
                     android:text="@string/new_book"
                     android:textAlignment="viewStart"
                     android:textSize="20sp" />
-<!--                <LinearLayout-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="match_parent">-->
-<!--                    <TextView-->
-<!--                        android:id="@+id/tvSeeAll"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:layout_weight="0"-->
-<!--                        android:gravity="center_horizontal|center_vertical"-->
-<!--                        android:fontFamily="@font/quick"-->
-<!--                        android:text="@string/view_all"-->
-<!--                        android:textColor="#0072FF"-->
-<!--                        android:textSize="14sp"-->
-<!--                        tools:ignore="InefficientWeight" />-->
-<!--                    <ImageView-->
-<!--                        android:layout_marginStart="5sp"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:src="@mipmap/right_arrow"-->
-<!--                        android:layout_gravity="center_vertical"-->
-<!--                        />-->
-<!--                </LinearLayout>-->
             </LinearLayout>
 
             <GridLayout
@@ -111,8 +89,27 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
                 android:horizontalSpacing="10dp">
-
             </GridLayout>
+
+            <LinearLayout
+                android:id="@+id/loading"
+                android:layout_marginTop="100dp"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:background="@drawable/bg_loading"
+                android:layout_gravity="center"
+                android:padding="1dp">
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:padding="0dp"
+                    android:id="@+id/lottieAnimationView"
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:layout_height="match_parent"
+                    app:lottie_autoPlay="true"
+                    app:lottie_loop="true"
+                    app:lottie_rawRes="@raw/loading_image" />
+            </LinearLayout>
 
         </LinearLayout>
     </ScrollView>
