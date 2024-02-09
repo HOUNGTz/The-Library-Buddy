@@ -15,6 +15,7 @@
         android:fontFamily="@font/kdam_thmor"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
+        app:layout_constraintTop_toTopOf="parent"
         app:navigationIcon="@mipmap/arrow_back_icon"
         tools:ignore="MissingConstraints">
 
@@ -59,6 +60,7 @@
 
 
     <ScrollView
+        android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="60dp"
@@ -124,6 +126,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     tools:ignore="TouchTargetSizeCheck,DuplicateSpeakableTextCheck,ImageContrastCheck"
                     tools:layout_editor_absoluteY="7dp" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <LinearLayout
