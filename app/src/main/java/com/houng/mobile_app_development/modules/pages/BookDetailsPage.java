@@ -3,39 +3,43 @@ package com.houng.mobile_app_development.modules.pages;
 import static android.app.PendingIntent.getActivity;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.DialogFragment;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.SpannableString;
+import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.CustomTarget;
-import com.bumptech.glide.request.transition.Transition;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.houng.mobile_app_development.MainButtomNavigation;
 import com.houng.mobile_app_development.R;
 import com.houng.mobile_app_development.ReadWriteUserDetails;
 import com.houng.mobile_app_development.model.Book_model;
@@ -69,16 +73,12 @@ public class BookDetailsPage extends AppCompatActivity {
         img = findViewById(R.id.img);
         story = findViewById(R.id.story);
         rate = findViewById(R.id.rate);
-
-        buttonEditText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(BookDetailsPage.this, UpdatePage.class);
-                startActivity(intent);
-            }
-        });
-
         book = (Book_model) getIntent().getSerializableExtra("EXTRA_DATA");
+
+        buttonEditText.setOnClickListener(
+            v -> new UpdateDialog(book.title, book.category, book.subtitle, book.image, book.rate, book.des, book.story).show(BookDetailsPage.this.getSupportFragmentManager(), "GAME_DIALOG")
+        );
+
         if (book != null) {
             title.setText(book.title); if (book.image != null && !book.image.isEmpty()) {
                 Glide.with(BookDetailsPage.this)
@@ -87,10 +87,7 @@ public class BookDetailsPage extends AppCompatActivity {
             }
             story.setText(book.story);
             rate.setText(book.rate + "/5");
-
-
         }
-
         loadUserProfileRole();
     }
 
@@ -117,7 +114,7 @@ public class BookDetailsPage extends AppCompatActivity {
                     ReadWriteUserDetails userDetails = snapshot.getValue(ReadWriteUserDetails.class);
                     if (userDetails != null && userDetails.imageUrl != null && !userDetails.imageUrl.isEmpty()) {
                         role = userDetails.role;
-                        System.out.println("===== %%" + role);
+                        System.out.println("===== %%");
                     }
 
                     if(role.equals("1")){
@@ -133,9 +130,63 @@ public class BookDetailsPage extends AppCompatActivity {
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
-
                 }
             });
+        }
+    }
+
+    public static class UpdateDialog extends DialogFragment {
+        private final String title;
+        private final String subtitle;
+        private final String category;
+        private final String image;
+        private final String story;
+        private final String des;
+        private final String rate;
+
+        public UpdateDialog(String title, String subtitle, String category, String image, String story, String des, String rate) {
+            this.title = title;
+            this.subtitle = subtitle;
+            this.category = category;
+            this.image = image;
+            this.story = story;
+            this.des = des;
+            this.rate = rate;
+        }
+
+        @NonNull
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
+
+            LayoutInflater inflater = requireActivity().getLayoutInflater();
+            View view = inflater.inflate(R.layout.update_book, null);
+
+            builder.setView(view)
+                    .setPositiveButton(R.string.start, null) // Set to null temporarily
+                    .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // Cancel behavior here
+                            }
+                        }
+                    );
+
+            final AlertDialog dialog = builder.create();
+
+            dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+                @Override
+                public void onShow(DialogInterface dialogInterface) {
+                    Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                    positiveButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                        }
+                    });
+                }
+            });
+            return dialog;
         }
     }
 }

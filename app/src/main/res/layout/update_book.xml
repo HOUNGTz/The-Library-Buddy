@@ -1,41 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".modules.pages.UpdatePage">
-
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/materialToolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#22A5B4"
-            android:layout_gravity="center_horizontal"
-            android:fontFamily="@font/kdam_thmor"
-            android:minHeight="?attr/actionBarSize"
-            android:theme="?attr/actionBarTheme"
-            app:navigationIcon="@mipmap/arrow_back_icon">
-            <TextView
-                android:id="@+id/toolbarTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text=""
-                android:textColor="@android:color/white"
-                android:textSize="18sp" />
-
-        </com.google.android.material.appbar.MaterialToolbar>
-    </com.google.android.material.appbar.AppBarLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+<ScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent">
+    <LinearLayout android:layout_width="match_parent"
         android:padding="16dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_height="wrap_content"
+        xmlns:android="http://schemas.android.com/apk/res/android">
 
         <TableRow
             android:layout_width="match_parent"
@@ -48,13 +19,13 @@
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/title"
                     android:layout_width="0dp"
                     android:layout_weight="0.4"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="5dp">
+
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/category"
+                        android:id="@+id/input_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/book_title"
@@ -67,7 +38,7 @@
                     android:layout_weight="0.4">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/update_type_book"
+                        android:id="@+id/choose_type_book"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawableEnd="@mipmap/down"
@@ -89,7 +60,7 @@
                 android:layout_height="wrap_content">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/subtitle"
+                    android:id="@+id/input_subtitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/books_subtitle" />
@@ -107,12 +78,23 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
+                <ImageView
+                    android:id="@+id/image_preview"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@android:drawable/gallery_thumb"
+                    android:contentDescription="@string/image_preview" />
+
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/image"
+                    android:id="@+id/input_image"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawableEnd="@mipmap/browe_image"
-                    android:hint="@string/browes_image" />
+                    android:hint="@string/browes_image"
+                    android:inputType="none"
+                    android:focusable="false"
+                    android:onClick="openFileChooser" />
             </com.google.android.material.textfield.TextInputLayout>
         </TableRow>
 
@@ -128,7 +110,7 @@
                 android:layout_height="wrap_content">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/rateBook"
+                    android:id="@+id/input_rate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/rating_books" />
@@ -147,7 +129,7 @@
                 android:layout_height="wrap_content">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/des"
+                    android:id="@+id/input_des"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/description" />
@@ -165,8 +147,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp">
+
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/story"
+                    android:id="@+id/input_story"
                     android:layout_width="match_parent"
                     android:layout_height="120dp"
                     android:gravity="start"
@@ -187,20 +170,12 @@
             app:cardCornerRadius="8dp"
             app:cardElevation="8dp"/>
 
-        <TableRow
+        <ProgressBar
+            android:id="@+id/progressBar3"
+            android:visibility="gone"
+            style="?android:attr/progressBarStyle"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/rounded_cornor">
-            <TextView
-                android:id="@+id/save_book_button"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:text="@string/update"
-                android:gravity="center_horizontal|center_vertical"
-                android:layout_gravity="center_horizontal"
-                android:textColor="@color/white"
-                android:textSize="20sp"
-                android:textAlignment="center"/>
-        </TableRow>
+            android:layout_height="wrap_content" />
+
     </LinearLayout>
-</LinearLayout>
+</ScrollView>
