@@ -124,7 +124,6 @@ public class HomeScreen extends Fragment {
                             params.width = (int) (imageWidthDp * getResources().getDisplayMetrics().density);
                             params.height = 400;
                             params.setMargins(0, 20, 25, 20);
-
                             params.rowSpec = GridLayout.spec(imageIndex / columnCount);
                             params.columnSpec = GridLayout.spec(imageIndex % columnCount);
                             imageView.setLayoutParams(params);
