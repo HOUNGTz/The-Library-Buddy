@@ -114,7 +114,6 @@ public class HomeScreen extends Fragment {
 //                        if (imageIndex > 6) {
 //                            break;
 //                        }
-
                         Book_model book = bookSnapshot.getValue(Book_model.class);
                         assert book != null;
                         image = book.image;
