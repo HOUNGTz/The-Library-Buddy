@@ -1,18 +1,10 @@
 package com.houng.mobile_app_development.modules.screens;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.PagerSnapHelper;
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.DisplayMetrics;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,8 +12,15 @@ import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.Switch;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.PagerSnapHelper;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.target.CustomTarget;
@@ -34,12 +33,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.houng.mobile_app_development.R;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import com.houng.mobile_app_development.ReadWriteUserDetails;
 import com.houng.mobile_app_development.model.Book_model;
 import com.houng.mobile_app_development.modules.helper.CarouselAdapter;
 import com.houng.mobile_app_development.modules.pages.BookDetailsPage;
-import com.houng.mobile_app_development.modules.pages.UpdatePage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -133,7 +130,6 @@ public class HomeScreen extends Fragment {
                             imageView.setLayoutParams(params);
                             imageView.setScaleType(ImageView.ScaleType.FIT_XY);
                             imageView.setClipToOutline(true);
-
                             gridLayout.addView(imageView);
 
                             // Use Glide to load the image without an error placeholder
@@ -143,10 +139,8 @@ public class HomeScreen extends Fragment {
                                 .error(R.drawable.empty_image)
                                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                                 .into(imageView);
-
                             imageIndex++;
                             loading.setVisibility(View.GONE);
-
                             final Book_model finalBook = book;
 
                             imageView.setOnClickListener(new View.OnClickListener() {
@@ -164,7 +158,6 @@ public class HomeScreen extends Fragment {
                         }
                     }
                 }
-
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
                     Toast.makeText(getActivity(), "Database error: " + databaseError.getMessage(), Toast.LENGTH_LONG).show();

@@ -101,6 +101,7 @@
         tools:ignore="MissingConstraints" />
 
     <ImageView
+        android:id="@+id/image_"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="100dp"
@@ -108,4 +109,12 @@
         app:layout_constraintTop_toBottomOf="@+id/view3"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="56dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/search_item"
+        android:layout_width="409dp"
+        android:layout_height="315dp"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="2dp"
+        tools:layout_editor_absoluteY="502dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

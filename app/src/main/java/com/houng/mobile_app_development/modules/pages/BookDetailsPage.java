@@ -1,6 +1,23 @@
 package com.houng.mobile_app_development.modules.pages;
 
-import static android.app.PendingIntent.getActivity;
+import android.annotation.SuppressLint;
+import android.app.Dialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
+import android.util.TypedValue;
+import android.view.LayoutInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -9,31 +26,11 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 
-import android.annotation.SuppressLint;
-import android.app.Dialog;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.os.Bundle;
-import android.text.SpannableString;
-import android.text.TextUtils;
-import android.text.style.ForegroundColorSpan;
-import android.util.TypedValue;
-import android.view.LayoutInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
-
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -44,6 +41,8 @@ import com.houng.mobile_app_development.R;
 import com.houng.mobile_app_development.ReadWriteUserDetails;
 import com.houng.mobile_app_development.model.Book_model;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class BookDetailsPage extends AppCompatActivity {
@@ -53,7 +52,8 @@ public class BookDetailsPage extends AppCompatActivity {
     public TextView story;
     public TextView rate;
     public Book_model book;
-    public TextView rating;
+
+
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +76,7 @@ public class BookDetailsPage extends AppCompatActivity {
         book = (Book_model) getIntent().getSerializableExtra("EXTRA_DATA");
 
         buttonEditText.setOnClickListener(
-            v -> new UpdateDialog(book.title, book.category, book.subtitle, book.image, book.rate, book.des, book.story).show(BookDetailsPage.this.getSupportFragmentManager(), "GAME_DIALOG")
+            v -> new UpdateDialog(book.title, book.subtitle, book.category, book.image, book.rate, book.des, book.story).show(BookDetailsPage.this.getSupportFragmentManager(), "GAME_DIALOG")
         );
 
         if (book != null) {
@@ -144,7 +144,11 @@ public class BookDetailsPage extends AppCompatActivity {
         private final String des;
         private final String rate;
 
-        public UpdateDialog(String title, String subtitle, String category, String image, String story, String des, String rate) {
+        EditText editTitle, editSubtitle, editCategory, editImage, editRate, editDes, editStory;
+
+
+
+        public UpdateDialog(String title, String subtitle, String category, String image, String rate, String des, String story) {
             this.title = title;
             this.subtitle = subtitle;
             this.category = category;
@@ -161,6 +165,19 @@ public class BookDetailsPage extends AppCompatActivity {
 
             LayoutInflater inflater = requireActivity().getLayoutInflater();
             View view = inflater.inflate(R.layout.update_book, null);
+            editTitle = view.findViewById(R.id.input_title);
+            editSubtitle = view.findViewById(R.id.input_subtitle);
+            editCategory = view.findViewById(R.id.choose_type_book);
+            editStory = view.findViewById(R.id.input_story);
+            editDes = view.findViewById(R.id.input_des);
+            editRate = view.findViewById(R.id.input_rate);
+            editTitle.setText(title);
+            editSubtitle.setText(subtitle);
+            editCategory.setText(category);
+            editStory.setText(story);
+            editDes.setText(des);
+            editRate.setText(rate);
+
 
             builder.setView(view)
                     .setPositiveButton(R.string.start, null) // Set to null temporarily
@@ -181,10 +198,48 @@ public class BookDetailsPage extends AppCompatActivity {
                     positiveButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            // Validate input fields if necessary
+                            String textTitle = editTitle.getText().toString();
+                            String textCategory = editCategory.getText().toString();
+                            String textDes = editDes.getText().toString();
+                            String textSubtitle = editSubtitle.getText().toString();
+                            String textRate = editRate.getText().toString();
+                            String textStory = editStory.getText().toString();
 
+                            // Assuming 'bookId' is the ID of the book to update. You need to obtain this ID.
+                            String bookId = "the_book_id"; // Placeholder, replace with actual book ID logic
+                            DatabaseReference bookReference = FirebaseDatabase.getInstance().getReference("book").child(bookId);
+
+                            // Create a map to update book information
+                            Map<String, Object> bookUpdates = new HashMap<>();
+                            bookUpdates.put("title", textTitle);
+                            bookUpdates.put("subtitle", textSubtitle);
+                            bookUpdates.put("category", textCategory);
+                            bookUpdates.put("description", textDes);
+                            bookUpdates.put("rate", textRate);
+                            bookUpdates.put("story", textStory);
+
+                            bookReference.updateChildren(bookUpdates).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()){
+                                        // Dismiss dialog and navigate or show success message
+                                        Toast.makeText(getContext(), "Book updated successfully", Toast.LENGTH_SHORT).show();
+                                        dialog.dismiss();
+                                        // Navigate or refresh as needed
+                                        Intent intent = new Intent(getActivity(), MainButtomNavigation.class);
+                                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                        startActivity(intent);
+                                    } else {
+                                        // Handle failure
+                                        Toast.makeText(getContext(), "Failed to update book", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
                         }
                     });
                 }
+
             });
             return dialog;
         }
