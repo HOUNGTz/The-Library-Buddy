@@ -81,6 +81,7 @@
                     android:id="@+id/image_preview"
                     android:layout_width="match_parent"
                     android:layout_height="180dp"
+
                     android:background="@android:drawable/gallery_thumb"
                     android:contentDescription="@string/image_preview" />
 
@@ -97,7 +98,7 @@
         </TableRow>
 
         <TableRow
-            android:layout_margxinTop="16dp"
+            android:layout_marginTop="16dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|center_horizontal"
