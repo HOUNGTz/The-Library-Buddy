@@ -127,6 +127,13 @@
                     tools:ignore="TouchTargetSizeCheck,DuplicateSpeakableTextCheck,ImageContrastCheck"
                     tools:layout_editor_absoluteY="7dp" />
 
+                <ImageView
+                    android:id="@+id/delete_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@mipmap/delete_icon"
+android:layout_marginLeft="200dp" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <LinearLayout
