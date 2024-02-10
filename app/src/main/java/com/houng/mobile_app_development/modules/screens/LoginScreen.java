@@ -122,43 +122,53 @@ public class LoginScreen extends AppCompatActivity {
         authProfile.signInWithEmailAndPassword(the_email, psw).addOnCompleteListener(LoginScreen.this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                FirebaseUser firebaseUser = authProfile.getCurrentUser();
-                if (task.isSuccessful() || firebaseUser.isEmailVerified()) {
-                    View rootView = findViewById(android.R.id.content); // Get the root view
-                    Snackbar snackbar = Snackbar.make(rootView, "User login successfully!", Snackbar.LENGTH_LONG);
-                    snackbar.setDuration(3000);
-                    snackbar.setBackgroundTint(getResources().getColor(R.color.blue));
-                    snackbar.setActionTextColor(getResources().getColor(R.color.white));
-                    snackbar.show();
+                if (task.isSuccessful()) {
+                    FirebaseUser firebaseUser = authProfile.getCurrentUser();
                     if (firebaseUser.isEmailVerified()) {
-                        startActivity(new Intent(LoginScreen.this, MainButtomNavigation.class));
-                        finish();
+                        View rootView = findViewById(android.R.id.content); // Get the root view
+                        Snackbar snackbar = Snackbar.make(rootView, "User login successfully!", Snackbar.LENGTH_LONG);
+                        snackbar.setDuration(3000);
+                        snackbar.setBackgroundTint(getResources().getColor(R.color.blue));
+                        snackbar.setActionTextColor(getResources().getColor(R.color.white));
+                        snackbar.show();
+                        if (firebaseUser.isEmailVerified()) {
+                            startActivity(new Intent(LoginScreen.this, MainButtomNavigation.class));
+                            finish();
+                        } else {
+                            firebaseUser.sendEmailVerification();
+                            authProfile.signOut();
+                            showAlertDialog();
+                        }
                     } else {
-                        firebaseUser.sendEmailVerification();
-                        authProfile.signOut();
-                        showAlertDialog();
+                        try {
+                            throw task.getException();
+                        } catch (FirebaseAuthInvalidUserException e) {
+                            email.setError("User does not Exists or is on longer valid. please Register again.");
+                            email.requestFocus();
+                        } catch (FirebaseAuthInvalidCredentialsException e) {
+                            email.setError("Invalid credentials. kindly, check and re-enter");
+                            email.requestFocus();
+                        } catch (Exception e) {
+                            Log.e(TAG, e.getMessage());
+                            Toast.makeText(LoginScreen.this, e.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                        View rootView = findViewById(android.R.id.content); // Get the root view
+                        Snackbar snackbar = Snackbar.make(rootView, "Something went Wrong!", Snackbar.LENGTH_LONG);
+                        snackbar.setDuration(3000);
+                        snackbar.setBackgroundTint(getResources().getColor(R.color.black));
+                        snackbar.setActionTextColor(getResources().getColor(R.color.white));
+                        snackbar.show();
+
                     }
-                } else {
-                    try {
-                        throw task.getException();
-                    } catch (FirebaseAuthInvalidUserException e) {
-                        email.setError("User does not Exists or is on longer valid. please Register again.");
-                        email.requestFocus();
-                    } catch (FirebaseAuthInvalidCredentialsException e) {
-                        email.setError("Invalid credentials. kindly, check and re-enter");
-                        email.requestFocus();
-                    } catch (Exception e) {
-                        Log.e(TAG, e.getMessage());
-                        Toast.makeText(LoginScreen.this, e.getMessage(), Toast.LENGTH_LONG).show();
-                    }
+                }else {
                     View rootView = findViewById(android.R.id.content); // Get the root view
                     Snackbar snackbar = Snackbar.make(rootView, "Something went Wrong!", Snackbar.LENGTH_LONG);
                     snackbar.setDuration(3000);
                     snackbar.setBackgroundTint(getResources().getColor(R.color.black));
                     snackbar.setActionTextColor(getResources().getColor(R.color.white));
                     snackbar.show();
-
                 }
+
                 progressBar.setVisibility(View.GONE);
             }
         });
