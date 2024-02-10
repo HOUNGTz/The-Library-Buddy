@@ -303,7 +303,7 @@ public class BookDetailsPage extends AppCompatActivity {
                                         bookUpdates.put("title", textTitle);
                                         bookUpdates.put("subtitle", textSubtitle);
                                         bookUpdates.put("category", textCategory);
-                                        bookUpdates.put("image", imageUrl); // Use the new image URL
+                                        bookUpdates.put("image", imageUrl);
                                         bookUpdates.put("description", textDes);
                                         bookUpdates.put("rate", textRate);
                                         bookUpdates.put("story", textStory);
