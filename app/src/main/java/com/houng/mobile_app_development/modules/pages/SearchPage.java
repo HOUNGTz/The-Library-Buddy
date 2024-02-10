@@ -31,7 +31,7 @@ public class SearchPage extends Fragment {
     private EditText searchField;
     private Button searchButton;
     private RecyclerView resultView;
-    private List<Book_model> itemList = new ArrayList<>();
+    private final List<Book_model> itemList = new ArrayList<>();
     private ItemAdapter itemAdapter;
 
     private ImageView imageEmpty;
@@ -41,8 +41,7 @@ public class SearchPage extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View views = inflater.inflate(R.layout.activity_search_page, container, false);
-
-        // Find the TextInputEditText
+        itemList.clear();
 
         searchField = views.findViewById(R.id.searchField);
         searchButton = views.findViewById(R.id.searchButton);
@@ -52,9 +51,6 @@ public class SearchPage extends Fragment {
         itemAdapter = new ItemAdapter(getActivity(), itemList);
         resultView.setAdapter(itemAdapter);
 
-        // Initialize your RecyclerView
-
-        // Initialize Firebase
         databaseReference = FirebaseDatabase.getInstance().getReference("book");
 
         searchButton.setOnClickListener(view -> {
@@ -64,6 +60,14 @@ public class SearchPage extends Fragment {
         return views;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (searchField != null) {
+            searchField.setText("");
+        }
+    }
+
     private void firebaseItemSearch(String searchText) {
         Query firebaseSearchQuery = databaseReference.orderByChild("title").startAt(searchText).endAt(searchText + "\uf8ff");
 
@@ -71,26 +75,23 @@ public class SearchPage extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    itemList.clear(); // Clear existing data
+                    itemList.clear();
 
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         Book_model item = snapshot.getValue(Book_model.class);
-                        itemList.add(item); // Add the item from the search result
+                        itemList.add(item);
                     }
                     imageEmpty.setVisibility(View.GONE);
 
-                    itemAdapter.notifyDataSetChanged(); // Notify the adapter that data has changed
+                    itemAdapter.notifyDataSetChanged();
                 } else {
-                    // Handle the case where the search result is empty or dataSnapshot does not exist
-                    itemList.clear(); // Clear existing data
-                    itemAdapter.notifyDataSetChanged(); // Notify the adapter to clear the RecyclerView
+                    itemList.clear();
+                    itemAdapter.notifyDataSetChanged();
                     Toast.makeText(getActivity(), "No items found", Toast.LENGTH_SHORT).show();
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                // Handle possible errors
                 Toast.makeText(getActivity(), "Error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });

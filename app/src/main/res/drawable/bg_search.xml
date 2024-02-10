@@ -1,20 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- Shadow Layer -->
-    <item>
-        <shape android:shape="rectangle">
-            <solid android:color="#20000000"
-                android:endColor="#00000000"
-                android:angle="50"/>  <!-- Shadow color with semi-transparency -->
-            <corners android:radius="24dp"/> <!-- Increase the radius for a larger shadow -->
-        </shape>
-    </item>
+    <!--    &lt;!&ndash; Shadow Layer &ndash;&gt;-->
+    <!--    <item>-->
+    <!--        <shape android:shape="rectangle">-->
+    <!--            <solid android:color="#20000000"-->
+    <!--                android:endColor="#00000000"-->
+    <!--                android:angle="50"/>  &lt;!&ndash; Shadow color with semi-transparency &ndash;&gt;-->
+    <!--            <corners android:radius="24dp"/> &lt;!&ndash; Increase the radius for a larger shadow &ndash;&gt;-->
+    <!--        </shape>-->
+    <!--    </item>-->
 
     <!-- Main Shape Layer -->
-    <item android:left="0dp" android:top="0dp" android:right="2dp" android:bottom="6dp">
+    <item
+        android:bottom="6dp"
+        android:left="0dp"
+        android:right="2dp"
+        android:top="0dp">
         <shape android:shape="rectangle">
-            <solid android:color="#fff"/><!-- Main shape color -->
-            <corners android:radius="7dp"/>
+            <solid android:color="#fff" /><!-- Main shape color -->
+            <corners android:radius="7dp" />
         </shape>
     </item>
 </layer-list>
