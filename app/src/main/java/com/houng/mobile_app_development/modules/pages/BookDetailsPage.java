@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
@@ -144,7 +145,8 @@ public class BookDetailsPage extends AppCompatActivity {
         private final String des;
         private final String rate;
 
-        EditText editTitle, editSubtitle, editCategory, editImage, editRate, editDes, editStory;
+        EditText editTitle, editSubtitle, editCategory, editRate, editDes, editStory;
+        ImageView imageUrl;
 
 
 
@@ -167,10 +169,21 @@ public class BookDetailsPage extends AppCompatActivity {
             View view = inflater.inflate(R.layout.update_book, null);
             editTitle = view.findViewById(R.id.input_title);
             editSubtitle = view.findViewById(R.id.input_subtitle);
+            imageUrl = view.findViewById(R.id.image_preview);
             editCategory = view.findViewById(R.id.choose_type_book);
             editStory = view.findViewById(R.id.input_story);
             editDes = view.findViewById(R.id.input_des);
             editRate = view.findViewById(R.id.input_rate);
+            if (!image.isEmpty()) {
+                Glide.with(this)
+                        .load(Uri.parse(image)) // Glide can handle Uri.parse(image) directly
+                        .into(imageUrl);
+            } else {
+                // Consider setting a default image or placeholder
+                Glide.with(this)
+                        .load(R.drawable.empty_image) // Assuming you have a default placeholder
+                        .into(imageUrl);
+            }
             editTitle.setText(title);
             editSubtitle.setText(subtitle);
             editCategory.setText(category);
@@ -201,6 +214,7 @@ public class BookDetailsPage extends AppCompatActivity {
                             // Validate input fields if necessary
                             String textTitle = editTitle.getText().toString();
                             String textCategory = editCategory.getText().toString();
+                            String imagePreview = imageUrl.getImageMatrix().toString();
                             String textDes = editDes.getText().toString();
                             String textSubtitle = editSubtitle.getText().toString();
                             String textRate = editRate.getText().toString();
@@ -215,6 +229,7 @@ public class BookDetailsPage extends AppCompatActivity {
                             bookUpdates.put("title", textTitle);
                             bookUpdates.put("subtitle", textSubtitle);
                             bookUpdates.put("category", textCategory);
+                            bookUpdates.put("image", imagePreview);
                             bookUpdates.put("description", textDes);
                             bookUpdates.put("rate", textRate);
                             bookUpdates.put("story", textStory);

@@ -113,6 +113,13 @@
                     android:layout_height="wrap_content"
                     android:drawableEnd="@mipmap/browe_image"
                     android:hint="@string/browes_image" />
+                <ImageView
+                    android:id="@+id/image_preview"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@android:drawable/gallery_thumb"
+                    android:contentDescription="@string/image_preview" />
             </com.google.android.material.textfield.TextInputLayout>
         </TableRow>
 
