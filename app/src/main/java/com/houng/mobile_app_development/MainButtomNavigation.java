@@ -28,10 +28,12 @@ public class MainButtomNavigation extends AppCompatActivity {
             if (itemId == R.id.btn_home) {
                 showFragment(homeScreen);
                 return true;
-            } else if (itemId == R.id.btn_book) {
-                showFragment(bookPage);
-                return true;
-            } else if (itemId == R.id.btn_search) {
+            }
+//            else if (itemId == R.id.btn_book) {
+//                showFragment(bookPage);
+//                return true;
+//            }
+            else if (itemId == R.id.btn_search) {
                 showFragment(searchPage);
                 return true;
             } else if (itemId == R.id.btn_profile) {

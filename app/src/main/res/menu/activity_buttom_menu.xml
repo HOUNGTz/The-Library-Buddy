@@ -4,10 +4,6 @@
         android:icon="@mipmap/home_outline_icon"
         android:title="@string/home" />
     <item
-        android:id="@+id/btn_book"
-        android:icon="@mipmap/book_icon"
-        android:title="@string/book" />
-    <item
         android:id="@+id/btn_search"
         android:icon="@mipmap/search_outline_icon"
         android:title="@string/search" />
