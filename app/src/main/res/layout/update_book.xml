@@ -151,10 +151,11 @@
                     android:id="@+id/input_story"
                     android:layout_width="match_parent"
                     android:layout_height="120dp"
-                    android:gravity="start"
-                    android:hint="@string/story" />
+                    android:gravity="start|top"
+                    android:hint="@string/story"
+                    android:inputType="textMultiLine"
+                    android:scrollbars="vertical" />
             </com.google.android.material.textfield.TextInputLayout>
-
         </TableRow>
 
         <androidx.cardview.widget.CardView

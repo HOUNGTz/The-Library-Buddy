@@ -13,6 +13,7 @@ import android.text.style.ForegroundColorSpan;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
@@ -32,6 +33,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -57,9 +59,9 @@ public class BookDetailsPage extends AppCompatActivity {
     public TextView story;
     public TextView rate;
     public Book_model book;
+    public TextInputEditText editTextStory;
 
-
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"SetTextI18n", "ClickableViewAccessibility", "MissingInflatedId"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,6 +80,7 @@ public class BookDetailsPage extends AppCompatActivity {
         img = findViewById(R.id.img);
         story = findViewById(R.id.story);
         rate = findViewById(R.id.rate);
+        editTextStory = findViewById(R.id.input_story);
         book = (Book_model) getIntent().getSerializableExtra("EXTRA_DATA");
 
         buttonEditText.setOnClickListener(
@@ -85,14 +88,26 @@ public class BookDetailsPage extends AppCompatActivity {
         );
 
         if (book != null) {
-            title.setText(book.title); if (book.image != null && !book.image.isEmpty()) {
+            title.setText(book.title);
+            if (book.image != null && !book.image.isEmpty()) {
                 Glide.with(BookDetailsPage.this)
-                    .load(book.image)
-                    .into(img);
+                        .load(book.image)
+                        .into(img);
             }
             story.setText(book.story);
             rate.setText(book.rate + "/5");
         }
+
+        editTextStory.setOnTouchListener((v, event) -> {
+            if (v.getId() == R.id.input_story) {
+                v.getParent().requestDisallowInterceptTouchEvent(true);
+                if ((event.getAction() & MotionEvent.ACTION_MASK) == MotionEvent.ACTION_UP) {
+                    v.getParent().requestDisallowInterceptTouchEvent(false);
+                }
+            }
+            return false;
+        });
+
         loadUserProfileRole();
     }
 

@@ -116,44 +116,45 @@ public class HomeScreen extends Fragment {
                             break;
                         }
                         Book_model book = bookSnapshot.getValue(Book_model.class);
-                        if (book != null) {
-                            String image = book.image;
-                            if (image != null && !image.isEmpty()) {
-                                foundImage = true;
-                                image_none.setVisibility(View.GONE);
-                                GridLayout.LayoutParams params = new GridLayout.LayoutParams();
-                                ImageView imageView = new ImageView(getContext());
-                                params.width = (int) (imageWidthDp * getResources().getDisplayMetrics().density);
-                                params.height = 400;
-                                params.setMargins(0, 20, 25, 20);
-                                params.rowSpec = GridLayout.spec(imageIndex / columnCount);
-                                params.columnSpec = GridLayout.spec(imageIndex % columnCount);
-                                imageView.setLayoutParams(params);
-                                imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-                                imageView.setClipToOutline(true);
-                                gridLayout.addView(imageView);
+                        assert book != null;
+                        image = book.image;
+                        if (image != null && !image.isEmpty()) {
+                            foundImage = true;
+                            image_none.setVisibility(View.GONE);
+                            GridLayout.LayoutParams params = new GridLayout.LayoutParams();
+                            ImageView imageView = new ImageView(getContext());
+                            params.width = (int) (imageWidthDp * getResources().getDisplayMetrics().density);
+                            params.height = 400;
+                            params.setMargins(0, 20, 25, 20);
+                            params.rowSpec = GridLayout.spec(imageIndex / columnCount);
+                            params.columnSpec = GridLayout.spec(imageIndex % columnCount);
+                            imageView.setLayoutParams(params);
+                            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                            imageView.setClipToOutline(true);
+                            gridLayout.addView(imageView);
 
-                                Glide.with(requireContext())
+                            Glide.with(requireContext())
                                     .load(image)
                                     .skipMemoryCache(true)
                                     .error(R.drawable.empty_image)
                                     .diskCacheStrategy(DiskCacheStrategy.NONE)
                                     .into(imageView);
 
-                                imageIndex++;
-                                loading.setVisibility(View.GONE);
+                            imageIndex++;
+                            loading.setVisibility(View.GONE);
 
-                                imageView.setOnClickListener(v -> {
-                                    try {
-                                        Intent intent = new Intent(getContext(), BookDetailsPage.class);
-                                        intent.putExtra("EXTRA_DATA", book); // Directly pass book
-                                        startActivity(intent);
-                                    } catch (Exception e) {
-                                        e.printStackTrace();
-                                    }
-                                });
-                            }
+                            final Book_model finalBook = book;
+                            imageView.setOnClickListener(v -> {
+                                try {
+                                    Intent intent = new Intent(getContext(), BookDetailsPage.class);
+                                    intent.putExtra("EXTRA_DATA", finalBook); // Directly pass book
+                                    startActivity(intent);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            });
                         }
+
                     }
 
                     if (!foundImage) {

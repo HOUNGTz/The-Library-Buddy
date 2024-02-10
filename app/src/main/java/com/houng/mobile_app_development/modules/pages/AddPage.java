@@ -11,6 +11,7 @@ import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
@@ -50,6 +51,7 @@ public class AddPage extends AppCompatActivity {
     private Uri imageUri;
     private ProgressBar progressBar;
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +66,16 @@ public class AddPage extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.materialToolbar);
         imagePreview = findViewById(R.id.image_preview);
         setSupportActionBar(toolbar);
+
+        story.setOnTouchListener((v, event) -> {
+            if (v.getId() == R.id.input_story) {
+                v.getParent().requestDisallowInterceptTouchEvent(true);
+                if ((event.getAction() & MotionEvent.ACTION_MASK) == MotionEvent.ACTION_UP) {
+                    v.getParent().requestDisallowInterceptTouchEvent(false);
+                }
+            }
+            return false;
+        });
 
         FirebaseAppCheck.getInstance()
                 .installAppCheckProviderFactory(SafetyNetAppCheckProviderFactory.getInstance());
@@ -167,24 +179,36 @@ public class AddPage extends AppCompatActivity {
         String editDes = Objects.requireNonNull(des.getText()).toString();
         String editStory = Objects.requireNonNull(story.getText()).toString();
         String editCategory = Objects.requireNonNull(choose_type_book.getText()).toString();
-        if(TextUtils.isEmpty(editTitle)){
+        if(TextUtils.isEmpty(editTitle)) {
             title.setError("Title Is required");
             title.requestFocus();
+            progressBar.setVisibility(View.GONE);
+            save_button.setVisibility(View.VISIBLE);
         } else if (TextUtils.isEmpty(editSubtitle)) {
             subtitle.setError("Subtitle Is required");
             subtitle.requestFocus();
+            progressBar.setVisibility(View.GONE);
+            save_button.setVisibility(View.VISIBLE);
         }else if (TextUtils.isEmpty(editRate)) {
             rate.setError("Rate Is required");
             rate.requestFocus();
+            progressBar.setVisibility(View.GONE);
+            save_button.setVisibility(View.VISIBLE);
         }else if (TextUtils.isEmpty(editDes)) {
             des.setError("Des Is required");
             des.requestFocus();
+            progressBar.setVisibility(View.GONE);
+            save_button.setVisibility(View.VISIBLE);
         }else if (TextUtils.isEmpty(editStory)) {
             story.setError("Story Is required");
             story.requestFocus();
+            progressBar.setVisibility(View.GONE);
+            save_button.setVisibility(View.VISIBLE);
         } else if (TextUtils.isEmpty(editCategory)) {
             choose_type_book.setError("Category Is required");
             choose_type_book.requestFocus();
+            progressBar.setVisibility(View.GONE);
+            save_button.setVisibility(View.VISIBLE);
         } else if (TextUtils.isEmpty(imageUrl)) {
             Toast.makeText(AddPage.this, "Please input image cover", Toast.LENGTH_LONG).show();
             progressBar.setVisibility(View.GONE);
@@ -198,7 +222,7 @@ public class AddPage extends AppCompatActivity {
                     new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
-                            if(task.isSuccessful()){
+                            if (task.isSuccessful()) {
                                 progressBar.setVisibility(View.GONE);
                                 Intent intent = new Intent(AddPage.this, MainButtomNavigation.class);
                                 startActivity(intent);
