@@ -144,13 +144,16 @@ public class HomeScreen extends Fragment {
                             loading.setVisibility(View.GONE);
 
                             final Book_model finalBook = book;
-                            imageView.setOnClickListener(v -> {
-                                try {
-                                    Intent intent = new Intent(getContext(), BookDetailsPage.class);
-                                    intent.putExtra("EXTRA_DATA", finalBook); // Directly pass book
-                                    startActivity(intent);
-                                } catch (Exception e) {
-                                    e.printStackTrace();
+                            imageView.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    try {
+                                        Intent intent = new Intent(getContext(), BookDetailsPage.class);
+                                        intent.putExtra("EXTRA_DATA", finalBook);
+                                        startActivity(intent);
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
                                 }
                             });
                         }

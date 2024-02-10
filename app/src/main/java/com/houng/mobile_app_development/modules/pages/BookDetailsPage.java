@@ -182,15 +182,13 @@ public class BookDetailsPage extends AppCompatActivity {
                 Uri imageUri = data.getData();
 
                 imageResult = imageUri;
-                // Call upload method
                 uploadImageToFirebaseStorage(imageUri);
 
-                // Use Glide to load the selected image into the ImageView
                 Glide.with(this).load(imageUri).into(imageUrl);
             }
         }
         private String getFileExtension(Uri uri) {
-            ContentResolver contentResolver = getContext().getContentResolver();
+            ContentResolver contentResolver = requireContext().getContentResolver();
             MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
             return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
         }
@@ -201,12 +199,13 @@ public class BookDetailsPage extends AppCompatActivity {
                         // Get download URL and update Realtime Database
                         storageReference.getDownloadUrl().addOnSuccessListener(uri -> {
                             String uploadId = FirebaseDatabase.getInstance().getReference("books").push().getKey();
+                            assert uploadId != null;
                             FirebaseDatabase.getInstance().getReference("books").child(uploadId).setValue(uri.toString())
                                     .addOnCompleteListener(task -> {
                                         if (task.isSuccessful()) {
                                             Toast.makeText(getContext(), "Image upload successful", Toast.LENGTH_SHORT).show();
                                         } else {
-                                            Toast.makeText(getContext(), "Upload failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(getContext(), "Upload failed: " + Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
                                         }
                                     });
                         });
@@ -245,12 +244,11 @@ public class BookDetailsPage extends AppCompatActivity {
 
             if (!image.isEmpty()) {
                 Glide.with(this)
-                        .load(Uri.parse(image)) // Glide can handle Uri.parse(image) directly
+                        .load(Uri.parse(image))
                         .into(imageUrl);
             } else {
-                // Consider setting a default image or placeholder
                 Glide.with(this)
-                        .load(R.drawable.empty_image) // Assuming you have a default placeholder
+                        .load(R.drawable.empty_image)
                         .into(imageUrl);
             }
             editTitle.setText(title);
@@ -264,11 +262,11 @@ public class BookDetailsPage extends AppCompatActivity {
             builder.setView(view)
                     .setPositiveButton(R.string.start, null) // Set to null temporarily
                     .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                // Cancel behavior here
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // Cancel behavior here
+                                }
                             }
-                        }
                     );
 
             final AlertDialog dialog = builder.create();
@@ -293,14 +291,12 @@ public class BookDetailsPage extends AppCompatActivity {
                             String textRate = editRate.getText().toString().trim();
                             String textStory = editStory.getText().toString().trim();
 
-                            // Assume imageResult is not null and contains the selected image URI
                             if (imageResult != null) {
                                 StorageReference fileReference = FirebaseStorage.getInstance().getReference("uploads").child(System.currentTimeMillis() + "." + getFileExtension(imageResult));
                                 fileReference.putFile(imageResult).addOnSuccessListener(taskSnapshot -> {
                                     // After upload, get the URL of the uploaded file
                                     fileReference.getDownloadUrl().addOnSuccessListener(uri -> {
-                                        // Update book details with the new image URL and other details
-                                        String imageUrl = uri.toString(); // URL of the uploaded image
+                                        String imageUrl = uri.toString();
                                         DatabaseReference bookReference = FirebaseDatabase.getInstance().getReference("book").child(id);
 
                                         Map<String, Object> bookUpdates = new HashMap<>();
@@ -327,23 +323,18 @@ public class BookDetailsPage extends AppCompatActivity {
                                     });
                                 }).addOnFailureListener(e -> Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show());
                             } else {
-                                // Handle case where no new image was selected but other details need to be updated
                                 DatabaseReference bookReference = FirebaseDatabase.getInstance().getReference("book").child(id);
                                 Map<String, Object> bookUpdates = new HashMap<>();
                                 bookUpdates.put("title", textTitle);
                                 bookUpdates.put("subtitle", textSubtitle);
                                 bookUpdates.put("category", textCategory);
-                                // Preserve the old image if no new image was selected
                                 bookUpdates.put("description", textDes);
                                 bookUpdates.put("rate", textRate);
                                 bookUpdates.put("story", textStory);
-
                                 bookReference.updateChildren(bookUpdates).addOnCompleteListener(task -> {
                                     if (task.isSuccessful()) {
                                         Toast.makeText(getContext(), "Book updated successfully", Toast.LENGTH_SHORT).show();
                                         dialog.dismiss();
-
-                                        // Refresh or navigate as needed
                                     } else {
                                         Toast.makeText(getContext(), "Failed to update book", Toast.LENGTH_SHORT).show();
                                     }
@@ -351,7 +342,6 @@ public class BookDetailsPage extends AppCompatActivity {
                             }
                         }
                     });
-
                 }
 
             });
