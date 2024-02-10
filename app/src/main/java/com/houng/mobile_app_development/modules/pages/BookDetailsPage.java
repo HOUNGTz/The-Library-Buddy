@@ -32,6 +32,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -58,9 +59,10 @@ public class BookDetailsPage extends AppCompatActivity {
     public TextView rate;
     public Book_model book;
     private ImageView deleteIcon;
+    public TextInputEditText choose_book;
 
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"SetTextI18n", "MissingInflatedId"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,38 +82,31 @@ public class BookDetailsPage extends AppCompatActivity {
         story = findViewById(R.id.story);
         rate = findViewById(R.id.rate);
         deleteIcon = findViewById(R.id.delete_button);
+        choose_book = findViewById(R.id.choose_type_book);
         book = (Book_model) getIntent().getSerializableExtra("EXTRA_DATA");
 
-        buttonEditText.setOnClickListener(
-            v -> new UpdateDialog(book.id, book.title, book.subtitle, book.category, book.image, book.rate, book.des, book.story).show(BookDetailsPage.this.getSupportFragmentManager(), "GAME_DIALOG")
-        );
+        buttonEditText.setOnClickListener(v -> new UpdateDialog(book.id, book.title, book.subtitle, book.category, book.image, book.rate, book.des, book.story).show(BookDetailsPage.this.getSupportFragmentManager(), "GAME_DIALOG"));
 
         if (book != null) {
-            title.setText(book.title); if (book.image != null && !book.image.isEmpty()) {
-                Glide.with(BookDetailsPage.this)
-                    .load(book.image)
-                    .into(img);
+            title.setText(book.title);
+            if (book.image != null && !book.image.isEmpty()) {
+                Glide.with(BookDetailsPage.this).load(book.image).into(img);
             }
             story.setText(book.story);
             rate.setText(book.rate + "/5");
         }
         loadUserProfileRole();
         deleteIcon.setOnClickListener(new View.OnClickListener() {
-                                          @Override
-                                          public void onClick(View v) {
-                                              DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("book").child(book.id);
-                                              databaseReference.removeValue();
-                                              Intent intent = new Intent(BookDetailsPage.this, MainButtomNavigation.class);
-                                              intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                                              startActivity(intent);
+            @Override
+            public void onClick(View v) {
+                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("book").child(book.id);
+                databaseReference.removeValue();
+                Intent intent = new Intent(BookDetailsPage.this, MainButtomNavigation.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
 
-                                          }
-                                      }
-
-
-        );
-
-
+            }
+        });
     }
 
     @Override
@@ -140,14 +135,16 @@ public class BookDetailsPage extends AppCompatActivity {
                         System.out.println("===== %%");
                     }
 
-                    if(role.equals("1")){
+                    if (role.equals("1")) {
+                        deleteIcon.setVisibility(View.VISIBLE);
                         buttonEditText.setVisibility(View.VISIBLE);
-                    }else{
+                    } else {
                         ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) rate.getLayoutParams();
                         float pixels = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 310, getResources().getDisplayMetrics());
                         layoutParams.setMarginEnd((int) pixels);
                         rate.setLayoutParams(layoutParams);
                         buttonEditText.setVisibility(View.GONE);
+                        deleteIcon.setVisibility(View.GONE);
                     }
                 }
 
@@ -178,6 +175,7 @@ public class BookDetailsPage extends AppCompatActivity {
             intent.setAction(Intent.ACTION_GET_CONTENT);
             startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
         }
+
         @Override
         public void onActivityResult(int requestCode, int resultCode, Intent data) {
             super.onActivityResult(requestCode, resultCode, data);
@@ -192,30 +190,30 @@ public class BookDetailsPage extends AppCompatActivity {
                 Glide.with(this).load(imageUri).into(imageUrl);
             }
         }
+
         private String getFileExtension(Uri uri) {
             ContentResolver contentResolver = getContext().getContentResolver();
             MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
             return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
         }
+
         private void uploadImageToFirebaseStorage(Uri imageUri) {
             StorageReference storageReference = FirebaseStorage.getInstance().getReference("uploads/" + System.currentTimeMillis() + ".jpg");
-            storageReference.putFile(imageUri)
-                    .addOnSuccessListener(taskSnapshot -> {
-                        // Get download URL and update Realtime Database
-                        storageReference.getDownloadUrl().addOnSuccessListener(uri -> {
-                            String uploadId = FirebaseDatabase.getInstance().getReference("books").push().getKey();
-                            FirebaseDatabase.getInstance().getReference("books").child(uploadId).setValue(uri.toString())
-                                    .addOnCompleteListener(task -> {
-                                        if (task.isSuccessful()) {
-                                            Toast.makeText(getContext(), "Image upload successful", Toast.LENGTH_SHORT).show();
-                                        } else {
-                                            Toast.makeText(getContext(), "Upload failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
-                        });
-                    })
-                    .addOnFailureListener(e -> Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show());
+            storageReference.putFile(imageUri).addOnSuccessListener(taskSnapshot -> {
+                // Get download URL and update Realtime Database
+                storageReference.getDownloadUrl().addOnSuccessListener(uri -> {
+                    String uploadId = FirebaseDatabase.getInstance().getReference("books").push().getKey();
+                    FirebaseDatabase.getInstance().getReference("books").child(uploadId).setValue(uri.toString()).addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(getContext(), "Image upload successful", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(getContext(), "Upload failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                });
+            }).addOnFailureListener(e -> Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show());
         }
+
         public UpdateDialog(String id, String title, String subtitle, String category, String image, String rate, String des, String story) {
             this.title = title;
             this.subtitle = subtitle;
@@ -247,13 +245,11 @@ public class BookDetailsPage extends AppCompatActivity {
             imagePut.setOnClickListener(v -> openFileChooser());
 
             if (!image.isEmpty()) {
-                Glide.with(this)
-                        .load(Uri.parse(image)) // Glide can handle Uri.parse(image) directly
+                Glide.with(this).load(Uri.parse(image)) // Glide can handle Uri.parse(image) directly
                         .into(imageUrl);
             } else {
                 // Consider setting a default image or placeholder
-                Glide.with(this)
-                        .load(R.drawable.empty_image) // Assuming you have a default placeholder
+                Glide.with(this).load(R.drawable.empty_image) // Assuming you have a default placeholder
                         .into(imageUrl);
             }
             editTitle.setText(title);
@@ -264,15 +260,13 @@ public class BookDetailsPage extends AppCompatActivity {
             editRate.setText(rate);
 
 
-            builder.setView(view)
-                    .setPositiveButton(R.string.start, null) // Set to null temporarily
+            builder.setView(view).setPositiveButton(R.string.start, null)
                     .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                // Cancel behavior here
-                            }
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            // Cancel behavior here
                         }
-                    );
+                    });
 
             final AlertDialog dialog = builder.create();
 

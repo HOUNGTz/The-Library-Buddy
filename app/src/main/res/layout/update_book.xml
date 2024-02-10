@@ -2,14 +2,27 @@
     android:layout_height="wrap_content"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent">
-    <LinearLayout android:layout_width="match_parent"
-        android:padding="16dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:orientation="vertical"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_popup_update">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:background="@android:color/holo_blue_dark"
+            android:gravity="center"
+            android:padding="12dp"
+            android:text="@string/update_book"
+            android:textColor="@android:color/white"
+            android:textSize="20sp" />
 
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="7dp"
             android:layout_gravity="center_vertical|center_horizontal"
             android:gravity="center_horizontal|center_vertical">
 
@@ -48,7 +61,7 @@
         </TableRow>
 
         <TableRow
-            android:layout_marginTop="16dp"
+            android:padding="7dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|center_horizontal"
@@ -67,7 +80,7 @@
         </TableRow>
 
         <TableRow
-            android:layout_marginTop="16dp"
+            android:padding="7dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|center_horizontal"
@@ -98,7 +111,7 @@
         </TableRow>
 
         <TableRow
-            android:layout_marginTop="16dp"
+            android:padding="7dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|center_horizontal"
@@ -117,7 +130,7 @@
         </TableRow>
 
         <TableRow
-            android:layout_marginTop="16dp"
+            android:padding="7dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|center_horizontal"
@@ -136,7 +149,7 @@
         </TableRow>
 
         <TableRow
-            android:layout_marginTop="16dp"
+            android:padding="7dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|center_horizontal"
@@ -144,8 +157,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp">
+                android:layout_height="wrap_content">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/input_story"

@@ -128,6 +128,17 @@
                     tools:ignore="TouchTargetSizeCheck,DuplicateSpeakableTextCheck,ImageContrastCheck"
                     tools:layout_editor_absoluteY="7dp" />
 
+                <ImageView
+                    android:id="@+id/delete_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:contentDescription="TODO"
+                    app:layout_constraintEnd_toStartOf="@+id/buttonEditText"
+                    app:srcCompat="@mipmap/delete_icon"
+                    tools:ignore="ContentDescription,HardcodedText"
+                    tools:layout_editor_absoluteY="7dp" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <LinearLayout
@@ -149,14 +160,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
-
-                <ImageView
-                    android:id="@+id/delete_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:contentDescription="TODO"
-                    app:srcCompat="@mipmap/delete_icon"
-                    tools:ignore="ContentDescription,HardcodedText" />
 
                 <TextView
                     android:id="@+id/story"
