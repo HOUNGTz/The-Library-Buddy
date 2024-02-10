@@ -57,6 +57,7 @@ public class BookDetailsPage extends AppCompatActivity {
     public TextView story;
     public TextView rate;
     public Book_model book;
+    private ImageView deleteIcon;
 
 
     @SuppressLint("SetTextI18n")
@@ -78,6 +79,7 @@ public class BookDetailsPage extends AppCompatActivity {
         img = findViewById(R.id.img);
         story = findViewById(R.id.story);
         rate = findViewById(R.id.rate);
+        deleteIcon = findViewById(R.id.delete_button);
         book = (Book_model) getIntent().getSerializableExtra("EXTRA_DATA");
 
         buttonEditText.setOnClickListener(
@@ -94,6 +96,22 @@ public class BookDetailsPage extends AppCompatActivity {
             rate.setText(book.rate + "/5");
         }
         loadUserProfileRole();
+        deleteIcon.setOnClickListener(new View.OnClickListener() {
+                                          @Override
+                                          public void onClick(View v) {
+                                              DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("book").child(book.id);
+                                              databaseReference.removeValue();
+                                              Intent intent = new Intent(BookDetailsPage.this, MainButtomNavigation.class);
+                                              intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                              startActivity(intent);
+
+                                          }
+                                      }
+
+
+        );
+
+
     }
 
     @Override

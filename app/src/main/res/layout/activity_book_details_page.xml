@@ -51,11 +51,11 @@
             android:id="@+id/img"
             android:layout_width="131dp"
             android:layout_height="170dp"
-            android:padding="2dp"
             android:contentDescription="TODO"
             android:foregroundGravity="center_vertical|center_horizontal"
+            android:padding="2dp"
             android:scaleType="fitXY"
-            tools:ignore="ContentDescription,HardcodedText,MissingConstraints" />
+            tools:ignore="ContentDescription,HardcodedText,MissingConstraints,ImageContrastCheck" />
     </LinearLayout>
 
 
@@ -103,6 +103,7 @@
                     android:text="@string/rating"
                     android:textColor="@color/red"
                     app:layout_constraintEnd_toStartOf="@+id/rate"
+                    tools:ignore="TextContrastCheck"
                     tools:layout_editor_absoluteY="7dp" />
 
                 <TextView
@@ -127,13 +128,6 @@
                     tools:ignore="TouchTargetSizeCheck,DuplicateSpeakableTextCheck,ImageContrastCheck"
                     tools:layout_editor_absoluteY="7dp" />
 
-                <ImageView
-                    android:id="@+id/delete_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@mipmap/delete_icon"
-android:layout_marginLeft="200dp" />
-
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <LinearLayout
@@ -155,6 +149,14 @@ android:layout_marginLeft="200dp" />
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/delete_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="TODO"
+                    app:srcCompat="@mipmap/delete_icon"
+                    tools:ignore="ContentDescription,HardcodedText" />
 
                 <TextView
                     android:id="@+id/story"
