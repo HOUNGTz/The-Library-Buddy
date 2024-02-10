@@ -91,6 +91,16 @@
                 android:horizontalSpacing="10dp">
             </GridLayout>
 
+
+            <ImageView
+                android:id="@+id/image_none"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="100dp"
+                android:src="@mipmap/no_data_found"
+                android:contentDescription="TODO"
+                tools:ignore="ContentDescription,HardcodedText" />
+
             <LinearLayout
                 android:id="@+id/loading"
                 android:layout_marginTop="100dp"
@@ -109,6 +119,8 @@
                     app:lottie_autoPlay="true"
                     app:lottie_loop="true"
                     app:lottie_rawRes="@raw/loading_image" />
+
+
             </LinearLayout>
 
         </LinearLayout>

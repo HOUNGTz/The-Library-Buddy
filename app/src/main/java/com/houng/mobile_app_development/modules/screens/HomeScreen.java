@@ -46,12 +46,11 @@ public class HomeScreen extends Fragment {
     public GridLayout gridLayout;
     public RecyclerView recyclerView;
     public CarouselAdapter adapter;
-    public ImageView profile;
+    public ImageView profile, image_none;
     private ProgressBar progressBar;
     private final Handler sliderHandler = new Handler();
     public String image;
     public LinearLayout loading;
-    public ImageView imageView;
     private final Runnable sliderRunnable = new Runnable() {
         @Override
         public void run() {
@@ -74,6 +73,7 @@ public class HomeScreen extends Fragment {
         progressBar = view.findViewById(R.id.progressBar);
         gridLayout = view.findViewById(R.id.gridImage);
         loading = view.findViewById(R.id.loading);
+        image_none = view.findViewById(R.id.image_none);
         addImagesToGridLayout(gridLayout);
 
         recyclerView = view.findViewById(R.id.recyclerView);
@@ -86,7 +86,7 @@ public class HomeScreen extends Fragment {
         recyclerView.setAdapter(adapter);
         PagerSnapHelper snapHelper = new PagerSnapHelper();
         snapHelper.attachToRecyclerView(recyclerView);
-
+        image_none.setVisibility(View.GONE);
         loadUserProfileImage();
 
         return view;
@@ -102,24 +102,27 @@ public class HomeScreen extends Fragment {
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseUser user = auth.getCurrentUser();
         if (user == null) {
-            Toast.makeText(getActivity(), "No user signed in", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), "User not logged in", Toast.LENGTH_LONG).show();
         } else {
             DatabaseReference referenceBooks = FirebaseDatabase.getInstance().getReference("book");
             referenceBooks.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     int imageIndex = 0;
+                    boolean foundImage = false;
 
                     for (DataSnapshot bookSnapshot : dataSnapshot.getChildren()) {
-//                        if (imageIndex > 6) {
-//                            break;
-//                        }
+                        if (imageIndex > 6) {
+                            break;
+                        }
                         Book_model book = bookSnapshot.getValue(Book_model.class);
                         assert book != null;
                         image = book.image;
                         if (image != null && !image.isEmpty()) {
+                            foundImage = true;
+                            image_none.setVisibility(View.GONE);
                             GridLayout.LayoutParams params = new GridLayout.LayoutParams();
-                            imageView = new ImageView(getContext());
+                            ImageView imageView = new ImageView(getContext());
                             params.width = (int) (imageWidthDp * getResources().getDisplayMetrics().density);
                             params.height = 400;
                             params.setMargins(0, 20, 25, 20);
@@ -130,17 +133,17 @@ public class HomeScreen extends Fragment {
                             imageView.setClipToOutline(true);
                             gridLayout.addView(imageView);
 
-                            // Use Glide to load the image without an error placeholder
                             Glide.with(requireContext())
-                                .load(image)
-                                .skipMemoryCache(true)
-                                .error(R.drawable.empty_image)
-                                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                                .into(imageView);
+                                    .load(image)
+                                    .skipMemoryCache(true)
+                                    .error(R.drawable.empty_image)
+                                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                                    .into(imageView);
+
                             imageIndex++;
                             loading.setVisibility(View.GONE);
-                            final Book_model finalBook = book;
 
+                            final Book_model finalBook = book;
                             imageView.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
@@ -154,8 +157,16 @@ public class HomeScreen extends Fragment {
                                 }
                             });
                         }
+
+                    }
+
+                    if (!foundImage) {
+                        image_none.setVisibility(View.VISIBLE);
+                        Toast.makeText(getActivity(), "No image response", Toast.LENGTH_LONG).show();
+                        loading.setVisibility(View.GONE);
                     }
                 }
+
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
                     Toast.makeText(getActivity(), "Database error: " + databaseError.getMessage(), Toast.LENGTH_LONG).show();
@@ -216,8 +227,8 @@ public class HomeScreen extends Fragment {
                                 }
                             });
                     } else {
-                        Toast.makeText(getActivity(), "User image not available", Toast.LENGTH_LONG).show();
-                        progressBar.setVisibility(View.GONE); // Hide the ProgressBar
+                        Toast.makeText(getActivity(), "Image not available", Toast.LENGTH_LONG).show();
+                        progressBar.setVisibility(View.GONE);
                     }
                 }
 
