@@ -1,7 +1,9 @@
 package com.houng.mobile_app_development.modules.pages;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.Dialog;
+import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -13,10 +15,12 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,8 +32,6 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 
 import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -37,6 +39,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.houng.mobile_app_development.MainButtomNavigation;
 import com.houng.mobile_app_development.R;
 import com.houng.mobile_app_development.ReadWriteUserDetails;
@@ -77,7 +81,7 @@ public class BookDetailsPage extends AppCompatActivity {
         book = (Book_model) getIntent().getSerializableExtra("EXTRA_DATA");
 
         buttonEditText.setOnClickListener(
-            v -> new UpdateDialog(book.title, book.subtitle, book.category, book.image, book.rate, book.des, book.story).show(BookDetailsPage.this.getSupportFragmentManager(), "GAME_DIALOG")
+            v -> new UpdateDialog(book.id, book.title, book.subtitle, book.category, book.image, book.rate, book.des, book.story).show(BookDetailsPage.this.getSupportFragmentManager(), "GAME_DIALOG")
         );
 
         if (book != null) {
@@ -137,20 +141,64 @@ public class BookDetailsPage extends AppCompatActivity {
     }
 
     public static class UpdateDialog extends DialogFragment {
-        private final String title;
+        private final String title, id;
         private final String subtitle;
         private final String category;
         private final String image;
         private final String story;
         private final String des;
         private final String rate;
+        Uri imageResult;
 
-        EditText editTitle, editSubtitle, editCategory, editRate, editDes, editStory;
+        EditText editTitle, editSubtitle, editCategory, editRate, editDes, editStory, imagePut;
         ImageView imageUrl;
+        private static final int PICK_IMAGE_REQUEST = 1;
 
+        private void openFileChooser() {
+            Intent intent = new Intent();
+            intent.setType("image/*");
+            intent.setAction(Intent.ACTION_GET_CONTENT);
+            startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+        }
+        @Override
+        public void onActivityResult(int requestCode, int resultCode, Intent data) {
+            super.onActivityResult(requestCode, resultCode, data);
+            if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null && data.getData() != null) {
+                Uri imageUri = data.getData();
 
+                imageResult = imageUri;
+                // Call upload method
+                uploadImageToFirebaseStorage(imageUri);
 
-        public UpdateDialog(String title, String subtitle, String category, String image, String rate, String des, String story) {
+                // Use Glide to load the selected image into the ImageView
+                Glide.with(this).load(imageUri).into(imageUrl);
+            }
+        }
+        private String getFileExtension(Uri uri) {
+            ContentResolver contentResolver = getContext().getContentResolver();
+            MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
+            return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
+        }
+        private void uploadImageToFirebaseStorage(Uri imageUri) {
+            StorageReference storageReference = FirebaseStorage.getInstance().getReference("uploads/" + System.currentTimeMillis() + ".jpg");
+            storageReference.putFile(imageUri)
+                    .addOnSuccessListener(taskSnapshot -> {
+                        // Get download URL and update Realtime Database
+                        storageReference.getDownloadUrl().addOnSuccessListener(uri -> {
+                            String uploadId = FirebaseDatabase.getInstance().getReference("books").push().getKey();
+                            FirebaseDatabase.getInstance().getReference("books").child(uploadId).setValue(uri.toString())
+                                    .addOnCompleteListener(task -> {
+                                        if (task.isSuccessful()) {
+                                            Toast.makeText(getContext(), "Image upload successful", Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            Toast.makeText(getContext(), "Upload failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                        });
+                    })
+                    .addOnFailureListener(e -> Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show());
+        }
+        public UpdateDialog(String id, String title, String subtitle, String category, String image, String rate, String des, String story) {
             this.title = title;
             this.subtitle = subtitle;
             this.category = category;
@@ -158,6 +206,7 @@ public class BookDetailsPage extends AppCompatActivity {
             this.story = story;
             this.des = des;
             this.rate = rate;
+            this.id = id;
         }
 
         @NonNull
@@ -167,13 +216,18 @@ public class BookDetailsPage extends AppCompatActivity {
 
             LayoutInflater inflater = requireActivity().getLayoutInflater();
             View view = inflater.inflate(R.layout.update_book, null);
+            imagePut = view.findViewById(R.id.input_image);
             editTitle = view.findViewById(R.id.input_title);
+            ProgressBar progressBar = view.findViewById(R.id.progressBar3);
             editSubtitle = view.findViewById(R.id.input_subtitle);
             imageUrl = view.findViewById(R.id.image_preview);
             editCategory = view.findViewById(R.id.choose_type_book);
             editStory = view.findViewById(R.id.input_story);
             editDes = view.findViewById(R.id.input_des);
             editRate = view.findViewById(R.id.input_rate);
+            imageUrl.setOnClickListener(v -> openFileChooser());
+            imagePut.setOnClickListener(v -> openFileChooser());
+
             if (!image.isEmpty()) {
                 Glide.with(this)
                         .load(Uri.parse(image)) // Glide can handle Uri.parse(image) directly
@@ -208,51 +262,81 @@ public class BookDetailsPage extends AppCompatActivity {
                 @Override
                 public void onShow(DialogInterface dialogInterface) {
                     Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                    Button back = dialog.getButton(AlertDialog.BUTTON_NEGATIVE);
                     positiveButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            // Validate input fields if necessary
-                            String textTitle = editTitle.getText().toString();
-                            String textCategory = editCategory.getText().toString();
-                            String imagePreview = imageUrl.getImageMatrix().toString();
-                            String textDes = editDes.getText().toString();
-                            String textSubtitle = editSubtitle.getText().toString();
-                            String textRate = editRate.getText().toString();
-                            String textStory = editStory.getText().toString();
+                            // Collect all field values
+                            progressBar.setVisibility(View.VISIBLE);
+                            positiveButton.setVisibility(View.GONE);
+                            back.setVisibility(View.GONE);
 
-                            // Assuming 'bookId' is the ID of the book to update. You need to obtain this ID.
-                            String bookId = "the_book_id"; // Placeholder, replace with actual book ID logic
-                            DatabaseReference bookReference = FirebaseDatabase.getInstance().getReference("book").child(bookId);
+                            String textTitle = editTitle.getText().toString().trim();
+                            String textCategory = editCategory.getText().toString().trim();
+                            String textDes = editDes.getText().toString().trim();
+                            String textSubtitle = editSubtitle.getText().toString().trim();
+                            String textRate = editRate.getText().toString().trim();
+                            String textStory = editStory.getText().toString().trim();
 
-                            // Create a map to update book information
-                            Map<String, Object> bookUpdates = new HashMap<>();
-                            bookUpdates.put("title", textTitle);
-                            bookUpdates.put("subtitle", textSubtitle);
-                            bookUpdates.put("category", textCategory);
-                            bookUpdates.put("image", imagePreview);
-                            bookUpdates.put("description", textDes);
-                            bookUpdates.put("rate", textRate);
-                            bookUpdates.put("story", textStory);
+                            // Assume imageResult is not null and contains the selected image URI
+                            if (imageResult != null) {
+                                StorageReference fileReference = FirebaseStorage.getInstance().getReference("uploads").child(System.currentTimeMillis() + "." + getFileExtension(imageResult));
+                                fileReference.putFile(imageResult).addOnSuccessListener(taskSnapshot -> {
+                                    // After upload, get the URL of the uploaded file
+                                    fileReference.getDownloadUrl().addOnSuccessListener(uri -> {
+                                        // Update book details with the new image URL and other details
+                                        String imageUrl = uri.toString(); // URL of the uploaded image
+                                        DatabaseReference bookReference = FirebaseDatabase.getInstance().getReference("book").child(id);
 
-                            bookReference.updateChildren(bookUpdates).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if (task.isSuccessful()){
-                                        // Dismiss dialog and navigate or show success message
+                                        Map<String, Object> bookUpdates = new HashMap<>();
+                                        bookUpdates.put("title", textTitle);
+                                        bookUpdates.put("subtitle", textSubtitle);
+                                        bookUpdates.put("category", textCategory);
+                                        bookUpdates.put("image", imageUrl); // Use the new image URL
+                                        bookUpdates.put("description", textDes);
+                                        bookUpdates.put("rate", textRate);
+                                        bookUpdates.put("story", textStory);
+
+                                        bookReference.updateChildren(bookUpdates).addOnCompleteListener(task -> {
+                                            if (task.isSuccessful()) {
+                                                Toast.makeText(getContext(), "Book updated successfully", Toast.LENGTH_SHORT).show();
+                                                dialog.dismiss();
+                                                Intent intent = new Intent(getActivity(), MainButtomNavigation.class);
+                                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                                startActivity(intent);
+                                                // Refresh or navigate as needed
+                                            } else {
+                                                Toast.makeText(getContext(), "Failed to update book", Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+                                    });
+                                }).addOnFailureListener(e -> Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show());
+                            } else {
+                                // Handle case where no new image was selected but other details need to be updated
+                                DatabaseReference bookReference = FirebaseDatabase.getInstance().getReference("book").child(id);
+                                Map<String, Object> bookUpdates = new HashMap<>();
+                                bookUpdates.put("title", textTitle);
+                                bookUpdates.put("subtitle", textSubtitle);
+                                bookUpdates.put("category", textCategory);
+                                // Preserve the old image if no new image was selected
+                                bookUpdates.put("description", textDes);
+                                bookUpdates.put("rate", textRate);
+                                bookUpdates.put("story", textStory);
+
+                                bookReference.updateChildren(bookUpdates).addOnCompleteListener(task -> {
+                                    if (task.isSuccessful()) {
                                         Toast.makeText(getContext(), "Book updated successfully", Toast.LENGTH_SHORT).show();
                                         dialog.dismiss();
-                                        // Navigate or refresh as needed
-                                        Intent intent = new Intent(getActivity(), MainButtomNavigation.class);
-                                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                                        startActivity(intent);
+
+                                        // Refresh or navigate as needed
                                     } else {
-                                        // Handle failure
                                         Toast.makeText(getContext(), "Failed to update book", Toast.LENGTH_SHORT).show();
                                     }
-                                }
-                            });
+                                });
+                            }
                         }
                     });
+
                 }
 
             });

@@ -1,10 +1,5 @@
 package com.houng.mobile_app_development.modules.pages;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import com.google.firebase.appcheck.FirebaseAppCheck;
-
 import android.annotation.SuppressLint;
 import android.content.ContentResolver;
 import android.content.DialogInterface;
@@ -22,8 +17,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
-import com.google.firebase.appcheck.safetynet.SafetyNetAppCheckProviderFactory;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
@@ -32,6 +29,8 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.appcheck.FirebaseAppCheck;
+import com.google.firebase.appcheck.safetynet.SafetyNetAppCheckProviderFactory;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -40,6 +39,7 @@ import com.google.firebase.storage.UploadTask;
 import com.houng.mobile_app_development.MainButtomNavigation;
 import com.houng.mobile_app_development.R;
 import com.houng.mobile_app_development.model.Book_model;
+
 import java.util.Objects;
 
 public class AddPage extends AppCompatActivity {
@@ -193,7 +193,7 @@ public class AddPage extends AppCompatActivity {
             DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("book");
             String bookId = databaseReference.push().getKey();
             assert bookId != null;
-            Book_model books = new Book_model(editTitle, editCategory, editSubtitle, imageUrl, editRate, editDes, editStory);
+            Book_model books = new Book_model(bookId, editTitle, editCategory, editSubtitle, imageUrl, editRate, editDes, editStory);
             databaseReference.child(bookId).setValue(books).addOnCompleteListener(
                     new OnCompleteListener<Void>() {
                         @Override
