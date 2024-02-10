@@ -1,120 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".modules.pages.SearchPage">
+    android:padding="16dp">
 
-
-    <!--    <ListView-->
-    <!--        android:id="@+id/simpleListView"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="547dp"-->
-    <!--        android:scrollbarAlwaysDrawVerticalTrack="true"-->
-    <!--        tools:ignore="VisualLintBounds" />-->
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/view3"
-        android:layout_width="match_parent"
-        android:layout_height="227dp"
-        android:background="@drawable/bg_main_search"
-        tools:ignore="MissingConstraints,VisualLintBounds"
-        tools:layout_editor_absoluteX="-16dp"
-        tools:layout_editor_absoluteY="0dp">
-
-    </androidx.appcompat.widget.Toolbar>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="56dp"
-        android:fontFamily="sans-serif-medium"
-        android:text="@string/librarybuddy1"
-        android:textAlignment="center"
-        android:textColor="@color/coral"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3"
-        tools:ignore="MissingConstraints" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:fontFamily="sans-serif-medium"
-        android:text="for"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="@+id/view3"
-        app:layout_constraintTop_toBottomOf="@+id/textView3"
-        tools:ignore="MissingConstraints" />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="36dp"
-        android:fontFamily="sans-serif-medium"
-        android:shadowRadius="3"
-        android:text="@string/search_text"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="@+id/view3"
-        app:layout_constraintTop_toTopOf="@+id/view3"
-        tools:ignore="MissingConstraints" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="26dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="@string/librarybuddy1"
+            android:textAlignment="center"
+            android:textColor="@color/coral"
+            android:textSize="24sp"
+            />
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/search_textfield"
-        android:layout_width="match_parent"
-        android:layout_height="61dp"
-        android:layout_margin="20dp"
-        android:layout_marginBottom="4dp"
-        android:background="@drawable/bg_search"
-        android:drawableStart="@mipmap/transparency"
-        android:drawablePadding="10dp"
-        android:hint="Search..."
-        android:paddingStart="10dp"
-        android:textAlignment="viewStart"
-        android:textColorHint="@color/black"
-        app:layout_constraintBottom_toBottomOf="@+id/view3"
-        tools:ignore="HardcodedText,MissingConstraints,RtlSymmetry,TextContrastCheck,VisualLintTextFieldSize"
-        tools:layout_editor_absoluteX="24dp" />
+            android:id="@+id/searchField"
+            android:layout_width="match_parent"
+            android:layout_height="61dp"
+            android:layout_margin="20dp"
+            android:layout_marginBottom="4dp"
+            android:background="@drawable/bg_search"
+            android:drawableStart="@mipmap/transparency"
+            android:drawablePadding="10dp"
+            android:hint="Search..."
+            android:paddingStart="10dp"
+            android:textAlignment="viewStart"
+            android:textColorHint="@color/black"
+ />
 
-
-    <TextView
+    <Button
+        android:id="@+id/searchButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="244dp"
-        android:fontFamily="sans-serif-medium"
-        android:shadowRadius="3"
-        android:text="No result"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="@+id/view3"
-        app:layout_constraintTop_toTopOf="@+id/view3"
-        tools:ignore="MissingConstraints" />
+        android:layout_gravity="center_horizontal"
+        android:text="Search"/>
 
-    <ImageView
-        android:id="@+id/image_"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:src="@mipmap/no_data_found"
-        app:layout_constraintTop_toBottomOf="@+id/view3"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="56dp" />
+        <ImageView
+            android:id="@+id/image_"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="100dp"
+            android:src="@mipmap/no_data_found"
+ />
+
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/search_item"
-        android:layout_width="409dp"
-        android:layout_height="315dp"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="2dp"
-        tools:layout_editor_absoluteY="502dp" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:id="@+id/resultView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+</LinearLayout>
