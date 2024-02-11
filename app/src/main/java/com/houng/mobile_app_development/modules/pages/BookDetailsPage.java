@@ -60,7 +60,7 @@ public class BookDetailsPage extends AppCompatActivity {
     public Book_model book;
     private ImageView deleteIcon;
     public TextInputEditText choose_book;
-
+    public boolean isHidden = false;
 
     @SuppressLint({"SetTextI18n", "MissingInflatedId"})
     @Override
@@ -87,15 +87,22 @@ public class BookDetailsPage extends AppCompatActivity {
 
         buttonEditText.setOnClickListener(v -> new UpdateDialog(book.id, book.title, book.subtitle, book.category, book.image, book.rate, book.des, book.story).show(BookDetailsPage.this.getSupportFragmentManager(), "GAME_DIALOG"));
 
-        if (book != null) {
-            title.setText(book.title);
-            if (book.image != null && !book.image.isEmpty()) {
-                Glide.with(BookDetailsPage.this).load(book.image).into(img);
-            }
-            story.setText(book.story);
-            rate.setText(book.rate + "/5");
-        }
         loadUserProfileRole();
+        Intent intent = getIntent();
+        if (Objects.equals(intent.getStringExtra("isTapped"), "")) {
+            isHidden = true;
+            getDataFromResearch();
+        } else {
+            if (book != null) {
+                title.setText(book.title);
+                if (book.image != null && !book.image.isEmpty()) {
+                    Glide.with(BookDetailsPage.this).load(book.image).into(img);
+                }
+                story.setText(book.story);
+                rate.setText(book.rate + "/5");
+            }
+        }
+
         deleteIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -104,7 +111,6 @@ public class BookDetailsPage extends AppCompatActivity {
                 Intent intent = new Intent(BookDetailsPage.this, MainButtomNavigation.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
-
             }
         });
     }
@@ -136,8 +142,17 @@ public class BookDetailsPage extends AppCompatActivity {
                     }
 
                     if (role.equals("1")) {
-                        deleteIcon.setVisibility(View.VISIBLE);
-                        buttonEditText.setVisibility(View.VISIBLE);
+                        if (isHidden) {
+                            ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) rate.getLayoutParams();
+                            float pixels = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 310, getResources().getDisplayMetrics());
+                            layoutParams.setMarginEnd((int) pixels);
+                            rate.setLayoutParams(layoutParams);
+                            buttonEditText.setVisibility(View.GONE);
+                            deleteIcon.setVisibility(View.GONE);
+                        } else {
+                            deleteIcon.setVisibility(View.VISIBLE);
+                            buttonEditText.setVisibility(View.VISIBLE);
+                        }
                     } else {
                         ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) rate.getLayoutParams();
                         float pixels = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 310, getResources().getDisplayMetrics());
@@ -164,7 +179,6 @@ public class BookDetailsPage extends AppCompatActivity {
         private final String des;
         private final String rate;
         Uri imageResult;
-
         EditText editTitle, editSubtitle, editCategory, editRate, editDes, editStory, imagePut;
         ImageView imageUrl;
         private static final int PICK_IMAGE_REQUEST = 1;
@@ -355,4 +369,18 @@ public class BookDetailsPage extends AppCompatActivity {
             return dialog;
         }
     }
+
+    public void getDataFromResearch() {
+        Intent intent = getIntent();
+        String titles = intent.getStringExtra("title");
+        String stories = intent.getStringExtra("story");
+        String imageUrl = intent.getStringExtra("image");
+        String rates = intent.getStringExtra("rate");
+
+        title.setText(titles);
+        story.setText(stories);
+        rate.setText(rates);
+        Glide.with(this).load(imageUrl).into(img);
+    }
+
 }
