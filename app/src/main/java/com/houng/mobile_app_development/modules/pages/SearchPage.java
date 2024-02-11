@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -35,21 +36,21 @@ public class SearchPage extends Fragment {
     private ItemAdapter itemAdapter;
 
     private ImageView imageEmpty;
-    // Firebase reference
+    public LinearLayout loading;
     private DatabaseReference databaseReference;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View views = inflater.inflate(R.layout.activity_search_page, container, false);
         itemList.clear();
-
         searchField = views.findViewById(R.id.searchField);
         searchButton = views.findViewById(R.id.searchButton);
-        imageEmpty = views.findViewById(R.id.image_);
+        imageEmpty = views.findViewById(R.id.image_none);
         resultView = views.findViewById(R.id.resultView);
         resultView.setLayoutManager(new LinearLayoutManager(getActivity()));
         itemAdapter = new ItemAdapter(getActivity(), itemList);
         resultView.setAdapter(itemAdapter);
+        loading = views.findViewById(R.id.loading);
 
         databaseReference = FirebaseDatabase.getInstance().getReference("book");
 
@@ -66,14 +67,18 @@ public class SearchPage extends Fragment {
         if (searchField != null) {
             searchField.setText("");
         }
+        loading.setVisibility(View.GONE);
     }
 
     private void firebaseItemSearch(String searchText) {
         Query firebaseSearchQuery = databaseReference.orderByChild("title").startAt(searchText).endAt(searchText + "\uf8ff");
-
+        loading.setVisibility(View.VISIBLE);
+        imageEmpty.setVisibility(View.GONE);
         firebaseSearchQuery.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                loading.setVisibility(View.GONE);
+
                 if (dataSnapshot.exists()) {
                     itemList.clear();
 
@@ -90,12 +95,15 @@ public class SearchPage extends Fragment {
                     Toast.makeText(getActivity(), "No items found", Toast.LENGTH_SHORT).show();
                 }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Hide loading indicator
+                loading.setVisibility(View.GONE);
+
                 Toast.makeText(getActivity(), "Error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 
 }

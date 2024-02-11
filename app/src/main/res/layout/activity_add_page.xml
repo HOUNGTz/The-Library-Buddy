@@ -214,18 +214,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/save_book_button"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:text="@string/save"
-                android:gravity="center_horizontal|center_vertical"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/blue"
                 android:layout_gravity="center_horizontal"
-                android:textColor="@color/white"
-                android:textSize="20sp"
-                android:textAlignment="center"
-                android:background="@drawable/rounded_cornor"
-                />
+                android:text="@string/save"
+                app:cornerRadius="4dp"
+                tools:ignore="HardcodedText" />
 
         </LinearLayout>
     </ScrollView>
