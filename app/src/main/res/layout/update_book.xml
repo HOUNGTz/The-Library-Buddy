@@ -39,7 +39,8 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/input_title"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="58dp"
+                        android:maxLines="1"
                         android:hint="@string/book_title"
                         app:hintEnabled="true" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -52,7 +53,8 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/choose_type_book"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="58dp"
+                        android:maxLines="1"
                         android:drawableEnd="@mipmap/down"
                         android:hint="@string/category" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -74,7 +76,8 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/input_subtitle"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="58dp"
+                    android:maxLines="1"
                     android:hint="@string/books_subtitle" />
             </com.google.android.material.textfield.TextInputLayout>
         </TableRow>
@@ -124,7 +127,8 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/input_rate"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="58dp"
+                    android:maxLines="1"
                     android:hint="@string/rating_books" />
             </com.google.android.material.textfield.TextInputLayout>
         </TableRow>
