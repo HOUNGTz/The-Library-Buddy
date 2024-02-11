@@ -21,7 +21,6 @@ public class IconAdapterWithTextDialog extends ArrayAdapter<String> {
         this.icons = icons;
         this.inflater = LayoutInflater.from(context);
     }
-
     @NonNull
     @Override
     public View getView(int position, View convertView, @NonNull ViewGroup parent) {
@@ -31,7 +30,6 @@ public class IconAdapterWithTextDialog extends ArrayAdapter<String> {
 
         ImageView imageView = convertView.findViewById(R.id.item_icon);
         TextView textView = convertView.findViewById(R.id.item_text);
-
         imageView.setImageResource(icons[position]);
         textView.setText(items[position]);
 

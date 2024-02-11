@@ -14,7 +14,7 @@ import com.houng.mobile_app_development.modules.screens.HomeScreen;
 public class MainButtomNavigation extends AppCompatActivity {
     BottomNavigationView navigationView;
     HomeScreen homeScreen = new HomeScreen();
-    BookPage bookPage = new BookPage();
+    //BookPage bookPage = new BookPage();
     SearchPage searchPage = new SearchPage();
     ProfilePage profilePage = new ProfilePage();
     @Override

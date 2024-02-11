@@ -18,13 +18,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -40,7 +38,6 @@ import com.google.firebase.storage.UploadTask;
 import com.houng.mobile_app_development.MainButtomNavigation;
 import com.houng.mobile_app_development.R;
 import com.houng.mobile_app_development.model.Book_model;
-
 import java.util.Objects;
 
 public class AddPage extends AppCompatActivity {
@@ -50,12 +47,13 @@ public class AddPage extends AppCompatActivity {
     private ImageView imagePreview;
     private Uri imageUri;
     private ProgressBar progressBar;
-
+    int titleTextColor;
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_page);
+
         save_button = findViewById(R.id.save_book_button);
         title = findViewById(R.id.input_title);
         subtitle = findViewById(R.id.input_subtitle);
@@ -63,9 +61,18 @@ public class AddPage extends AppCompatActivity {
         progressBar = findViewById(R.id.progressBar3);
         des = findViewById(R.id.input_des);
         story = findViewById(R.id.input_story);
-        Toolbar toolbar = findViewById(R.id.materialToolbar);
         imagePreview = findViewById(R.id.image_preview);
+
+        Toolbar toolbar = findViewById(R.id.materialToolbar);
         setSupportActionBar(toolbar);
+        Objects
+                .requireNonNull(getSupportActionBar())
+                .setTitle("Insert New Books");
+
+        titleTextColor = ContextCompat.getColor(this, R.color.white);
+        SpannableString spannableString = new SpannableString(getSupportActionBar().getTitle());
+        spannableString.setSpan(new ForegroundColorSpan(titleTextColor), 0, spannableString.length(), 0);
+        getSupportActionBar().setTitle(spannableString);
 
         story.setOnTouchListener((v, event) -> {
             if (v.getId() == R.id.input_story) {
@@ -77,9 +84,9 @@ public class AddPage extends AppCompatActivity {
             return false;
         });
 
-        FirebaseAppCheck.getInstance()
+        FirebaseAppCheck
+                .getInstance()
                 .installAppCheckProviderFactory(SafetyNetAppCheckProviderFactory.getInstance());
-        Objects.requireNonNull(getSupportActionBar()).setTitle("Insert New Books");
         TextInputEditText inputImage = findViewById(R.id.input_image);
         inputImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,13 +95,7 @@ public class AddPage extends AppCompatActivity {
             }
         });
 
-        int titleTextColor = ContextCompat.getColor(this, R.color.white);
-        SpannableString spannableString = new SpannableString(getSupportActionBar().getTitle());
-        spannableString.setSpan(new ForegroundColorSpan(titleTextColor), 0, spannableString.length(), 0);
-        getSupportActionBar().setTitle(spannableString);
-
         choose_type_book = findViewById(R.id.choose_type_book);
-
         choose_type_book.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -112,11 +113,8 @@ public class AddPage extends AppCompatActivity {
                     // Save book without image or show an error message
                     saveBook(null);
                 }
-
             }
         });
-
-
     }
     private void openFileChooser() {
         Intent intent = new Intent();
@@ -145,9 +143,10 @@ public class AddPage extends AppCompatActivity {
 
     private void uploadFile() {
         if (imageUri != null) {
-            StorageReference fileReference = FirebaseStorage.getInstance().getReference("uploads")
+            StorageReference fileReference = FirebaseStorage
+                    .getInstance()
+                    .getReference("uploads")
                     .child(System.currentTimeMillis() + "." + getFileExtension(imageUri));
-
             fileReference.putFile(imageUri)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
@@ -172,13 +171,13 @@ public class AddPage extends AppCompatActivity {
     }
 
     private void saveBook(String imageUrl) {
-
         String editTitle = Objects.requireNonNull(title.getText()).toString();
         String editSubtitle = Objects.requireNonNull(subtitle.getText()).toString();
         String editRate = Objects.requireNonNull(rate.getText()).toString();
         String editDes = Objects.requireNonNull(des.getText()).toString();
         String editStory = Objects.requireNonNull(story.getText()).toString();
         String editCategory = Objects.requireNonNull(choose_type_book.getText()).toString();
+
         if(TextUtils.isEmpty(editTitle)) {
             title.setError("Title Is required");
             title.requestFocus();
@@ -217,21 +216,29 @@ public class AddPage extends AppCompatActivity {
             DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("book");
             String bookId = databaseReference.push().getKey();
             assert bookId != null;
-            Book_model books = new Book_model(bookId, editTitle, editCategory, editSubtitle, imageUrl, editRate, editDes, editStory);
+            Book_model books = new Book_model(
+                bookId,
+                editTitle,
+                editCategory,
+                editSubtitle,
+                imageUrl,
+                editRate,
+                editDes,
+                editStory
+            );
             databaseReference.child(bookId).setValue(books).addOnCompleteListener(
-                    new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()) {
-                                progressBar.setVisibility(View.GONE);
-                                Intent intent = new Intent(AddPage.this, MainButtomNavigation.class);
-                                startActivity(intent);
-                            }
+                new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            progressBar.setVisibility(View.GONE);
+                            Intent intent = new Intent(AddPage.this, MainButtomNavigation.class);
+                            startActivity(intent);
                         }
                     }
+                }
             );
         }
-
     }
 
     @Override

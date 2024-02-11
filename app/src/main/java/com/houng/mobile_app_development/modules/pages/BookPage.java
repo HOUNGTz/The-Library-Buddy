@@ -2,7 +2,6 @@ package com.houng.mobile_app_development.modules.pages;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,14 +10,8 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.CustomTarget;
-import com.bumptech.glide.request.transition.Transition;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -36,8 +29,11 @@ public class BookPage extends Fragment {
     public FirebaseAuth auth;
     public String role;
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(
+        LayoutInflater inflater,
+        ViewGroup container,
+        Bundle savedInstanceState
+    ) {
         View view = inflater.inflate(R.layout.activity_book_page, container, false);
 
         img_clicker = view.findViewById(R.id.img_clicker);
@@ -70,7 +66,9 @@ public class BookPage extends Fragment {
         if (firebaseUser == null){
             Toast.makeText(getActivity(), "User not logged in", Toast.LENGTH_LONG).show();
         } else {
-            DatabaseReference referenceProfile = FirebaseDatabase.getInstance().getReference("Registered users");
+            DatabaseReference referenceProfile = FirebaseDatabase
+                    .getInstance()
+                    .getReference("Registered users");
             referenceProfile.child(firebaseUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
                 @SuppressLint("SetTextI18n")
                 @Override
@@ -92,13 +90,9 @@ public class BookPage extends Fragment {
                         Toast.makeText(getActivity(), "User details not found", Toast.LENGTH_LONG).show();
                     }
                 }
-
                 @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
+                public void onCancelled(@NonNull DatabaseError error) {}
             });
-
         }
 
         assert cancel != null;

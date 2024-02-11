@@ -20,20 +20,24 @@ import com.houng.mobile_app_development.R;
 import java.util.Objects;
 
 public class UpdatePage extends AppCompatActivity {
+    int titleTextColor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_page);
+
         Toolbar toolbar = findViewById(R.id.materialToolbar);
         setSupportActionBar(toolbar);
-        Objects.requireNonNull(getSupportActionBar()).setTitle("Update Book");
-        int titleTextColor = ContextCompat.getColor(this, R.color.white);
+        Objects
+                .requireNonNull(getSupportActionBar())
+                .setTitle("Update Book");
+        titleTextColor = ContextCompat.getColor(this, R.color.white);
         SpannableString spannableString = new SpannableString(getSupportActionBar().getTitle());
         spannableString.setSpan(new ForegroundColorSpan(titleTextColor), 0, spannableString.length(), 0);
         getSupportActionBar().setTitle(spannableString);
+
         TextInputEditText update_type_book = findViewById(R.id.update_type_book);
         update_type_book.setOnClickListener(v -> showDialog());
-
     }
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -43,7 +47,6 @@ public class UpdatePage extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
 
     public void showDialog() {
         final CharSequence[] items = {"សៀវភៅប្រលោមលោក", "សៀវភៅទូទៅ", "សៀវភៅអក្សរសិល្ប៌", "គម្ពីរធម៌"};

@@ -45,9 +45,7 @@ import com.houng.mobile_app_development.modules.screens.LoginScreen;
 
 public class ProfilePage extends Fragment {
     public LinearLayout evenLogout;
-    public LinearLayout about;
     public TextView textName, roleText;
-
     public ImageView imageView;
     public FirebaseAuth auth;
     public String name, image,email,role,password, userID;
@@ -65,12 +63,13 @@ public class ProfilePage extends Fragment {
         // Initialize your views here
         textName = view.findViewById(R.id.textViewName);
         imageView = view.findViewById(R.id.imageViewProfile);
-        LinearLayout evenLogout = view.findViewById(R.id.even_logout);
-        LinearLayout add_book = view.findViewById(R.id.add_book);
         roleText = view.findViewById(R.id.role);
-        LinearLayout update = view.findViewById(R.id.update);
         progressBar = view.findViewById(R.id.progressBar);
         verticalLine = view.findViewById(R.id.vertical_line);
+        LinearLayout evenLogout = view.findViewById(R.id.even_logout);
+        LinearLayout add_book = view.findViewById(R.id.add_book);
+        LinearLayout about = view.findViewById(R.id.about);
+        LinearLayout update = view.findViewById(R.id.update);
 
         // Setup Firebase
         auth = FirebaseAuth.getInstance();
@@ -78,7 +77,9 @@ public class ProfilePage extends Fragment {
         if (firebaseUser == null){
             Toast.makeText(getActivity(), "User not logged in", Toast.LENGTH_LONG).show();
         } else {
-            DatabaseReference referenceProfile = FirebaseDatabase.getInstance().getReference("Registered users");
+            DatabaseReference referenceProfile = FirebaseDatabase
+                    .getInstance()
+                    .getReference("Registered users");
             referenceProfile.child(firebaseUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
                 @SuppressLint("SetTextI18n")
                 @Override
@@ -134,7 +135,6 @@ public class ProfilePage extends Fragment {
                     }
                 }
 
-
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
 
@@ -150,11 +150,10 @@ public class ProfilePage extends Fragment {
 
         // Setup logout event
         if (evenLogout != null) {
-            evenLogout.setOnClickListener(v -> new StartGameDialogFragment().show(requireActivity().getSupportFragmentManager(), "GAME_DIALOG"));
+            evenLogout
+                    .setOnClickListener(v -> new StartGameDialogFragment()
+                    .show(requireActivity().getSupportFragmentManager(), "GAME_DIALOG"));
         }
-
-
-        about = view.findViewById(R.id.about);
         about.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -170,13 +169,18 @@ public class ProfilePage extends Fragment {
             }
         });
 
-        update.setOnClickListener(v -> new UpdateDialogFragment(name, email, password, userID, firebaseUser, image, role).show(requireActivity().getSupportFragmentManager(), "GAME_DIALOG"));
+        update.setOnClickListener(v -> new UpdateDialogFragment(
+            name,
+            email,
+            password,
+            userID,
+            firebaseUser,
+            image,
+            role
+        ).show(requireActivity().getSupportFragmentManager(), "GAME_DIALOG"));
 
         return view;
-
     }
-
-
 
     private void setupClickListener(View view, int layoutId, Class<?> activityClass) {
         LinearLayout layout = view.findViewById(layoutId);
@@ -192,7 +196,6 @@ public class ProfilePage extends Fragment {
                     }
                 }
             });
-
         }
     }
     public static class StartGameDialogFragment extends DialogFragment {
@@ -209,22 +212,24 @@ public class ProfilePage extends Fragment {
                     public void onClick(DialogInterface dialog, int id) {
                         authProfile.signOut();
                         Intent intent = new Intent(getActivity(), LoginScreen.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK
+                        intent.setFlags(
+                            Intent.FLAG_ACTIVITY_CLEAR_TOP
+                            | Intent.FLAG_ACTIVITY_CLEAR_TASK
+                            | Intent.FLAG_ACTIVITY_NEW_TASK
                         );
                         startActivity(intent);
                     }
-                })
-                    .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            View rootView = requireActivity().findViewById(android.R.id.content); // Get the root view
-                            Snackbar snackbar = Snackbar.make(rootView, "The account wasn't logged out.", Snackbar.LENGTH_LONG);
-                            snackbar.setDuration(3000);
-                            snackbar.setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark));
-                            snackbar.setActionTextColor(getResources().getColor(R.color.white));
-                            snackbar.show();
-                        }
+                }).setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        View rootView = requireActivity().findViewById(android.R.id.content); // Get the root view
+                        Snackbar snackbar = Snackbar.make(rootView, "The account wasn't logged out.", Snackbar.LENGTH_LONG);
+                        snackbar.setDuration(3000);
+                        snackbar.setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark));
+                        snackbar.setActionTextColor(getResources().getColor(R.color.white));
+                        snackbar.show();
                     }
+                }
             );
             return builder.create();
         }
@@ -242,10 +247,16 @@ public class ProfilePage extends Fragment {
         private final String userId;
         private final String imageUri;
         private final String role;
-
         private final FirebaseUser firebaseUser;
-
-        public UpdateDialogFragment(String name, String email, String password, String userId, FirebaseUser firebaseUser, String imageUri, String role) {
+        public UpdateDialogFragment(
+            String name,
+            String email,
+            String password,
+            String userId,
+            FirebaseUser firebaseUser,
+            String imageUri,
+            String role
+        ) {
             this.name = name;
             this.email = email;
             this.password = password;
@@ -312,7 +323,9 @@ public class ProfilePage extends Fragment {
                             }
                             progressBar.setVisibility(View.VISIBLE);
                             ReadWriteUserDetails writeUserDetails = new ReadWriteUserDetails( textEmail, textPassword,imageUri, role,textName);
-                            DatabaseReference userReference = FirebaseDatabase.getInstance().getReference("Registered users");
+                            DatabaseReference userReference = FirebaseDatabase
+                                    .getInstance()
+                                    .getReference("Registered users");
 
                             userReference.child(userId).setValue(writeUserDetails).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
@@ -321,20 +334,19 @@ public class ProfilePage extends Fragment {
                                         UserProfileChangeRequest profileChangeRequest = new UserProfileChangeRequest.Builder().setDisplayName(textName).build();
                                         firebaseUser.updateProfile(profileChangeRequest);
                                         Intent intent = new Intent(getActivity(), MainButtomNavigation.class);
-                                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+                                                | Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                                | Intent.FLAG_ACTIVITY_NEW_TASK);
                                         startActivity(intent);
                                     }
                                 }
                             });
-
                         }
                     });
                 }
             });
-
             return dialog;
         }
     }
-
 }
 

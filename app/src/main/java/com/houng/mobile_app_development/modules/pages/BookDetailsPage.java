@@ -23,14 +23,12 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
-
 import com.bumptech.glide.Glide;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
@@ -46,32 +44,34 @@ import com.houng.mobile_app_development.MainButtomNavigation;
 import com.houng.mobile_app_development.R;
 import com.houng.mobile_app_development.ReadWriteUserDetails;
 import com.houng.mobile_app_development.model.Book_model;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
 public class BookDetailsPage extends AppCompatActivity {
-    public ImageButton buttonEditText;
-    public TextView title;
-    public ImageView img;
-    public TextView story;
-    public TextView rate;
-    public Book_model book;
+    ImageButton buttonEditText;
+    TextView title;
+    ImageView img;
+    TextView story;
+    TextView rate;
+    Book_model book;
+    TextInputEditText choose_book;
     private ImageView deleteIcon;
-    public TextInputEditText choose_book;
-    public boolean isHidden = false;
-
+    boolean isHidden = false;
+    int titleTextColor;
     @SuppressLint({"SetTextI18n", "MissingInflatedId"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_details_page);
+
         Toolbar toolbar = findViewById(R.id.materialToolbar);
         setSupportActionBar(toolbar);
 
-        Objects.requireNonNull(getSupportActionBar()).setTitle("");
-        int titleTextColor = ContextCompat.getColor(this, R.color.white);
+        Objects
+                .requireNonNull(getSupportActionBar())
+                .setTitle("");
+        titleTextColor = ContextCompat.getColor(this, R.color.white);
         SpannableString spannableString = new SpannableString(getSupportActionBar().getTitle());
         spannableString.setSpan(new ForegroundColorSpan(titleTextColor), 0, spannableString.length(), 0);
         getSupportActionBar().setTitle(spannableString);
@@ -85,7 +85,16 @@ public class BookDetailsPage extends AppCompatActivity {
         choose_book = findViewById(R.id.choose_type_book);
         book = (Book_model) getIntent().getSerializableExtra("EXTRA_DATA");
 
-        buttonEditText.setOnClickListener(v -> new UpdateDialog(book.id, book.title, book.subtitle, book.category, book.image, book.rate, book.des, book.story).show(BookDetailsPage.this.getSupportFragmentManager(), "GAME_DIALOG"));
+        buttonEditText.setOnClickListener(v -> new UpdateDialog(
+            book.id,
+            book.title,
+            book.subtitle,
+            book.category,
+            book.image,
+            book.rate,
+            book.des,
+            book.story
+        ).show(BookDetailsPage.this.getSupportFragmentManager(), "GAME_DIALOG"));
 
         loadUserProfileRole();
         Intent intent = getIntent();
@@ -106,10 +115,16 @@ public class BookDetailsPage extends AppCompatActivity {
         deleteIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("book").child(book.id);
+                DatabaseReference databaseReference = FirebaseDatabase
+                        .getInstance()
+                        .getReference("book")
+                        .child(book.id);
                 databaseReference.removeValue();
                 Intent intent = new Intent(BookDetailsPage.this, MainButtomNavigation.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    | Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    | Intent.FLAG_ACTIVITY_NEW_TASK
+                );
                 startActivity(intent);
             }
         });
@@ -130,7 +145,9 @@ public class BookDetailsPage extends AppCompatActivity {
         if (firebaseUser == null) {
             Toast.makeText(BookDetailsPage.this, "User not logged in", Toast.LENGTH_LONG).show();
         } else {
-            DatabaseReference referenceProfile = FirebaseDatabase.getInstance().getReference("Registered users");
+            DatabaseReference referenceProfile = FirebaseDatabase
+                    .getInstance()
+                    .getReference("Registered users");
             referenceProfile.child(firebaseUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -140,7 +157,6 @@ public class BookDetailsPage extends AppCompatActivity {
                         role = userDetails.role;
                         System.out.println("===== %%");
                     }
-
                     if (role.equals("1")) {
                         if (isHidden) {
                             ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) rate.getLayoutParams();
@@ -182,7 +198,6 @@ public class BookDetailsPage extends AppCompatActivity {
         EditText editTitle, editSubtitle, editCategory, editRate, editDes, editStory, imagePut;
         ImageView imageUrl;
         private static final int PICK_IMAGE_REQUEST = 1;
-
         private void openFileChooser() {
             Intent intent = new Intent();
             intent.setType("image/*");
@@ -193,7 +208,10 @@ public class BookDetailsPage extends AppCompatActivity {
         @Override
         public void onActivityResult(int requestCode, int resultCode, Intent data) {
             super.onActivityResult(requestCode, resultCode, data);
-            if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null && data.getData() != null) {
+            if (requestCode == PICK_IMAGE_REQUEST
+                && resultCode == Activity.RESULT_OK
+                && data != null && data.getData() != null
+            ) {
                 Uri imageUri = data.getData();
 
                 imageResult = imageUri;
@@ -212,23 +230,41 @@ public class BookDetailsPage extends AppCompatActivity {
         }
 
         private void uploadImageToFirebaseStorage(Uri imageUri) {
-            StorageReference storageReference = FirebaseStorage.getInstance().getReference("uploads/" + System.currentTimeMillis() + ".jpg");
+            StorageReference storageReference = FirebaseStorage
+                .getInstance()
+                .getReference("uploads/" + System.currentTimeMillis() + ".jpg");
             storageReference.putFile(imageUri).addOnSuccessListener(taskSnapshot -> {
                 // Get download URL and update Realtime Database
                 storageReference.getDownloadUrl().addOnSuccessListener(uri -> {
-                    String uploadId = FirebaseDatabase.getInstance().getReference("books").push().getKey();
-                    FirebaseDatabase.getInstance().getReference("books").child(uploadId).setValue(uri.toString()).addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(getContext(), "Image upload successful", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(getContext(), "Upload failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                    String uploadId = FirebaseDatabase
+                        .getInstance()
+                        .getReference("books")
+                        .push()
+                        .getKey();
+                    FirebaseDatabase
+                        .getInstance()
+                        .getReference("books")
+                        .child(uploadId).setValue(uri.toString()).addOnCompleteListener(task -> {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(getContext(), "Image upload successful", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(getContext(), "Upload failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                         });
                 });
             }).addOnFailureListener(e -> Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show());
         }
 
-        public UpdateDialog(String id, String title, String subtitle, String category, String image, String rate, String des, String story) {
+        public UpdateDialog(
+            String id,
+            String title,
+            String subtitle,
+            String category,
+            String image,
+            String rate,
+            String des,
+            String story
+        ) {
             this.title = title;
             this.subtitle = subtitle;
             this.category = category;
@@ -243,12 +279,11 @@ public class BookDetailsPage extends AppCompatActivity {
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
-
             LayoutInflater inflater = requireActivity().getLayoutInflater();
             View view = inflater.inflate(R.layout.update_book, null);
+            ProgressBar progressBar = view.findViewById(R.id.progressBar3);
             imagePut = view.findViewById(R.id.input_image);
             editTitle = view.findViewById(R.id.input_title);
-            ProgressBar progressBar = view.findViewById(R.id.progressBar3);
             editSubtitle = view.findViewById(R.id.input_subtitle);
             imageUrl = view.findViewById(R.id.image_preview);
             editCategory = view.findViewById(R.id.choose_type_book);
@@ -273,7 +308,6 @@ public class BookDetailsPage extends AppCompatActivity {
             editDes.setText(des);
             editRate.setText(rate);
 
-
             builder.setView(view).setPositiveButton(R.string.start, null)
                     .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                         @Override
@@ -283,7 +317,6 @@ public class BookDetailsPage extends AppCompatActivity {
                     });
 
             final AlertDialog dialog = builder.create();
-
             dialog.setOnShowListener(new DialogInterface.OnShowListener() {
                 @Override
                 public void onShow(DialogInterface dialogInterface) {
@@ -306,13 +339,18 @@ public class BookDetailsPage extends AppCompatActivity {
 
                             // Assume imageResult is not null and contains the selected image URI
                             if (imageResult != null) {
-                                StorageReference fileReference = FirebaseStorage.getInstance().getReference("uploads").child(System.currentTimeMillis() + "." + getFileExtension(imageResult));
+                                StorageReference fileReference = FirebaseStorage
+                                        .getInstance()
+                                        .getReference("uploads")
+                                        .child(System.currentTimeMillis() + "." + getFileExtension(imageResult));
                                 fileReference.putFile(imageResult).addOnSuccessListener(taskSnapshot -> {
                                     // After upload, get the URL of the uploaded file
                                     fileReference.getDownloadUrl().addOnSuccessListener(uri -> {
                                         // Update book details with the new image URL and other details
                                         String imageUrl = uri.toString(); // URL of the uploaded image
-                                        DatabaseReference bookReference = FirebaseDatabase.getInstance().getReference("book").child(id);
+                                        DatabaseReference bookReference = FirebaseDatabase
+                                                .getInstance()
+                                                .getReference("book").child(id);
 
                                         Map<String, Object> bookUpdates = new HashMap<>();
                                         bookUpdates.put("title", textTitle);
@@ -339,7 +377,9 @@ public class BookDetailsPage extends AppCompatActivity {
                                 }).addOnFailureListener(e -> Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show());
                             } else {
                                 // Handle case where no new image was selected but other details need to be updated
-                                DatabaseReference bookReference = FirebaseDatabase.getInstance().getReference("book").child(id);
+                                DatabaseReference bookReference = FirebaseDatabase
+                                        .getInstance()
+                                        .getReference("book").child(id);
                                 Map<String, Object> bookUpdates = new HashMap<>();
                                 bookUpdates.put("title", textTitle);
                                 bookUpdates.put("subtitle", textSubtitle);
@@ -362,9 +402,7 @@ public class BookDetailsPage extends AppCompatActivity {
                             }
                         }
                     });
-
                 }
-
             });
             return dialog;
         }
@@ -382,5 +420,4 @@ public class BookDetailsPage extends AppCompatActivity {
         rate.setText(rates);
         Glide.with(this).load(imageUrl).into(img);
     }
-
 }

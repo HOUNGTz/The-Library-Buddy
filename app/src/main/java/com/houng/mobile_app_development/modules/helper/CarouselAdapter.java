@@ -23,7 +23,6 @@ public class CarouselAdapter extends RecyclerView.Adapter<CarouselAdapter.ViewHo
             this.imageResIds.addAll(imageResIds);
             count++;
         }
-
     }
 
     @NonNull
@@ -48,5 +47,4 @@ public class CarouselAdapter extends RecyclerView.Adapter<CarouselAdapter.ViewHo
             imageView = itemView.findViewById(R.id.imageView);
         }
     }
-
 }

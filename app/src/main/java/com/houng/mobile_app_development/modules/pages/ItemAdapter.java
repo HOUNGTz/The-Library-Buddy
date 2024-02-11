@@ -7,20 +7,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Glide;
 import com.houng.mobile_app_development.R;
 import com.houng.mobile_app_development.model.Book_model;
-
 import java.util.List;
 
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder> {
     private final Context mContext;
     private static List<Book_model> itemList;
-
     public ItemAdapter(Context context, List<Book_model> itemList) {
         this.mContext = context;
         ItemAdapter.itemList = itemList;
@@ -30,8 +26,6 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
     @Override
     public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.item_adaptor, parent, false);
-
-
         return new ItemViewHolder(view);
     }
 
@@ -48,19 +42,16 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
     public int getItemCount() {
         return itemList.size();
     }
-
     public static class ItemViewHolder extends RecyclerView.ViewHolder {
         public TextView nameTextView;
         public TextView descriptionTextView;
         public ImageView imageUrl;
         String isTapped = "";
-
         public ItemViewHolder(View itemView) {
             super(itemView);
             nameTextView = itemView.findViewById(R.id.nameTextView);
             descriptionTextView = itemView.findViewById(R.id.descriptionTextView);
             imageUrl = itemView.findViewById(R.id.itemImageView);
-
             imageUrl.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -82,5 +73,4 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
             });
         }
     }
-
 }

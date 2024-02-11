@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import androidx.appcompat.app.AppCompatActivity;
 import com.houng.mobile_app_development.modules.screens.LoginScreen;
-import com.houng.mobile_app_development.modules.screens.SignUpScreen;
 
 public class MainActivity extends AppCompatActivity {
     @Override
