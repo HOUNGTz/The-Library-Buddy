@@ -1,82 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".modules.pages.AboutUsPage">
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="562dp"
-        android:layout_height="921dp"
-        android:contentDescription="@string/todo"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.346"
-        app:srcCompat="@drawable/aboutus_back"
-        tools:ignore="VisualLintBounds" />
+    android:orientation="vertical"
+    tools:context=".modules.pages.UpdatePage">
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        tools:ignore="MissingConstraints">
+        android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/about_arrow_back"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_vertical|center_horizontal"
-            android:contentDescription="@string/todo1"
-            android:paddingStart="30dp"
-            android:paddingTop="28dp"
-            app:srcCompat="@mipmap/arrow_back_large_size_icon"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="-137dp"
-            tools:layout_editor_absoluteY="48dp" />
-
-        <TextView
-            android:id="@+id/about_txt"
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/aboutPage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="28dp"
-            android:fontFamily="sans-serif-black"
-            android:padding="16dp"
-            android:shadowColor="#3C3A3A"
-            android:shadowDx="10"
-            android:shadowDy="10"
-            android:shadowRadius="20"
-            android:text="@string/about_us"
-            android:textAlignment="center"
-            android:textColor="#000000"
-            android:textSize="44sp"
+            android:background="#22A5B4"
+            android:layout_gravity="center_horizontal"
+            android:fontFamily="@font/kdam_thmor"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme"
+            app:navigationIcon="@mipmap/arrow_back_icon">
+
+            <!-- Title just dummy TextView-->
+            <TextView
+                android:id="@+id/toolbarTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text=""
+                android:textColor="@android:color/white"
+                android:textSize="18sp" />
+
+        </com.google.android.material.appbar.MaterialToolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@drawable/aboutus_back">
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-medium"
+            android:paddingLeft="18dp"
+            android:paddingTop="5dp"
+            android:paddingRight="18dp"
+            android:text="@string/subtitle"
+            android:textColor="#252424"
+            android:textSize="18dp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+            app:layout_constraintVertical_bias="0.368"
+            tools:ignore="NotSibling,TextSizeCheck" />
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-medium"
-        android:paddingLeft="18dp"
-        android:paddingTop="5dp"
-        android:paddingRight="18dp"
-        android:text="@string/subtitle"
-        android:textColor="#514E4E"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-        app:layout_constraintVertical_bias="0.368"
-        tools:ignore="NotSibling,TextSizeCheck" />
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
