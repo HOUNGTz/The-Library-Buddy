@@ -47,7 +47,7 @@ import com.google.firebase.storage.StorageReference;
 import com.houng.mobile_app_development.MainButtomNavigation;
 import com.houng.mobile_app_development.R;
 import com.houng.mobile_app_development.ReadWriteUserDetails;
-import com.houng.mobile_app_development.model.Book_model;
+import com.houng.mobile_app_development.modules.model.Book_model;
 
 import java.util.HashMap;
 import java.util.Map;

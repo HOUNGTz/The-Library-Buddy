@@ -23,7 +23,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.houng.mobile_app_development.R;
-import com.houng.mobile_app_development.model.Book_model;
+import com.houng.mobile_app_development.modules.model.Book_model;
 
 import java.util.ArrayList;
 import java.util.List;

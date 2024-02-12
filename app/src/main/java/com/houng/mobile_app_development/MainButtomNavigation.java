@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.houng.mobile_app_development.modules.pages.BookPage;
 import com.houng.mobile_app_development.modules.pages.ProfilePage;
 import com.houng.mobile_app_development.modules.pages.SearchPage;
 import com.houng.mobile_app_development.modules.screens.HomeScreen;
@@ -14,7 +13,6 @@ import com.houng.mobile_app_development.modules.screens.HomeScreen;
 public class MainButtomNavigation extends AppCompatActivity {
     BottomNavigationView navigationView;
     HomeScreen homeScreen = new HomeScreen();
-    //BookPage bookPage = new BookPage();
     SearchPage searchPage = new SearchPage();
     ProfilePage profilePage = new ProfilePage();
     @Override
@@ -29,10 +27,6 @@ public class MainButtomNavigation extends AppCompatActivity {
                 showFragment(homeScreen);
                 return true;
             }
-//            else if (itemId == R.id.btn_book) {
-//                showFragment(bookPage);
-//                return true;
-//            }
             else if (itemId == R.id.btn_search) {
                 showFragment(searchPage);
                 return true;
