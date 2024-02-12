@@ -1,4 +1,4 @@
-package com.houng.mobile_app_development.model;
+package com.houng.mobile_app_development.modules.model;
 
 import java.io.Serializable;
 

@@ -1,4 +1,4 @@
-package com.houng.mobile_app_development.modules.helper;
+package com.houng.mobile_app_development.modules.helpers;
 
 import android.view.LayoutInflater;
 import android.view.View;

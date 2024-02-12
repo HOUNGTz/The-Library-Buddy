@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.houng.mobile_app_development.R;
-import com.houng.mobile_app_development.model.Book_model;
+import com.houng.mobile_app_development.modules.model.Book_model;
 import java.util.List;
 
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder> {

@@ -34,8 +34,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.houng.mobile_app_development.R;
 import com.houng.mobile_app_development.ReadWriteUserDetails;
-import com.houng.mobile_app_development.model.Book_model;
-import com.houng.mobile_app_development.modules.helper.CarouselAdapter;
+import com.houng.mobile_app_development.modules.model.Book_model;
+import com.houng.mobile_app_development.modules.helpers.CarouselAdapter;
 import com.houng.mobile_app_development.modules.pages.BookDetailsPage;
 
 import java.util.ArrayList;
