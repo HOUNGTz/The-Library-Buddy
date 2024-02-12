@@ -13,8 +13,10 @@ import android.text.style.ForegroundColorSpan;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,12 +25,14 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
+
 import com.bumptech.glide.Glide;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
@@ -44,6 +48,7 @@ import com.houng.mobile_app_development.MainButtomNavigation;
 import com.houng.mobile_app_development.R;
 import com.houng.mobile_app_development.ReadWriteUserDetails;
 import com.houng.mobile_app_development.model.Book_model;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -68,9 +73,7 @@ public class BookDetailsPage extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.materialToolbar);
         setSupportActionBar(toolbar);
 
-        Objects
-                .requireNonNull(getSupportActionBar())
-                .setTitle("");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("");
         titleTextColor = ContextCompat.getColor(this, R.color.white);
         SpannableString spannableString = new SpannableString(getSupportActionBar().getTitle());
         spannableString.setSpan(new ForegroundColorSpan(titleTextColor), 0, spannableString.length(), 0);
@@ -186,6 +189,20 @@ public class BookDetailsPage extends AppCompatActivity {
         }
     }
 
+    @SuppressLint("SetTextI18n")
+    public void getDataFromResearch() {
+        Intent intent = getIntent();
+        String titles = intent.getStringExtra("title");
+        String stories = intent.getStringExtra("story");
+        String imageUrl = intent.getStringExtra("image");
+        String rates = intent.getStringExtra("rate");
+
+        title.setText(titles);
+        story.setText(stories);
+        rate.setText(rates + "/5");
+        Glide.with(this).load(imageUrl).into(img);
+    }
+
     public static class UpdateDialog extends DialogFragment {
         private final String title, id;
         private final String subtitle;
@@ -215,10 +232,7 @@ public class BookDetailsPage extends AppCompatActivity {
                 Uri imageUri = data.getData();
 
                 imageResult = imageUri;
-                // Call upload method
                 uploadImageToFirebaseStorage(imageUri);
-
-                // Use Glide to load the selected image into the ImageView
                 Glide.with(this).load(imageUri).into(imageUrl);
             }
         }
@@ -275,12 +289,14 @@ public class BookDetailsPage extends AppCompatActivity {
             this.id = id;
         }
 
+        @SuppressLint("ClickableViewAccessibility")
         @NonNull
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
             LayoutInflater inflater = requireActivity().getLayoutInflater();
             View view = inflater.inflate(R.layout.update_book, null);
+
             ProgressBar progressBar = view.findViewById(R.id.progressBar3);
             imagePut = view.findViewById(R.id.input_image);
             editTitle = view.findViewById(R.id.input_title);
@@ -301,12 +317,23 @@ public class BookDetailsPage extends AppCompatActivity {
                 Glide.with(this).load(R.drawable.empty_image) // Assuming you have a default placeholder
                         .into(imageUrl);
             }
+
             editTitle.setText(title);
             editSubtitle.setText(subtitle);
             editCategory.setText(category);
             editStory.setText(story);
             editDes.setText(des);
             editRate.setText(rate);
+
+            editStory.setOnTouchListener((v, event) -> {
+                if (v.getId() == R.id.input_story) {
+                    v.getParent().requestDisallowInterceptTouchEvent(true);
+                    if ((event.getAction() & MotionEvent.ACTION_MASK) == MotionEvent.ACTION_UP) {
+                        v.getParent().requestDisallowInterceptTouchEvent(false);
+                    }
+                }
+                return false;
+            });
 
             builder.setView(view).setPositiveButton(R.string.start, null)
                     .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -315,7 +342,6 @@ public class BookDetailsPage extends AppCompatActivity {
                             // Cancel behavior here
                         }
                     });
-
             final AlertDialog dialog = builder.create();
             dialog.setOnShowListener(new DialogInterface.OnShowListener() {
                 @Override
@@ -404,20 +430,9 @@ public class BookDetailsPage extends AppCompatActivity {
                     });
                 }
             });
+
+            Objects.requireNonNull(dialog.getWindow()).setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
             return dialog;
         }
-    }
-
-    public void getDataFromResearch() {
-        Intent intent = getIntent();
-        String titles = intent.getStringExtra("title");
-        String stories = intent.getStringExtra("story");
-        String imageUrl = intent.getStringExtra("image");
-        String rates = intent.getStringExtra("rate");
-
-        title.setText(titles);
-        story.setText(stories);
-        rate.setText(rates);
-        Glide.with(this).load(imageUrl).into(img);
     }
 }

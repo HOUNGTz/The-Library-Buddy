@@ -28,34 +28,32 @@
             <TextView
                 android:id="@+id/descriptionTextView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:layout_alignStart="@+id/itemImageView"
                 android:layout_alignTop="@+id/itemImageView"
                 android:layout_alignBottom="@+id/itemImageView"
                 android:layout_alignParentEnd="true"
-                android:layout_marginTop="80dp"
-                android:layout_marginBottom="130dp"
                 android:gravity="center"
                 android:text="Book Subtitle"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textColor="@color/white"
-                android:textSize="20sp"
+                android:textSize="16sp"
                 tools:ignore="HardcodedText" />
 
             <TextView
                 android:id="@+id/nameTextView"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:layout_alignTop="@+id/itemImageView"
                 android:layout_alignBottom="@+id/itemImageView"
-                android:layout_marginTop="135dp"
-                android:layout_marginBottom="79dp"
+                android:layout_marginTop="-31dp"
+                android:layout_marginBottom="31dp"
                 android:gravity="center"
                 android:text="Book Title"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textColor="@color/white"
                 android:textFontWeight="@integer/material_motion_duration_long_1"
-                android:textSize="18sp"
+                android:textSize="24sp"
                 tools:ignore="HardcodedText,UnusedAttribute" />
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
