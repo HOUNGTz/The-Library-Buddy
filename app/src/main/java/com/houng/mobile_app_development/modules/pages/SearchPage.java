@@ -2,6 +2,9 @@ package com.houng.mobile_app_development.modules.pages;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.os.Handler;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,15 +33,15 @@ import java.util.List;
 
 public class SearchPage extends Fragment {
     private EditText searchField;
-    private Button searchButton;
-    private RecyclerView resultView;
     private final List<Book_model> itemList = new ArrayList<>();
     private ItemAdapter itemAdapter;
     private ImageView imageEmpty;
     public LinearLayout loading;
     private DatabaseReference databaseReference;
 
-    @SuppressLint("ClickableViewAccessibility")
+    private static final int LOADING_DELAY = 5000; // 5 seconds
+
+    @SuppressLint({"ClickableViewAccessibility", "NotifyDataSetChanged"})
     @Override
     public View onCreateView(
             LayoutInflater inflater,
@@ -49,9 +52,9 @@ public class SearchPage extends Fragment {
         itemList.clear();
         searchField = views.findViewById(R.id.searchField);
 
-        searchButton = views.findViewById(R.id.searchButton);
+        Button searchButton = views.findViewById(R.id.searchButton);
         imageEmpty = views.findViewById(R.id.image_none);
-        resultView = views.findViewById(R.id.resultView);
+        RecyclerView resultView = views.findViewById(R.id.resultView);
         resultView.setLayoutManager(new LinearLayoutManager(getActivity()));
         itemAdapter = new ItemAdapter(getActivity(), itemList);
         resultView.setAdapter(itemAdapter);
@@ -60,12 +63,52 @@ public class SearchPage extends Fragment {
         databaseReference = FirebaseDatabase
                 .getInstance()
                 .getReference("book");
+
+        // Listen for text changes in the search field
+        searchField.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                String searchText = charSequence.toString().trim();
+                if (!searchText.isEmpty()) {
+                    // Trigger search when text changes
+                    firebaseItemSearch(searchText);
+                } else {
+                    // Clear the list when search text is empty
+                    itemList.clear();
+                    itemAdapter.notifyDataSetChanged();
+                    loading.setVisibility(View.GONE); // Hide loading indicator
+                    // Show "no data" message
+                    imageEmpty.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {}
+        });
+
         searchButton.setOnClickListener(view -> {
             String searchText = searchField.getText().toString().trim();
-            if (searchField.getText().toString().trim().equals("")) {
-                Toast.makeText(getActivity(), "Please fill in the blank before tap to search", Toast.LENGTH_LONG).show();
+            if (searchText.isEmpty()) {
+                Toast.makeText(getActivity(), "Please fill in the blank before tapping to search", Toast.LENGTH_LONG).show();
             } else {
-                firebaseItemSearch(searchText);
+                // Clear the list when search button is clicked
+                itemList.clear();
+                itemAdapter.notifyDataSetChanged();
+
+                // Show loading indicator
+                loading.setVisibility(View.VISIBLE);
+
+                // Start the loading delay
+                new Handler().postDelayed(() -> {
+                    // Perform search after the delay
+                    firebaseItemSearch(searchText);
+
+                    // Hide loading indicator
+                    loading.setVisibility(View.GONE);
+                }, LOADING_DELAY);
             }
         });
         return views;
@@ -87,6 +130,7 @@ public class SearchPage extends Fragment {
         loading.setVisibility(View.VISIBLE);
         imageEmpty.setVisibility(View.GONE);
         firebaseSearchQuery.addValueEventListener(new ValueEventListener() {
+            @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 loading.setVisibility(View.GONE);
@@ -105,6 +149,8 @@ public class SearchPage extends Fragment {
                     itemList.clear();
                     itemAdapter.notifyDataSetChanged();
                     Toast.makeText(getActivity(), "No items found", Toast.LENGTH_SHORT).show();
+                    // Set visibility of the empty view
+                    imageEmpty.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -117,5 +163,4 @@ public class SearchPage extends Fragment {
             }
         });
     }
-
 }
