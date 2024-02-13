@@ -114,25 +114,13 @@ public class BookDetailsPage extends AppCompatActivity {
                 rate.setText(book.rate + "/5");
             }
         }
-
         deleteIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatabaseReference databaseReference = FirebaseDatabase
-                        .getInstance()
-                        .getReference("book")
-                        .child(book.id);
-                databaseReference.removeValue();
-                Intent intent = new Intent(BookDetailsPage.this, MainButtomNavigation.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
-                    | Intent.FLAG_ACTIVITY_CLEAR_TASK
-                    | Intent.FLAG_ACTIVITY_NEW_TASK
-                );
-                startActivity(intent);
+                showDeleteConfirmationDialog();
             }
         });
     }
-
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
@@ -187,6 +175,39 @@ public class BookDetailsPage extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    private void showDeleteConfirmationDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(BookDetailsPage.this);
+        builder.setMessage("Are you sure you want to delete this book?")
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User clicked OK button, proceed with deletion
+                        deleteBook();
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User cancelled the dialog
+                        dialog.dismiss();
+                    }
+                });
+        // Create the AlertDialog object and return it
+        builder.create().show();
+    }
+
+    private void deleteBook() {
+        DatabaseReference databaseReference = FirebaseDatabase
+                .getInstance()
+                .getReference("book")
+                .child(book.id);
+        databaseReference.removeValue();
+        Intent intent = new Intent(BookDetailsPage.this, MainButtomNavigation.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+                | Intent.FLAG_ACTIVITY_CLEAR_TASK
+                | Intent.FLAG_ACTIVITY_NEW_TASK
+        );
+        startActivity(intent);
     }
 
     @SuppressLint("SetTextI18n")
