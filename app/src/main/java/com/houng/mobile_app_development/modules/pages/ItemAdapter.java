@@ -33,7 +33,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
         Book_model item = itemList.get(position);
         holder.nameTextView.setText(item.title);
-        holder.descriptionTextView.setText(item.des);
+        holder.descriptionTextView.setText(item.subtitle);
         Glide.with(mContext)
                 .load(item.image)
                 .into(holder.imageUrl);
