@@ -14,4 +14,5 @@
     <style name="ThemeOverlay.App.Snackbar" parent="">
         <item name="colorOnSurface">@color/colorPrimaryDark</item>
     </style>
+    <dimen name="profile_image_dialog_width">250dp</dimen> <!-- Adjust the width as needed -->
 </resources>

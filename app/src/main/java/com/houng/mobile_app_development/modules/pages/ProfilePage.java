@@ -1,14 +1,13 @@
 package com.houng.mobile_app_development.modules.pages;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +16,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
@@ -48,7 +48,7 @@ public class ProfilePage extends Fragment {
     public TextView textName, roleText;
     public ImageView imageView;
     public FirebaseAuth auth;
-    public String name, image,email,role,password, userID;
+    public String name, image, email, role, password, userID;
     private ProgressBar progressBar;
     public View verticalLine;
 
@@ -74,7 +74,7 @@ public class ProfilePage extends Fragment {
         // Setup Firebase
         auth = FirebaseAuth.getInstance();
         FirebaseUser firebaseUser = auth.getCurrentUser();
-        if (firebaseUser == null){
+        if (firebaseUser == null) {
             Toast.makeText(getActivity(), "User not logged in", Toast.LENGTH_LONG).show();
         } else {
             DatabaseReference referenceProfile = FirebaseDatabase
@@ -108,24 +108,24 @@ public class ProfilePage extends Fragment {
                         // Load the image using Glide
                         if (readWriteUserDetails.imageUrl != null && !readWriteUserDetails.imageUrl.isEmpty()) {
                             Glide.with(requireActivity())
-                                .load(readWriteUserDetails.imageUrl)
-                                .into(new CustomTarget<Drawable>() {
-                                    @Override
-                                    public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
-                                        imageView.setImageDrawable(resource);
-                                        progressBar.setVisibility(View.GONE); // Hide the ProgressBar
-                                    }
+                                    .load(readWriteUserDetails.imageUrl)
+                                    .into(new CustomTarget<Drawable>() {
+                                        @Override
+                                        public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                                            imageView.setImageDrawable(resource);
+                                            progressBar.setVisibility(View.GONE); // Hide the ProgressBar
+                                        }
 
-                                    @Override
-                                    public void onLoadCleared(@Nullable Drawable placeholder) {
-                                        // Handle cleanup if needed
-                                    }
+                                        @Override
+                                        public void onLoadCleared(@Nullable Drawable placeholder) {
+                                            // Handle cleanup if needed
+                                        }
 
-                                    @Override
-                                    public void onLoadFailed(@Nullable Drawable errorDrawable) {
-                                        progressBar.setVisibility(View.GONE); // Hide the ProgressBar on failure
-                                    }
-                                });
+                                        @Override
+                                        public void onLoadFailed(@Nullable Drawable errorDrawable) {
+                                            progressBar.setVisibility(View.GONE); // Hide the ProgressBar on failure
+                                        }
+                                    });
                         } else {
                             Toast.makeText(getActivity(), "User image not available", Toast.LENGTH_LONG).show();
                             progressBar.setVisibility(View.GONE); // Hide the ProgressBar
@@ -143,8 +143,8 @@ public class ProfilePage extends Fragment {
 
             if (image != null && !image.isEmpty()) {
                 Glide.with(ProfilePage.this)
-                .load(image)
-                .into(imageView);
+                        .load(image)
+                        .into(imageView);
             }
         }
 
@@ -152,52 +152,47 @@ public class ProfilePage extends Fragment {
         if (evenLogout != null) {
             evenLogout
                     .setOnClickListener(v -> new StartGameDialogFragment()
-                    .show(requireActivity().getSupportFragmentManager(), "GAME_DIALOG"));
+                            .show(requireActivity().getSupportFragmentManager(), "GAME_DIALOG"));
         }
         about.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent  = new Intent(getActivity(), AboutUsPage.class);
+                Intent intent = new Intent(getActivity(), AboutUsPage.class);
                 startActivity(intent);
             }
         });
         add_book.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent  = new Intent(getActivity(), AddPage.class);
+                Intent intent = new Intent(getActivity(), AddPage.class);
                 startActivity(intent);
             }
         });
 
         update.setOnClickListener(v -> new UpdateDialogFragment(
-            name,
-            email,
-            password,
-            userID,
-            firebaseUser,
-            image,
-            role
+                name,
+                email,
+                password,
+                userID,
+                firebaseUser,
+                image,
+                role
         ).show(requireActivity().getSupportFragmentManager(), "GAME_DIALOG"));
+
+        // Setup click listener for profile image
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (image != null && !image.isEmpty()) {
+                    new ProfileImageDialog(image).show(requireActivity().getSupportFragmentManager(), "PROFILE_IMAGE_DIALOG");
+                }
+            }
+        });
 
         return view;
     }
 
-    private void setupClickListener(View view, int layoutId, Class<?> activityClass) {
-        LinearLayout layout = view.findViewById(layoutId);
-        if (layout != null) {
-            layout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Activity activity = getActivity();
-                    Log.d("ProfilePage", "Layout clicked. Activity is " + (activity == null ? "null" : "not null"));
-                    if (activity != null) {
-                        Intent intent = new Intent(activity, activityClass);
-                        startActivity(intent);
-                    }
-                }
-            });
-        }
-    }
+    // DialogFragment to handle logout confirmation
     public static class StartGameDialogFragment extends DialogFragment {
         public FirebaseAuth authProfile;
 
@@ -207,37 +202,104 @@ public class ProfilePage extends Fragment {
             AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
             authProfile = FirebaseAuth.getInstance();
             builder.setIcon(R.mipmap.warning_bulelight_icon)
-                .setMessage(R.string.dialog_start_game)
-                .setPositiveButton(R.string.start, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        authProfile.signOut();
-                        Intent intent = new Intent(getActivity(), LoginScreen.class);
-                        intent.setFlags(
-                            Intent.FLAG_ACTIVITY_CLEAR_TOP
-                            | Intent.FLAG_ACTIVITY_CLEAR_TASK
-                            | Intent.FLAG_ACTIVITY_NEW_TASK
-                        );
-                        startActivity(intent);
-                    }
-                }).setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        View rootView = requireActivity().findViewById(android.R.id.content); // Get the root view
-                        Snackbar snackbar = Snackbar.make(rootView, "The account wasn't logged out.", Snackbar.LENGTH_LONG);
-                        snackbar.setDuration(3000);
-                        snackbar.setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark));
-                        snackbar.setActionTextColor(getResources().getColor(R.color.white));
-                        snackbar.show();
-                    }
-                }
-            );
+                    .setMessage(R.string.dialog_start_game)
+                    .setPositiveButton(R.string.start, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            authProfile.signOut();
+                            Intent intent = new Intent(getActivity(), LoginScreen.class);
+                            intent.setFlags(
+                                    Intent.FLAG_ACTIVITY_CLEAR_TOP
+                                            | Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                            | Intent.FLAG_ACTIVITY_NEW_TASK
+                            );
+                            startActivity(intent);
+                        }
+                    }).setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    View rootView = requireActivity().findViewById(android.R.id.content); // Get the root view
+                                    Snackbar snackbar = Snackbar.make(rootView, "The account wasn't logged out.", Snackbar.LENGTH_LONG);
+                                    snackbar.setDuration(3000);
+                                    snackbar.setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark));
+                                    snackbar.setActionTextColor(getResources().getColor(R.color.white));
+                                    snackbar.show();
+                                }
+                            }
+                    );
             return builder.create();
         }
     }
 
+    // DialogFragment to display the user's profile image
+    public static class ProfileImageDialog extends DialogFragment {
+        private String imageUrl;
+
+        public ProfileImageDialog(String imageUrl) {
+            this.imageUrl = imageUrl;
+        }
+
+        @NonNull
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
+
+            // Create a RelativeLayout to hold the ImageView and Close button
+            RelativeLayout layout = new RelativeLayout(requireActivity());
+            layout.setLayoutParams(new RelativeLayout.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+            ));
+
+            // Calculate the desired width and height for the image based on the screen size
+            DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
+            int dialogWidth = (int) (displayMetrics.widthPixels * 0.9); // 90% of screen width
+            int dialogHeight = (int) (dialogWidth * 0.75); // Maintain 4:3 aspect ratio
+            RelativeLayout.LayoutParams imageLayoutParams = new RelativeLayout.LayoutParams(
+                    dialogWidth,
+                    dialogHeight
+            );
+            imageLayoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
+            imageLayoutParams.addRule(RelativeLayout.ALIGN_PARENT_TOP); // Align to the top
+            ImageView imageView = new ImageView(requireActivity());
+            imageView.setLayoutParams(imageLayoutParams);
+
+            // Load the image using Glide
+            Glide.with(requireActivity())
+                    .load(imageUrl)
+                    .into(imageView);
+
+            // Create the Close button
+            Button closeButton = new Button(requireActivity());
+            RelativeLayout.LayoutParams closeButtonLayoutParams = new RelativeLayout.LayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+            );
+            closeButtonLayoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT); // Align to the right
+            closeButton.setLayoutParams(closeButtonLayoutParams);
+            closeButton.setText("Close");
+            closeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Close the dialog
+                    dismiss();
+                }
+            });
+
+            // Add the ImageView and Close button to the RelativeLayout
+            layout.addView(imageView);
+            layout.addView(closeButton);
+
+            builder.setView(layout);
+
+            return builder.create();
+        }
+
+    }
+
+    // DialogFragment to handle profile information update
     public static class UpdateDialogFragment extends DialogFragment {
         public FirebaseAuth authProfile;
-        private EditText userNameEditText ;
+        private EditText userNameEditText;
         private EditText emailEditText;
         private EditText passwordEditText;
         private ProgressBar progressBar;
@@ -248,14 +310,15 @@ public class ProfilePage extends Fragment {
         private final String imageUri;
         private final String role;
         private final FirebaseUser firebaseUser;
+
         public UpdateDialogFragment(
-            String name,
-            String email,
-            String password,
-            String userId,
-            FirebaseUser firebaseUser,
-            String imageUri,
-            String role
+                String name,
+                String email,
+                String password,
+                String userId,
+                FirebaseUser firebaseUser,
+                String imageUri,
+                String role
         ) {
             this.name = name;
             this.email = email;
@@ -284,14 +347,14 @@ public class ProfilePage extends Fragment {
             passwordEditText.setText(password);
 
             builder.setView(view)
-                .setPositiveButton(R.string.start, null) // Set to null temporarily
-                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Cancel behavior here
-                    }
-                }
-            );
+                    .setPositiveButton(R.string.start, null) // Set to null temporarily
+                    .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // Cancel behavior here
+                                }
+                            }
+                    );
 
             final AlertDialog dialog = builder.create();
 
@@ -322,7 +385,7 @@ public class ProfilePage extends Fragment {
                                 return; // Stay open
                             }
                             progressBar.setVisibility(View.VISIBLE);
-                            ReadWriteUserDetails writeUserDetails = new ReadWriteUserDetails( textEmail, textPassword,imageUri, role,textName);
+                            ReadWriteUserDetails writeUserDetails = new ReadWriteUserDetails(textEmail, textPassword, imageUri, role, textName);
                             DatabaseReference userReference = FirebaseDatabase
                                     .getInstance()
                                     .getReference("Registered users");
@@ -330,7 +393,7 @@ public class ProfilePage extends Fragment {
                             userReference.child(userId).setValue(writeUserDetails).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
-                                    if (task.isSuccessful()){
+                                    if (task.isSuccessful()) {
                                         UserProfileChangeRequest profileChangeRequest = new UserProfileChangeRequest.Builder().setDisplayName(textName).build();
                                         firebaseUser.updateProfile(profileChangeRequest);
                                         Intent intent = new Intent(getActivity(), MainButtomNavigation.class);
@@ -349,4 +412,3 @@ public class ProfilePage extends Fragment {
         }
     }
 }
-
