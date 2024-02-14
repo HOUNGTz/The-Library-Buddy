@@ -112,7 +112,7 @@ public class HomeScreen extends Fragment {
                     boolean foundImage = false;
 
                     for (DataSnapshot bookSnapshot : dataSnapshot.getChildren()) {
-                        if (imageIndex > 6) {
+                        if (imageIndex > 12) {
                             break;
                         }
                         Book_model book = bookSnapshot.getValue(Book_model.class);
