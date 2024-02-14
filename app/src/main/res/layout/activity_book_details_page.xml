@@ -96,23 +96,27 @@
                 android:paddingTop="5dp"
                 android:paddingBottom="5dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="10dp"
-                    android:text="@string/rating"
-                    android:textColor="@color/red"
-                    app:layout_constraintEnd_toStartOf="@+id/rate"
-                    tools:ignore="TextContrastCheck"
-                    tools:layout_editor_absoluteY="7dp" />
-
-                <TextView
-                    android:id="@+id/rate"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="258dp"
-                    app:layout_constraintEnd_toStartOf="@+id/buttonEditText"
-                    tools:layout_editor_absoluteY="7dp" />
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:text="@string/rating"
+                        android:textColor="@color/red"
+                        app:layout_constraintEnd_toStartOf="@+id/rate"
+                        tools:ignore="TextContrastCheck" />
+
+                    <TextView
+                        android:id="@+id/rate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="36dp"
+                        app:layout_constraintEnd_toStartOf="@+id/buttonEditText"
+                        tools:layout_editor_absoluteY="5dp" />
+                </LinearLayout>
 
                 <ImageButton
                     android:id="@+id/buttonEditText"
