@@ -2,7 +2,6 @@ package com.houng.mobile_app_development.modules.pages;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -44,7 +43,6 @@ import com.houng.mobile_app_development.ReadWriteUserDetails;
 import com.houng.mobile_app_development.modules.screens.LoginScreen;
 
 public class ProfilePage extends Fragment {
-    public LinearLayout evenLogout;
     public TextView textName, roleText;
     public ImageView imageView;
     public FirebaseAuth auth;
@@ -154,19 +152,13 @@ public class ProfilePage extends Fragment {
                     .setOnClickListener(v -> new StartGameDialogFragment()
                             .show(requireActivity().getSupportFragmentManager(), "GAME_DIALOG"));
         }
-        about.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), AboutUsPage.class);
-                startActivity(intent);
-            }
+        about.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), AboutUsPage.class);
+            startActivity(intent);
         });
-        add_book.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), AddPage.class);
-                startActivity(intent);
-            }
+        add_book.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), AddPage.class);
+            startActivity(intent);
         });
 
         update.setOnClickListener(v -> new UpdateDialogFragment(
@@ -180,12 +172,9 @@ public class ProfilePage extends Fragment {
         ).show(requireActivity().getSupportFragmentManager(), "GAME_DIALOG"));
 
         // Setup click listener for profile image
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (image != null && !image.isEmpty()) {
-                    new ProfileImageDialog(image).show(requireActivity().getSupportFragmentManager(), "PROFILE_IMAGE_DIALOG");
-                }
+        imageView.setOnClickListener(v -> {
+            if (image != null && !image.isEmpty()) {
+                new ProfileImageDialog(image).show(requireActivity().getSupportFragmentManager(), "PROFILE_IMAGE_DIALOG");
             }
         });
 
@@ -203,28 +192,23 @@ public class ProfilePage extends Fragment {
             authProfile = FirebaseAuth.getInstance();
             builder.setIcon(R.mipmap.warning_bulelight_icon)
                     .setMessage(R.string.dialog_start_game)
-                    .setPositiveButton(R.string.start, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            authProfile.signOut();
-                            Intent intent = new Intent(getActivity(), LoginScreen.class);
-                            intent.setFlags(
-                                    Intent.FLAG_ACTIVITY_CLEAR_TOP
-                                            | Intent.FLAG_ACTIVITY_CLEAR_TASK
-                                            | Intent.FLAG_ACTIVITY_NEW_TASK
-                            );
-                            startActivity(intent);
-                        }
-                    }).setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    View rootView = requireActivity().findViewById(android.R.id.content); // Get the root view
-                                    Snackbar snackbar = Snackbar.make(rootView, "The account wasn't logged out.", Snackbar.LENGTH_LONG);
-                                    snackbar.setDuration(3000);
-                                    snackbar.setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark));
-                                    snackbar.setActionTextColor(getResources().getColor(R.color.white));
-                                    snackbar.show();
-                                }
-                            }
+                    .setPositiveButton(R.string.start, (dialog, id) -> {
+                        authProfile.signOut();
+                        Intent intent = new Intent(getActivity(), LoginScreen.class);
+                        intent.setFlags(
+                                Intent.FLAG_ACTIVITY_CLEAR_TOP
+                                        | Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                        | Intent.FLAG_ACTIVITY_NEW_TASK
+                        );
+                        startActivity(intent);
+                    }).setNegativeButton(R.string.cancel, (dialog, which) -> {
+                        View rootView = requireActivity().findViewById(android.R.id.content); // Get the root view
+                        Snackbar snackbar = Snackbar.make(rootView, "The account wasn't logged out.", Snackbar.LENGTH_LONG);
+                        snackbar.setDuration(3000);
+                        snackbar.setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark));
+                        snackbar.setActionTextColor(getResources().getColor(R.color.white));
+                        snackbar.show();
+                    }
                     );
             return builder.create();
         }
@@ -232,7 +216,7 @@ public class ProfilePage extends Fragment {
 
     // DialogFragment to display the user's profile image
     public static class ProfileImageDialog extends DialogFragment {
-        private String imageUrl;
+        private final String imageUrl;
 
         public ProfileImageDialog(String imageUrl) {
             this.imageUrl = imageUrl;
@@ -277,12 +261,9 @@ public class ProfilePage extends Fragment {
             closeButtonLayoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT); // Align to the right
             closeButton.setLayoutParams(closeButtonLayoutParams);
             closeButton.setText("Close");
-            closeButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // Close the dialog
-                    dismiss();
-                }
+            closeButton.setOnClickListener(v -> {
+                // Close the dialog
+                dismiss();
             });
 
             // Add the ImageView and Close button to the RelativeLayout
@@ -348,65 +329,56 @@ public class ProfilePage extends Fragment {
 
             builder.setView(view)
                     .setPositiveButton(R.string.start, null) // Set to null temporarily
-                    .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    // Cancel behavior here
-                                }
-                            }
+                    .setNegativeButton(R.string.cancel, (dialog, which) -> {
+                        // Cancel behavior here
+                    }
                     );
 
             final AlertDialog dialog = builder.create();
 
-            dialog.setOnShowListener(new DialogInterface.OnShowListener() {
-                @Override
-                public void onShow(DialogInterface dialogInterface) {
+            dialog.setOnShowListener(dialogInterface -> {
 
-                    Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
-                    positiveButton.setOnClickListener(new View.OnClickListener() {
+                Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                positiveButton.setOnClickListener(v -> {
+
+                    String textName = userNameEditText.getText().toString();
+                    String textEmail = emailEditText.getText().toString();
+                    String textPassword = passwordEditText.getText().toString();
+
+                    if (TextUtils.isEmpty(textName)) {
+                        userNameEditText.setError("Name Is required");
+                        userNameEditText.requestFocus();
+                        return; // Stay open
+                    } else if (TextUtils.isEmpty(textEmail)) {
+                        emailEditText.setError("Email is required");
+                        emailEditText.requestFocus();
+                        return; // Stay open
+                    } else if (TextUtils.isEmpty(textPassword)) {
+                        passwordEditText.setError("Password is required");
+                        passwordEditText.requestFocus();
+                        return; // Stay open
+                    }
+                    progressBar.setVisibility(View.VISIBLE);
+                    ReadWriteUserDetails writeUserDetails = new ReadWriteUserDetails(textEmail, textPassword, imageUri, role, textName);
+                    DatabaseReference userReference = FirebaseDatabase
+                            .getInstance()
+                            .getReference("Registered users");
+
+                    userReference.child(userId).setValue(writeUserDetails).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
-                        public void onClick(View v) {
-
-                            String textName = userNameEditText.getText().toString();
-                            String textEmail = emailEditText.getText().toString();
-                            String textPassword = passwordEditText.getText().toString();
-
-                            if (TextUtils.isEmpty(textName)) {
-                                userNameEditText.setError("Name Is required");
-                                userNameEditText.requestFocus();
-                                return; // Stay open
-                            } else if (TextUtils.isEmpty(textEmail)) {
-                                emailEditText.setError("Email is required");
-                                emailEditText.requestFocus();
-                                return; // Stay open
-                            } else if (TextUtils.isEmpty(textPassword)) {
-                                passwordEditText.setError("Password is required");
-                                passwordEditText.requestFocus();
-                                return; // Stay open
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                UserProfileChangeRequest profileChangeRequest = new UserProfileChangeRequest.Builder().setDisplayName(textName).build();
+                                firebaseUser.updateProfile(profileChangeRequest);
+                                Intent intent = new Intent(getActivity(), MainButtomNavigation.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+                                        | Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                        | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intent);
                             }
-                            progressBar.setVisibility(View.VISIBLE);
-                            ReadWriteUserDetails writeUserDetails = new ReadWriteUserDetails(textEmail, textPassword, imageUri, role, textName);
-                            DatabaseReference userReference = FirebaseDatabase
-                                    .getInstance()
-                                    .getReference("Registered users");
-
-                            userReference.child(userId).setValue(writeUserDetails).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if (task.isSuccessful()) {
-                                        UserProfileChangeRequest profileChangeRequest = new UserProfileChangeRequest.Builder().setDisplayName(textName).build();
-                                        firebaseUser.updateProfile(profileChangeRequest);
-                                        Intent intent = new Intent(getActivity(), MainButtomNavigation.class);
-                                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
-                                                | Intent.FLAG_ACTIVITY_CLEAR_TASK
-                                                | Intent.FLAG_ACTIVITY_NEW_TASK);
-                                        startActivity(intent);
-                                    }
-                                }
-                            });
                         }
                     });
-                }
+                });
             });
             return dialog;
         }
