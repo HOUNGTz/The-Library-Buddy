@@ -105,7 +105,6 @@ public class AddPage extends AppCompatActivity {
         save_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                progressBar.setVisibility(View.VISIBLE);
                 save_button.setVisibility(View.GONE);
                 if (imageUri != null) {
                     uploadFile();
@@ -213,6 +212,7 @@ public class AddPage extends AppCompatActivity {
             progressBar.setVisibility(View.GONE);
             save_button.setVisibility(View.VISIBLE);
         }else {
+            progressBar.setVisibility(View.VISIBLE);
             DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("book");
             String bookId = databaseReference.push().getKey();
             assert bookId != null;
