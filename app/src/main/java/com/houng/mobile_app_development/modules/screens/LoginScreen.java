@@ -16,14 +16,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
@@ -118,61 +114,71 @@ public class LoginScreen extends AppCompatActivity {
 
     }
 
-    private void loginUser(String the_email, String psw) {
-        authProfile.signInWithEmailAndPassword(the_email, psw).addOnCompleteListener(LoginScreen.this, new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()) {
-                    FirebaseUser firebaseUser = authProfile.getCurrentUser();
-                    if (firebaseUser.isEmailVerified()) {
-                        View rootView = findViewById(android.R.id.content); // Get the root view
-                        Snackbar snackbar = Snackbar.make(rootView, "User login successfully!", Snackbar.LENGTH_LONG);
-                        snackbar.setDuration(3000);
-                        snackbar.setBackgroundTint(getResources().getColor(R.color.blue));
-                        snackbar.setActionTextColor(getResources().getColor(R.color.white));
-                        snackbar.show();
-                        if (firebaseUser.isEmailVerified()) {
+    private void loginUser(String email, String password) {
+        progressBar.setVisibility(View.VISIBLE);
+        authProfile.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, task -> {
+                    progressBar.setVisibility(View.GONE);
+                    if (task.isSuccessful()) {
+                        // Sign in success, update UI with the signed-in user's information
+                        FirebaseUser user = authProfile.getCurrentUser();
+                        if (user != null && user.isEmailVerified()) {
+                            // Email is verified, proceed to the main activity
                             startActivity(new Intent(LoginScreen.this, MainButtomNavigation.class));
                             finish();
                         } else {
-                            firebaseUser.sendEmailVerification();
-                            authProfile.signOut();
-                            showAlertDialog();
+                            // Email not verified, show alert dialog
+                            showEmailNotVerifiedAlert();
                         }
                     } else {
-                        try {
-                            throw task.getException();
-                        } catch (FirebaseAuthInvalidUserException e) {
-                            email.setError("User does not Exists or is on longer valid. please Register again.");
-                            email.requestFocus();
-                        } catch (FirebaseAuthInvalidCredentialsException e) {
-                            email.setError("Invalid credentials. kindly, check and re-enter");
-                            email.requestFocus();
-                        } catch (Exception e) {
-                            Log.e(TAG, e.getMessage());
-                            Toast.makeText(LoginScreen.this, e.getMessage(), Toast.LENGTH_LONG).show();
-                        }
-                        View rootView = findViewById(android.R.id.content); // Get the root view
-                        Snackbar snackbar = Snackbar.make(rootView, "Something went Wrong!", Snackbar.LENGTH_LONG);
-                        snackbar.setDuration(3000);
-                        snackbar.setBackgroundTint(getResources().getColor(R.color.black));
-                        snackbar.setActionTextColor(getResources().getColor(R.color.white));
-                        snackbar.show();
-
+                        // If sign in fails, display a message to the user.
+                        Log.w(TAG, "signInWithEmail:failure", task.getException());
+                        Toast.makeText(LoginScreen.this, "Authentication failed.",
+                                Toast.LENGTH_SHORT).show();
+                        handleSignInFailure(task.getException());
                     }
-                }else {
-                    View rootView = findViewById(android.R.id.content); // Get the root view
-                    Snackbar snackbar = Snackbar.make(rootView, "Something went Wrong!", Snackbar.LENGTH_LONG);
-                    snackbar.setDuration(3000);
-                    snackbar.setBackgroundTint(getResources().getColor(R.color.black));
-                    snackbar.setActionTextColor(getResources().getColor(R.color.white));
-                    snackbar.show();
-                }
-
-                progressBar.setVisibility(View.GONE);
-            }
-        });
+                });
     }
+
+    private void handleSignInFailure(Exception exception) {
+        if (exception instanceof FirebaseAuthInvalidUserException) {
+            email.setError("No account found with this email. Please register.");
+            email.requestFocus();
+        } else if (exception instanceof FirebaseAuthInvalidCredentialsException) {
+            password.setError("Invalid password. Please try again.");
+            password.requestFocus();
+        } else {
+            Toast.makeText(LoginScreen.this, "Login failed: " + exception.getMessage(),
+                    Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void showEmailNotVerifiedAlert() {
+        new AlertDialog.Builder(this)
+                .setTitle("Email not verified")
+                .setMessage("Please check your inbox for a verification email or resend verification email.")
+                .setPositiveButton("Resend Email", (dialog, which) -> resendVerificationEmail())
+                .setNegativeButton("Cancel", null)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+    }
+
+    private void resendVerificationEmail() {
+        FirebaseUser user = authProfile.getCurrentUser();
+        if (user != null) {
+            user.sendEmailVerification()
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(LoginScreen.this, "Verification email sent.",
+                                    Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(LoginScreen.this, "Failed to send verification email.",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        }
+    }
+
 
     private void showAlertDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(LoginScreen.this);
