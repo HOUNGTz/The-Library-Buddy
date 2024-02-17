@@ -20,9 +20,7 @@ public class AboutUsPage extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.aboutPage);
         setSupportActionBar(toolbar);
-        Objects
-                .requireNonNull(getSupportActionBar())
-                .setTitle("About");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("About");
         titleTextColor = ContextCompat.getColor(this, R.color.white);
         SpannableString spannableString = new SpannableString(getSupportActionBar().getTitle());
         spannableString.setSpan(new ForegroundColorSpan(titleTextColor), 0, spannableString.length(), 0);

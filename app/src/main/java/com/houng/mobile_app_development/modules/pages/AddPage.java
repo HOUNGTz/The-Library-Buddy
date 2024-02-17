@@ -39,6 +39,7 @@ import com.houng.mobile_app_development.MainButtomNavigation;
 import com.houng.mobile_app_development.R;
 import com.houng.mobile_app_development.modules.model.Book_model;
 import java.util.Objects;
+import java.util.Optional;
 
 public class AddPage extends AppCompatActivity {
     public TextInputEditText choose_type_book, title, subtitle, rate, des, story;
@@ -65,9 +66,7 @@ public class AddPage extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.materialToolbar);
         setSupportActionBar(toolbar);
-        Objects
-                .requireNonNull(getSupportActionBar())
-                .setTitle("Insert New Books");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Insert New Books");
 
         titleTextColor = ContextCompat.getColor(this, R.color.white);
         SpannableString spannableString = new SpannableString(getSupportActionBar().getTitle());
@@ -84,9 +83,7 @@ public class AddPage extends AppCompatActivity {
             return false;
         });
 
-        FirebaseAppCheck
-                .getInstance()
-                .installAppCheckProviderFactory(SafetyNetAppCheckProviderFactory.getInstance());
+        FirebaseAppCheck.getInstance().installAppCheckProviderFactory(SafetyNetAppCheckProviderFactory.getInstance());
         TextInputEditText inputImage = findViewById(R.id.input_image);
         inputImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,6 +103,7 @@ public class AddPage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 save_button.setVisibility(View.GONE);
+                progressBar.setVisibility(View.VISIBLE);
                 if (imageUri != null) {
                     uploadFile();
                 } else {
@@ -143,9 +141,9 @@ public class AddPage extends AppCompatActivity {
     private void uploadFile() {
         if (imageUri != null) {
             StorageReference fileReference = FirebaseStorage
-                    .getInstance()
-                    .getReference("uploads")
-                    .child(System.currentTimeMillis() + "." + getFileExtension(imageUri));
+                .getInstance()
+                .getReference("uploads")
+                .child(System.currentTimeMillis() + "." + getFileExtension(imageUri));
             fileReference.putFile(imageUri)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
@@ -169,76 +167,130 @@ public class AddPage extends AppCompatActivity {
         }
     }
 
-    private void saveBook(String imageUrl) {
-        String editTitle = Objects.requireNonNull(title.getText()).toString();
-        String editSubtitle = Objects.requireNonNull(subtitle.getText()).toString();
-        String editRate = Objects.requireNonNull(rate.getText()).toString();
-        String editDes = Objects.requireNonNull(des.getText()).toString();
-        String editStory = Objects.requireNonNull(story.getText()).toString();
-        String editCategory = Objects.requireNonNull(choose_type_book.getText()).toString();
+//    private void saveBook(String imageUrl) {
+//        String editTitle = Objects.requireNonNull(title.getText()).toString();
+//        String editSubtitle = Objects.requireNonNull(subtitle.getText()).toString();
+//        String editRate = Objects.requireNonNull(rate.getText()).toString();
+//        String editDes = Objects.requireNonNull(des.getText()).toString();
+//        String editStory = Objects.requireNonNull(story.getText()).toString();
+//        String editCategory = Objects.requireNonNull(choose_type_book.getText()).toString();
+//
+//        if(TextUtils.isEmpty(editTitle)) {
+//            title.setError("Title Is required");
+//            title.requestFocus();
+//            progressBar.setVisibility(View.GONE);
+//            save_button.setVisibility(View.VISIBLE);
+//        } else if (TextUtils.isEmpty(editSubtitle)) {
+//            subtitle.setError("Subtitle Is required");
+//            subtitle.requestFocus();
+//            progressBar.setVisibility(View.GONE);
+//            save_button.setVisibility(View.VISIBLE);
+//        }else if (TextUtils.isEmpty(editRate)) {
+//            rate.setError("Rate Is required");
+//            rate.requestFocus();
+//            progressBar.setVisibility(View.GONE);
+//            save_button.setVisibility(View.VISIBLE);
+//        }else if (TextUtils.isEmpty(editDes)) {
+//            des.setError("Des Is required");
+//            des.requestFocus();
+//            progressBar.setVisibility(View.GONE);
+//            save_button.setVisibility(View.VISIBLE);
+//        }else if (TextUtils.isEmpty(editStory)) {
+//            story.setError("Story Is required");
+//            story.requestFocus();
+//            progressBar.setVisibility(View.GONE);
+//            save_button.setVisibility(View.VISIBLE);
+//        } else if (TextUtils.isEmpty(editCategory)) {
+//            choose_type_book.setError("Category Is required");
+//            choose_type_book.requestFocus();
+//            progressBar.setVisibility(View.GONE);
+//            save_button.setVisibility(View.VISIBLE);
+//        } else if (TextUtils.isEmpty(imageUrl)) {
+//            Toast.makeText(AddPage.this, "Please input image cover", Toast.LENGTH_LONG).show();
+//            progressBar.setVisibility(View.GONE);
+//            save_button.setVisibility(View.VISIBLE);
+//        }else {
+//            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("book");
+//            String bookId = databaseReference.push().getKey();
+//            assert bookId != null;
+//            Book_model books = new Book_model(
+//                bookId,
+//                editTitle,
+//                editCategory,
+//                editSubtitle,
+//                imageUrl,
+//                editRate,
+//                editDes,
+//                editStory
+//            );
+//            databaseReference.child(bookId).setValue(books).addOnCompleteListener(
+//                new OnCompleteListener<Void>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<Void> task) {
+//                        if (task.isSuccessful()) {
+//                            progressBar.setVisibility(View.GONE);
+//                            Intent intent = new Intent(AddPage.this, MainButtomNavigation.class);
+//                            startActivity(intent);
+//                        }
+//                    }
+//                }
+//            );
+//        }
+//    }
 
-        if(TextUtils.isEmpty(editTitle)) {
-            title.setError("Title Is required");
-            title.requestFocus();
-            progressBar.setVisibility(View.GONE);
-            save_button.setVisibility(View.VISIBLE);
-        } else if (TextUtils.isEmpty(editSubtitle)) {
-            subtitle.setError("Subtitle Is required");
-            subtitle.requestFocus();
-            progressBar.setVisibility(View.GONE);
-            save_button.setVisibility(View.VISIBLE);
-        }else if (TextUtils.isEmpty(editRate)) {
-            rate.setError("Rate Is required");
-            rate.requestFocus();
-            progressBar.setVisibility(View.GONE);
-            save_button.setVisibility(View.VISIBLE);
-        }else if (TextUtils.isEmpty(editDes)) {
-            des.setError("Des Is required");
-            des.requestFocus();
-            progressBar.setVisibility(View.GONE);
-            save_button.setVisibility(View.VISIBLE);
-        }else if (TextUtils.isEmpty(editStory)) {
-            story.setError("Story Is required");
-            story.requestFocus();
-            progressBar.setVisibility(View.GONE);
-            save_button.setVisibility(View.VISIBLE);
-        } else if (TextUtils.isEmpty(editCategory)) {
-            choose_type_book.setError("Category Is required");
-            choose_type_book.requestFocus();
-            progressBar.setVisibility(View.GONE);
-            save_button.setVisibility(View.VISIBLE);
-        } else if (TextUtils.isEmpty(imageUrl)) {
-            Toast.makeText(AddPage.this, "Please input image cover", Toast.LENGTH_LONG).show();
-            progressBar.setVisibility(View.GONE);
-            save_button.setVisibility(View.VISIBLE);
-        }else {
-            progressBar.setVisibility(View.VISIBLE);
+    private void saveBook(String imageUrl) {
+        String editTitle = Optional.ofNullable(title.getText()).map(CharSequence::toString).orElse("");
+        String editSubtitle = Optional.ofNullable(subtitle.getText()).map(CharSequence::toString).orElse("");
+        String editRate = Optional.ofNullable(rate.getText()).map(CharSequence::toString).orElse("");
+        String editDes = Optional.ofNullable(des.getText()).map(CharSequence::toString).orElse("");
+        String editStory = Optional.ofNullable(story.getText()).map(CharSequence::toString).orElse("");
+        String editCategory = Optional.ofNullable(choose_type_book.getText()).map(CharSequence::toString).orElse("");
+
+        if (validateInputs(new String[]{editTitle, editSubtitle, editRate, editDes, editStory, editCategory, imageUrl})) {
             DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("book");
             String bookId = databaseReference.push().getKey();
-            assert bookId != null;
-            Book_model books = new Book_model(
-                bookId,
-                editTitle,
-                editCategory,
-                editSubtitle,
-                imageUrl,
-                editRate,
-                editDes,
-                editStory
-            );
-            databaseReference.child(bookId).setValue(books).addOnCompleteListener(
-                new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            progressBar.setVisibility(View.GONE);
-                            Intent intent = new Intent(AddPage.this, MainButtomNavigation.class);
-                            startActivity(intent);
-                        }
-                    }
-                }
-            );
+            if (bookId != null) {
+                Book_model book = new Book_model(bookId, editTitle, editCategory, editSubtitle, imageUrl, editRate, editDes, editStory);
+                saveBookToDatabase(databaseReference, book);
+            }
+        } else {
+            progressBar.setVisibility(View.GONE);
+            save_button.setVisibility(View.VISIBLE);
         }
+    }
+
+    private boolean validateInputs(String[] inputs) {
+        String[] fieldNames = {"Title", "Subtitle", "Rate", "Des", "Story", "Category", "Image URL"};
+        TextInputEditText[] fields = {title, subtitle, rate, des, story, choose_type_book, null};
+        boolean isValid = true;
+
+        for (int i = 0; i < inputs.length; i++) {
+            if (TextUtils.isEmpty(inputs[i])) {
+                if (i < fields.length - 1) {
+                    fields[i].setError(fieldNames[i] + " is required");
+                    fields[i].requestFocus();
+                } else {
+                    Toast.makeText(AddPage.this, "Please input image cover", Toast.LENGTH_LONG).show();
+                }
+                isValid = false;
+                break;
+            }
+        }
+        return isValid;
+    }
+
+    private void saveBookToDatabase(DatabaseReference databaseReference, Book_model book) {
+        databaseReference.child(book.id).setValue(book).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                progressBar.setVisibility(View.GONE);
+                startActivity(new Intent(AddPage.this, MainButtomNavigation.class));
+            } else {
+                // Handle failure
+                Toast.makeText(AddPage.this, "Failed to save book. Try again.", Toast.LENGTH_SHORT).show();
+                progressBar.setVisibility(View.GONE);
+                save_button.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     @Override
@@ -261,7 +313,6 @@ public class AddPage extends AppCompatActivity {
         builder.setSingleChoiceItems(items, -1, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int item) {
                 selectedItemIndex[0] = item;
-//                choose_type_book.setText(items[item].toString());
             }
         });
 
